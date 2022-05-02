@@ -11,7 +11,7 @@ public class Role {
     private int id;
     @Column(length = 30)
     private String name;
-    @ManyToMany()
+    @ManyToMany(mappedBy = "roles")
     private List<Account> accounts;
     public Role() {
     }
