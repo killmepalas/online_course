@@ -20,7 +20,6 @@ public class Test {
     @Column(name = "name")
     private String name;
 
-    @NotEmpty(message = "Пожалуйста, введите описание")
     @Size(max = 1000, message = "Описание не должно быть длиннее 1000 символов")
     @Column(name = "description")
     private String description;
