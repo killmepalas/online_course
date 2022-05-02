@@ -1,0 +1,185 @@
+html {
+    background-color: rgb(20, 14, 29);
+    background-repeat: repeat;
+    background-size: 40%;
+}
+
+body {
+    background-color: white;
+    margin: 58px auto;
+    text-align: center;
+    font: 24px Consolas bold;
+    font-family: Trebuchet MS;
+}
+
+#line {
+    display: inline-block;
+}
+#teaching {
+    height: 375px;
+}
+button {
+    color:#00c6ff;
+    padding: 10px 20px;
+    width: 200px;
+    text-decoration:none;
+    text-align:center;
+    margin:20px auto;
+    display: block;
+    background-image: linear-gradient(to left,transparent,transparent 50%,#00c6ff 50%,#00c6ff);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .25s ease-in;
+    font: 400 18px tahoma;
+    border: 1px solid #00C6FF;
+}
+
+button:hover {
+    background-position: 0 0;
+    color:#fff;
+}
+
+nav {
+    top: 5vh;
+    font-size: 1.5em;
+    position: absolute;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 1.2em;
+    left: 0;
+    height: 70px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    transition: all 0.5s ease-in-out;
+}
+
+nav a:hover {
+    color: red;
+}
+
+nav ul li:hover {
+    border-bottom: 5px solid red;
+}
+
+main {
+    width: 76%;
+    display: inline-block;
+    padding: 2%;
+}
+
+footer {
+    width: 100%;
+    height: 10%;
+    float: left;
+    margin-top: 10px;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    text-indent: 10px;
+}
+
+section {
+    width: 80%;
+    height: 600px;
+    margin: 0 auto;
+    padding: 2%;
+    color: white;
+}
+
+#container section {
+    display: inline-block;
+    width: 28%;
+}
+
+#center {
+    float: center;
+}
+
+#left {
+    float: left;
+}
+
+#right {
+    float: right;
+}
+
+article {
+    width: 80%;
+    padding: 1%;
+    color: white;
+    margin: 10px auto;
+}
+
+#container {
+    margin-top: 25vh;
+}
+
+#mine img {
+    width: 280px;
+    height: 280px;
+    border-radius: 150px;
+}
+
+#mine p {
+    font-size: 20px;
+}
+
+#free {
+    color: green;
+}
+
+#money{
+    color: blue;
+}
+
+.sell {
+    background-color: rgb(235, 209, 199);
+    margin-top: 30px;
+    height: 0%;
+    color: black;
+}
+
+#about p {
+    font-size: 20px;
+    text-align: justify;
+}
+
+
+
+#mine h4 {
+    color: black;
+}
+
+
+h2 {
+    color: white;
+    font-family: 'Lucida Console';
+}
+.search{
+    box-sizing: border-box;
+    width: 30%;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    transition: transform 0.3s ease-out;
+    color: brown;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 1em;
+}
