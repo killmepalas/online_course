@@ -18,13 +18,11 @@ public class Course {
     @Column(name = "name")
     private String name;
 
-    @NotEmpty(message = "Пожалуйста, введите описание")
     @Size(max = 1000, message = "Описание не должно быть длиннее 1000 символов")
     @Column(name = "description")
     private String description;
 
-    @NotEmpty(message = "Пожалуйста, введите стоимость")
-    @Min(value = 1000, message = "Минимальная стоимость - 1 рубль")
+    @Min(value = 1, message = "Минимальная стоимость - 1 рубль")
     @Column(name = "price")
     private int price;
 

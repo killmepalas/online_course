@@ -18,17 +18,14 @@ public class Account {
     @Column(name="id")
     private int id;
 
-    @NotEmpty(message = "Пожалуйста, введите имя")
     @Size(min = 2, max = 30, message = "Имя не должно быть короче 2 и длиннее 30 символов")
     @Column(name = "name")
     private String name;
 
-    @NotEmpty(message = "Пожалуйста, введите отчество")
     @Size(min = 2, max = 30, message = "Отчество не должно быть короче 2 и длиннее 30 символов")
     @Column(name = "midname")
     private String midname;
 
-    @NotEmpty(message = "Пожалуйста, введите фамилию")
     @Size(min = 2, max = 30, message = "Фамилия не должна быть короче 2 и длиннее 30 символов")
     @Column(name = "lastname")
     private String lastname;
