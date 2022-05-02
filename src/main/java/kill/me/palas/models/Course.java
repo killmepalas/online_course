@@ -17,16 +17,32 @@ public class Course {
     @Size(min = 2, max = 30, message = "Название не должно быть короче 2 и длиннее 30 символов")
     @Column(name = "name")
     private String name;
+
     @NotEmpty(message = "Пожалуйста, введите описание")
     @Size(max = 1000, message = "Описание не должно быть длиннее 1000 символов")
     @Column(name = "description")
     private String description;
+
     @NotEmpty(message = "Пожалуйста, введите стоимость")
     @Min(value = 1000, message = "Минимальная стоимость - 1 рубль")
     @Column(name = "price")
     private int price;
+
+    @Column(name="photo")
+    private String photolink;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="teacher_id")
+    private Account teacher;
+
     @ManyToMany
     private List<Account> accounts;
+
+    @OneToMany()
+    private List<Test> tests;
+
+    @OneToMany()
+    private List<CourseGrade> courseGrades;
 
     public Course(String name, String description, int price) {
         this.name = name;
@@ -36,6 +52,38 @@ public class Course {
 
     public Course(){
 
+    }
+
+    public String getPhotolink() {
+        return photolink;
+    }
+
+    public void setPhotolink(String photolink) {
+        this.photolink = photolink;
+    }
+
+    public Account getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Account teacher) {
+        this.teacher = teacher;
+    }
+
+    public List<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(List<Test> tests) {
+        this.tests = tests;
+    }
+
+    public List<CourseGrade> getCourseGrades() {
+        return courseGrades;
+    }
+
+    public void setCourseGrades(List<CourseGrade> courseGrades) {
+        this.courseGrades = courseGrades;
     }
 
     public int getId() {

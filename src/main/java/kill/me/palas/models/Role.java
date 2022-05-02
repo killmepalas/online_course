@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "role")
+@Table(name = "Role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 30)
     private String name;
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany()
     private List<Account> accounts;
     public Role() {
     }

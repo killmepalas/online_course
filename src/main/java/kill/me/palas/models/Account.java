@@ -1,9 +1,12 @@
 package kill.me.palas.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -40,17 +43,27 @@ public class Account {
     @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "Пожалуйста, введите возраст")
-    @Min(value = 0, message = "Слишком маленький возраст")
-    @Column(name = "age")
-    private int age;
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
+    private Date dateOfBirth;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name="photo")
+    private String photolink;
+
+    @ManyToMany()
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     private List<Course> courses;
 
+    @OneToMany()
+    private List<TestGrade> testGrades;
+
+    @OneToMany()
+    private List<CourseGrade> courseGrades;
+
+    @Column(name="rating")
     private int rating;
 
     public Account() {
@@ -60,6 +73,14 @@ public class Account {
     public Account(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+
+    public String getPhotolink() {
+        return photolink;
+    }
+
+    public void setPhotolink(String photolink) {
+        this.photolink = photolink;
     }
 
     public Set<Role> getRoles() {
@@ -85,15 +106,6 @@ public class Account {
     public void setRating(int rating) {
         this.rating = rating;
     }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
 
     public int getId() {
         return id;
@@ -141,5 +153,29 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public List<TestGrade> getTestGrades() {
+        return testGrades;
+    }
+
+    public void setTestGrades(List<TestGrade> testGrades) {
+        this.testGrades = testGrades;
+    }
+
+    public List<CourseGrade> getCourseGrades() {
+        return courseGrades;
+    }
+
+    public void setCourseGrades(List<CourseGrade> courseGrades) {
+        this.courseGrades = courseGrades;
     }
 }
