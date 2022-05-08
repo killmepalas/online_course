@@ -12,7 +12,7 @@
         <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN','ROLE_TEACHER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 
-        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
+        <form-login login-page="/login" default-target-url="/course" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
 
         <logout logout-success-url="/login?logout"/>

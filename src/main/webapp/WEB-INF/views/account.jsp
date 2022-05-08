@@ -11,9 +11,9 @@
 <body id="container">
 <nav>
     <ul>
-        <img src="WEB-INF/static/img/logo.png" width="400">
+        <img src="${pageContext.request.contextPath}/resources/img/logo.png" width="400">
         <li><a href="WEB-INF/jsp/account.jsp">Личный кабинет</a></li>
-        <li><a href="index.jsp">Каталог курсов</a></li>
+        <li><a href="course/index.jsp">Каталог курсов</a></li>
         <li><a href="WEB-INF/jsp/teaching.jsp">Преподавание</a></li>
         <li><a href="WEB-INF/jsp/training.jsp">Моё обучение</a></li>
     </ul>
