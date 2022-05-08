@@ -5,7 +5,6 @@ import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
 import kill.me.palas.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,7 +42,7 @@ public class UserController {
 
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
-        return "redirect:/welcome";
+        return  "redirect:/course";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -61,7 +60,7 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {
-        return "welcome";
+        return "redirect:/course";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
