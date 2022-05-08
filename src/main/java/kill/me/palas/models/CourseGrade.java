@@ -21,8 +21,8 @@ public class CourseGrade {
     private Course course;
 
     @ManyToOne()
-    @JoinColumn(name="account_id")
-    private Account account;
+    @JoinColumn(name="user_id")
+    private User user;
 
     public CourseGrade(){
 
@@ -56,11 +56,11 @@ public class CourseGrade {
         this.course = course;
     }
 
-    public Account getAccount() {
-        return account;
+    public User getUser() {
+        return user;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

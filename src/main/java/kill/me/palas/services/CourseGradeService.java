@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
 public class CourseGradeService {
     private final CourseGradeRepository courseGradeRepository;
 
@@ -28,18 +27,17 @@ public class CourseGradeService {
         return foundCourseGrade.orElse(null);
     }
 
-    @Transactional
     public void save(CourseGrade courseGrade) {
         courseGradeRepository.save(courseGrade);
     }
 
-    @Transactional
+
     public void update(int id, CourseGrade updatedCourseGrade) {
         updatedCourseGrade.setId(id);
         courseGradeRepository.save(updatedCourseGrade);
     }
 
-    @Transactional
+
     public void delete(int id) {
         courseGradeRepository.deleteById(id);
     }

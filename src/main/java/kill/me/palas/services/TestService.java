@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
 public class TestService {
     private final TestRepository testRepository;
 
@@ -28,18 +27,16 @@ public class TestService {
         return foundTest.orElse(null);
     }
 
-    @Transactional
     public void save(Test test) {
         testRepository.save(test);
     }
 
-    @Transactional
+
     public void update(int id, Test updatedTest) {
         updatedTest.setId(id);
         testRepository.save(updatedTest);
     }
 
-    @Transactional
     public void delete(int id) {
         testRepository.deleteById(id);
     }

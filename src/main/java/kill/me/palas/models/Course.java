@@ -31,10 +31,10 @@ public class Course {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="teacher_id")
-    private Account teacher;
+    private User teacher;
 
     @ManyToMany
-    private List<Account> accounts;
+    private List<User> users;
 
     @OneToMany()
     private List<Test> tests;
@@ -60,11 +60,11 @@ public class Course {
         this.photolink = photolink;
     }
 
-    public Account getTeacher() {
+    public User getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Account teacher) {
+    public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
 
@@ -116,11 +116,11 @@ public class Course {
         this.price = price;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
