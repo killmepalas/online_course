@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = true)
 public class AttemptService {
     private final AttemptRepository attemptRepository;
 
@@ -28,18 +27,15 @@ public class AttemptService {
         return foundAttempt.orElse(null);
     }
 
-    @Transactional
     public void save(Attempt attempt) {
         attemptRepository.save(attempt);
     }
 
-    @Transactional
     public void update(int id, Attempt updatedAttempt) {
         updatedAttempt.setId(id);
         attemptRepository.save(updatedAttempt);
     }
 
-    @Transactional
     public void delete(int id) {
         attemptRepository.deleteById(id);
     }

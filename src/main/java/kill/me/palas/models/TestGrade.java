@@ -21,8 +21,8 @@ public class TestGrade {
     private Test test;
 
     @ManyToOne()
-    @JoinColumn(name="account_id")
-    private Account account;
+    @JoinColumn(name="user_id")
+    private User user;
 
     public TestGrade(){}
 
@@ -54,11 +54,11 @@ public class TestGrade {
         this.test = test;
     }
 
-    public Account getAccount() {
-        return account;
+    public User getUser() {
+        return user;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

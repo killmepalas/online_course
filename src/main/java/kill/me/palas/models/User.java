@@ -3,40 +3,33 @@ package kill.me.palas.models;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "Account")
-public class Account {
+@Table(name = "User")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
-    @Size(min = 2, max = 30, message = "Имя не должно быть короче 2 и длиннее 30 символов")
-    @Column(name = "name")
+    @Column(name = "firstname")
     private String name;
 
-    @Size(min = 2, max = 30, message = "Отчество не должно быть короче 2 и длиннее 30 символов")
     @Column(name = "midname")
     private String midname;
 
-    @Size(min = 2, max = 30, message = "Фамилия не должна быть короче 2 и длиннее 30 символов")
     @Column(name = "lastname")
     private String lastname;
 
-    @NotEmpty(message = "Пожалуйста, введите логин")
-    @Size(min = 2, max = 30, message = "Логин не должна быть короче 2 и длиннее 30 символов")
-    @Column(name = "login")
-    private String login;
+    @Column(name = "username")
+    private String username;
 
-    @NotEmpty(message = "Пожалуйста, введите пароль")
-    @Size(min = 6, max = 30, message = "Фамилия не должна быть короче 6 и длиннее 30 символов")
+    @Transient
+    private String confirmPassword;
+
     @Column(name = "password")
     private String password;
 
@@ -49,6 +42,8 @@ public class Account {
     private String photolink;
 
     @ManyToMany()
+    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="users_id"),
+    inverseJoinColumns = @JoinColumn(name="roles_id"))
     private Set<Role> roles;
 
     @ManyToMany()
@@ -63,12 +58,12 @@ public class Account {
     @Column(name="rating")
     private int rating;
 
-    public Account() {
+    public User() {
 
     }
 
-    public Account(String login, String password) {
-        this.login = login;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
@@ -78,6 +73,14 @@ public class Account {
 
     public void setPhotolink(String photolink) {
         this.photolink = photolink;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public Set<Role> getRoles() {
@@ -136,12 +139,12 @@ public class Account {
         this.lastname = lastname;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

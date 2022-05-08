@@ -16,8 +16,8 @@ public class Attempt {
     private int grade;
 
     @ManyToOne()
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne()
     @JoinColumn(name = "test_id")
@@ -55,12 +55,12 @@ public class Attempt {
         this.grade = grade;
     }
 
-    public Account getAccount() {
-        return account;
+    public User getUser() {
+        return user;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Test getTest() {
