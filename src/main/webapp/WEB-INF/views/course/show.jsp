@@ -31,17 +31,20 @@
         <h4>${course.name}</h4>
         <h4>Автор - ${teacher.lastname} ${teacher.midname} ${teacher.name}</h4>
         <img src="${course.photolink}"/>
+        <h5>${course.description}</h5>
         <c:if test="${course.price!=0}">
             <p id="money">Цена: ${course.price} ₽</p>
+            <form method="post" action="/course/buy/${course.id}">
+                <input type="submit" value="Купить этот восхитительный курс"/>
+            </form>
         </c:if>
         <c:if test="${course.price==0}">
            <p id="free">Бесплатно</p>
+            <form method="post" action="/user/addCourse/${course.id}">
+                <input type="submit" value="Принять вызов"/>
+            </form>
         </c:if>
-        <h5>${course.description}</h5>
 
-        <form method="post" action="@{/course/buy/{id}(id=${course.id})}">
-            <input type="submit" value="Buy"/>
-        </form>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
