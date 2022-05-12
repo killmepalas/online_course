@@ -18,6 +18,50 @@ body {
 #teaching {
     height: 375px;
 }
+.detailed {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #1A1A1A;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 60px;
+    min-width: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform;
+}
+
+.detailed:disabled {
+    pointer-events: none;
+}
+
+.detailed:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.detailed:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+/* кнопка для препода
 button {
     color:#00c6ff;
     padding: 10px 20px;
@@ -37,7 +81,7 @@ button {
 button:hover {
     background-position: 0 0;
     color:#fff;
-}
+}*/
 
 nav {
     top: 5vh;
@@ -78,11 +122,21 @@ nav ul li:hover {
     border-bottom: 5px solid red;
 }
 
-main {
+.show{
+    width: 50%;
+    display: inline-block;
+    padding: 2%;
+    margin-left: 30%;
+    position:relative;
+}
+
+#course, #main{
     width: 76%;
     display: inline-block;
     padding: 2%;
 }
+
+
 
 footer {
     width: 100%;
@@ -104,7 +158,7 @@ section {
 }
 
 #container section {
-    display: inline-block;
+    display: inline-flex;
     width: 28%;
 }
 
@@ -129,15 +183,45 @@ article {
 
 #container {
     margin-top: 25vh;
+
 }
 
-#mine img {
+#course img {
     width: 280px;
     height: 280px;
     border-radius: 150px;
 }
 
-#mine p {
+#main img {
+    width: 520px;
+    height: 340px;
+    border-radius: 10px;
+}
+
+#show img {
+    width: 350px;
+    height: 350px;
+    position:absolute;
+    left:50px;
+    top:200px;
+}
+
+#show input[type=submit] {
+    padding:15px 19px;
+    background: #1ce562;
+    border:0 none;
+    cursor:pointer;
+    border-radius: 10px;
+    position:absolute;
+    left:50px;
+    top:560px;
+    font-size: 20px;
+    font-family: unset;
+    color: white;
+    width: 350px;
+}
+
+#course p {
     font-size: 20px;
 }
 
@@ -152,7 +236,7 @@ article {
 .sell {
     background-color: rgb(235, 209, 199);
     margin-top: 30px;
-    height: 0%;
+    height: 0;
     color: black;
 }
 
@@ -163,7 +247,7 @@ article {
 
 
 
-#mine h4 {
+#course h4 {
     color: black;
 }
 
@@ -188,4 +272,19 @@ h2 {
     background-color: rgb(20, 14, 29);
     background-repeat: repeat;
     background-size: 40%;
+}
+
+#show h2{
+    text-align: left;
+    color: black;
+}
+
+#show h4{
+    text-align: left;
+}
+
+#description{
+    text-align: justify;
+    font-family: Arial;
+    font-size: 20px;
 }
