@@ -1,22 +1,28 @@
 <%@ page  contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
+
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>Каталог курсов</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
+
 </head>
 
 <body>
-<header>
+<header id="black">
     <nav>
         <ul>
-            <img src="img/logo.png"/>
+            <img src="../../../resources/img/logo.png" width="400"/>
             <li><a href="/first/hello">Личный кабинет</a></li>
             <li><a href="index.jsp">Каталог курсов</a></li>
-            <li><a href="WEB-INF/jsp/teaching.jsp">Преподавание</a></li>
-            <li><a href="WEB-INF/jsp/training.jsp">Моё обучение</a></li>
+            <li><a href="../teaching.jsp">Преподавание</a></li>
+            <li><a href="../training.jsp">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
@@ -29,7 +35,7 @@
         <section id="left">
             <div>
                 <h4>Веб-программирование</h4>
-                <img src="WEB-INF/static/img/c1.jpeg">
+                <img src="/resources/img/c1.jpeg">
                 <article>
                     <p id="free">Бесплатно</p>
                 </article>
@@ -37,17 +43,32 @@
         </section>
         <section id="center">
             <h4>C# для начинающих</h4>
-            <img src="WEB-INF/static/img/c2.png">
+            <img src="../../../resources/img/c2.png">
             <article>
                 <p id="money">1450₽</p>
             </article>
         </section>
         <section id="right">
             <h4>Основы Java</h4>
-            <img src="WEB-INF/static/img/c3.jpg">
+            <img src="../../../resources/img/c3.jpg">
             <article>
                 <p id="free">Бесплатно</p>
             </article>
+        </section>
+
+        <section id="left">
+        <c:forEach items="${course}" var="courselist">
+            <div>
+                <h4>${courselist.name}</h4>
+                <img src="${courselist.photolink}">
+                <article>
+                    <p id="money">${courselist.price}</p>
+                </article>
+                <form method="get" action="/course/${courselist.id}" >
+                    <input type="submit" value="Подробнее"/>
+                </form>
+            </div>
+        </c:forEach>
         </section>
     </main>
     <footer>

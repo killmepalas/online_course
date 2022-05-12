@@ -14,7 +14,7 @@
     <ul>
         <img src="webapp/WEB-INF/img/logo.png" width="400">
         <li><a href="account.jsp">Личный кабинет</a></li>
-        <li><a href="index.jsp">Каталог курсов</a></li>
+        <li><a href="course/index.jsp">Каталог курсов</a></li>
         <li><a href="teaching.jsp">Преподавание</a></li>
         <li><a href="training.jsp">Моё обучение</a></li>
     </ul>

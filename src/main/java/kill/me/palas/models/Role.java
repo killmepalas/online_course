@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "role")
+@Table(name = "Role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +12,7 @@ public class Role {
     @Column(length = 30)
     private String name;
     @ManyToMany(mappedBy = "roles")
-    private List<Account> accounts;
+    private List<User> users;
     public Role() {
     }
     public int getId() {
@@ -27,10 +27,10 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
-    public List<Account> getAccounts() {
-        return accounts;
+    public List<User> getUsers() {
+        return users;
     }
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
