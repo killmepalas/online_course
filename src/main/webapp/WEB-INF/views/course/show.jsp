@@ -32,7 +32,7 @@
         <h4>Автор - ${teacher.lastname} ${teacher.midname} ${teacher.name}</h4>
         <img src="${course.photolink}"/>
         <h5>${course.description}</h5>
-        <c:if test="${course.price % 2000 == 0}">
+        <c:if test="${course.price != 0}">
             <p id="money">Цена: ${course.price} ₽</p>
             <form method="post" action="/course/buy/${course.id}">
                 <input type="submit" value="Купить этот восхитительный курс"/>
