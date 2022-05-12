@@ -27,21 +27,24 @@
     </nav>
 </header>
 <div id="container">
-    <main id="mine">
-        <h4>${course.name}</h4>
-        <h4>Автор - ${teacher.lastname} ${teacher.midname} ${teacher.name}</h4>
+    <main id="show">
+        <div class="show">
+            <h2>${course.name}</h2>
+            <h4>Автор - ${teacher.username}</h4>
+        </div>
         <img src="${course.photolink}"/>
-        <h5>${course.description}</h5>
+        <div class="show">
+            <p id="description">${course.description}</p>
+        </div>
+
         <c:if test="${course.price != 0}">
-            <p id="money">Цена: ${course.price} ₽</p>
             <form method="post" action="/course/buy/${course.id}">
-                <input type="submit" value="Купить этот восхитительный курс"/>
+                <input type="submit" value=${course.price}>
             </form>
         </c:if>
         <c:if test="${course.price==0}">
-           <p id="free">Бесплатно</p>
             <form method="post" action="/user/addCourse/${course.id}">
-                <input type="submit" value="Принять вызов"/>
+                <input type="submit" value="Бесплатно">
             </form>
         </c:if>
 

@@ -27,34 +27,10 @@
     </nav>
 </header>
 <div id="container">
-    <main id="mine">
+    <main id="course">
         <form>
             <input type="search" placeholder="Search" class="search">
         </form>
-
-        <section id="left">
-            <div>
-                <h4>Веб-программирование</h4>
-                <img src="/resources/img/c1.jpeg">
-                <article>
-                    <p id="free">Бесплатно</p>
-                </article>
-            </div>
-        </section>
-        <section id="center">
-            <h4>C# для начинающих</h4>
-            <img src="../../../resources/img/c2.png">
-            <article>
-                <p id="money">1450₽</p>
-            </article>
-        </section>
-        <section id="right">
-            <h4>Основы Java</h4>
-            <img src="../../../resources/img/c3.jpg">
-            <article>
-                <p id="free">Бесплатно</p>
-            </article>
-        </section>
 
         <c:forEach items="${course}" var="courselist">
         <c:choose>
@@ -74,11 +50,12 @@
                     </c:if>
                 </article>
                 <form method="get" action="/course/${courselist.id}" >
-                    <input type="submit" value="Подробнее"/>
+                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
                 </form>
             </div>
+            </section>
         </c:forEach>
-        </section>
+
 
     </main>
     <footer>
