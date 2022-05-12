@@ -64,6 +64,9 @@
                 <article>
                     <p id="money">${courselist.price}</p>
                 </article>
+                <form method="get" action="/course/${courselist.id}" >
+                    <input type="submit" value="Подробнее"/>
+                </form>
             </div>
         </c:forEach>
         </section>

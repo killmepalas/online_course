@@ -1,6 +1,7 @@
 package kill.me.palas.services;
 
 import kill.me.palas.models.Course;
+import kill.me.palas.models.User;
 import kill.me.palas.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,15 @@ public class CourseService {
     }
 
     public Course findOne(int id) {
-        Optional<Course> foundCourse = courseRepository.findById(id);
-        return foundCourse.orElse(null);
+        Course foundCourse = courseRepository.findById(id);
+        return foundCourse;
     }
 
+    public User findTeacher(int id){
+        Course foundCourse = courseRepository.findById(id);
+        User teacher = foundCourse.getTeacher();
+        return teacher;
+    }
 
     public void save(Course course) {
         courseRepository.save(course);
