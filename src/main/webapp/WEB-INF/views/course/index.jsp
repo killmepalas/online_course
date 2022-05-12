@@ -56,13 +56,22 @@
             </article>
         </section>
 
-        <section id="left">
         <c:forEach items="${course}" var="courselist">
+        <c:choose>
+        <c:when test="${courselist.id % 3==1}"><section id="left"></c:when>
+        <c:when test="${courselist.id % 3==2}"><section id="center"></c:when>
+            <c:otherwise><section id="right"></c:otherwise>
+                </c:choose>
             <div>
                 <h4>${courselist.name}</h4>
                 <img src="${courselist.photolink}">
                 <article>
-                    <p id="money">${courselist.price}</p>
+                    <c:if test="${courselist.price==0}">
+                        <p id="free">Бесплатно</p>
+                    </c:if>
+                    <c:if test="${courselist.price!=0}">
+                        <p id="money">Цена: ${courselist.price} ₽</p>
+                    </c:if>
                 </article>
                 <form method="get" action="/course/${courselist.id}" >
                     <input type="submit" value="Подробнее"/>
@@ -70,6 +79,7 @@
             </div>
         </c:forEach>
         </section>
+
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
