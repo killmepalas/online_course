@@ -5,9 +5,12 @@ import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
 import kill.me.palas.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,5 +69,17 @@ public class UserController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
         return "admin";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        if (db_user !=null){
+            model.addAttribute("user",db_user);
+            return "user/profile";
+        }
+        else return "error/not_auth";
     }
 }
