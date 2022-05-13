@@ -16,12 +16,12 @@ create table Role(
     name varchar(255) not null
     );
 
-create table User_roles(
-    user_id int not null,
-    role_id int not null,
-    foreign key(user_id) references user(id),
-    foreign key(role_id) references role(id),
-    UNIQUE (user_id, role_id)
+create table User_role(
+    users_id int not null,
+    roles_id int not null,
+    foreign key(users_id) references user(id),
+    foreign key(roles_id) references role(id),
+    UNIQUE (users_id, roles_id)
     );
 
 create table Course(
@@ -92,4 +92,4 @@ insert into User(username, password) values ('killmepalas', 'qwerty'),('proselyt
 
 insert into Role(name) values ('student'),('teacher'),('admin');
 
-insert into User_roles values (1,1),(1,2),(1,3),(2,1);
+insert into User_role values (1,1),(1,2),(1,3),(2,1);
