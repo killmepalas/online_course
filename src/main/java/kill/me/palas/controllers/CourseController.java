@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/course")
@@ -31,4 +32,9 @@ public class CourseController {
         return "course/show";
     }
 
+    @GetMapping("/find")
+    public String find(@RequestParam(value = "courses") String name, Model model){
+        model.addAttribute("courses", courseService.findByName(name));
+        return "course/find";
+    }
 }

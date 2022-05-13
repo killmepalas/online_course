@@ -34,6 +34,11 @@ public class CourseService {
         return teacher;
     }
 
+    public List<Course> findByName(String name){
+        List<Course> courses = courseRepository.findCourseByName(name);
+        return courses;
+    }
+
     public void save(Course course) {
         courseRepository.save(course);
     }
