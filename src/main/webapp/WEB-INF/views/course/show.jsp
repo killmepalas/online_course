@@ -28,25 +28,28 @@
 </header>
 <div id="container">
     <main id="show">
-        <div class="show">
-            <h2>${course.name}</h2>
-            <h4>Автор - ${teacher.username}</h4>
-        </div>
-        <img src="${course.photolink}"/>
-        <div class="show">
-            <p id="description">${course.description}</p>
-        </div>
+        <section>
+            <div class="show">
+                <h2>${course.name}</h2>
+                <h4>Автор - ${teacher.username}</h4>
+            </div>
+            <img src="${course.photolink}"/>
+            <div class="show">
+                <p id="description">${course.description}</p>
+            </div>
 
-        <c:if test="${course.price != 0}">
-            <form method="post" action="/course/buy/${course.id}">
-                <input type="submit" value=${course.price}>
-            </form>
-        </c:if>
-        <c:if test="${course.price==0}">
-            <form method="post" action="/user/addCourse/${course.id}">
-                <input type="submit" value="Бесплатно">
-            </form>
-        </c:if>
+            <c:if test="${course.price != 0}">
+                <form method="post" action="/course/buy/${course.id}">
+                    <input type="submit" value=${course.price}>
+                </form>
+            </c:if>
+            <c:if test="${course.price==0}">
+                <form method="post" action="/user/addCourse/${course.id}">
+                    <input type="submit" value="Бесплатно">
+                </form>
+            </c:if>
+        </section>
+
 
     </main>
     <footer>

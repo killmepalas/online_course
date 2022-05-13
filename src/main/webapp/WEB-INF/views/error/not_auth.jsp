@@ -29,7 +29,7 @@
     </nav>
 </header>
 <div id="container">
-    <main id="course">
+    <main id="auth">
         <section>
             <h4>Чтобы получить доступ к своим курсам, пожалуйста</h4>
             <h4><a href="/login">Войдите</a></h4>
