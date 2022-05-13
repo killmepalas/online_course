@@ -20,7 +20,7 @@
         <ul>
             <img src="../../../resources/img/logo.png" width="400"/>
             <li><a href="/first/hello">Личный кабинет</a></li>
-            <li><a href="index.jsp">Каталог курсов</a></li>
+            <li><a href="../course">Каталог курсов</a></li>
             <li><a href="../teaching.jsp">Преподавание</a></li>
             <li><a href="/course/my_courses/1">Моё обучение</a></li>
         </ul>
