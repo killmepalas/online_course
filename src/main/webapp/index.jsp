@@ -21,7 +21,7 @@
             <a href="index.jsp"><img src="../../../resources/img/logo.png" width="400"/></a>
             <li><a href="/profile">Личный кабинет</a></li>
             <li><a href="/course">Каталог курсов</a></li>
-            <li><a href="../teaching.jsp">Преподавание</a></li>
+            <li><a href="">Преподавание</a></li>
             <li><a href="/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
