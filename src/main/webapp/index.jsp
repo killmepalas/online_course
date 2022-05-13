@@ -31,10 +31,10 @@
         <p>Добро пожаловать на наш наипрекраснейший сайт с различными увлекательными курсами, способными
             научить вас чему угодно: от программирования до кулинарии (я бы лучше научилась печь тортики, честно говоря)
             /не забудь это вырезать/.</p>
-        <p>А ещё хотелось бы обратить ваше внимание на этого чудесного котика</p>
-        <img src="resources/img/rizhik.jpg"/>
-        <p><img src="resources/img/musya.jpg"/></p>
-        <p><img src="resources/img/sinya.jpg"/></p>
+        <p>А ещё хотелось бы обратить ваше внимание на этих чудесных котиков</p>
+        <img width="300" height="400" src="resources/img/rizhik.jpg"/>
+        <img width="400" height="400" src="resources/img/musya.jpg"/>
+        <img width="450" height="400" src="resources/img/sinya.jpg"/>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>

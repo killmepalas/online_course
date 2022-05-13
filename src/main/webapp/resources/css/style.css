@@ -130,13 +130,17 @@ nav ul li:hover {
     position:relative;
 }
 
-#course, #main{
+#course{
     width: 76%;
     display: inline-block;
     padding: 2%;
 }
 
-
+#main{
+    width: 90%;
+    display: inline-block;
+    padding: 2%;
+}
 
 footer {
     width: 100%;
@@ -193,8 +197,6 @@ article {
 }
 
 #main img {
-    width: 520px;
-    height: 340px;
     border-radius: 10px;
 }
 

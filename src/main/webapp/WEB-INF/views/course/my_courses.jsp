@@ -33,6 +33,13 @@
         <form action="/course/find/" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
+        <c:if test="${course.isEmpty()}">
+         <section>
+             <h4>У вас пока нет курсов. <a href="..">Начните обучение прямо сейчас</a></h4>
+         </section>
+        </c:if>
+
+        <c:if test="${!course.isEmpty()}">
         <c:forEach items="${course}" var="courselist">
         <c:choose>
         <c:when test="${course.indexOf(courselist) % 3==0}"><section id="left"></c:when>
@@ -56,6 +63,7 @@
                 </div>
             </section>
             </c:forEach>
+            </c:if>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
