@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Каталог курсов</title>
+    <title>404</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 
 </head>
