@@ -13,10 +13,12 @@ import java.util.Optional;
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, UserServiceImpl userService) {
         this.courseRepository = courseRepository;
+        this.userService = userService;
     }
 
     public List<Course> findAll() {
@@ -36,6 +38,12 @@ public class CourseService {
 
     public List<Course> findByName(String name){
         List<Course> courses = courseRepository.findCourseByName(name);
+        return courses;
+    }
+
+    public List<Course> findByUserId(int id){
+        User user = userService.findOne(id);
+        List<Course> courses = courseRepository.findCourseByUsers(user);
         return courses;
     }
 

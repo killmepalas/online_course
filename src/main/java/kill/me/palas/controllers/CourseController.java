@@ -37,4 +37,10 @@ public class CourseController {
         model.addAttribute("courses", courseService.findByName(name));
         return "course/find";
     }
+
+    @GetMapping("/my_courses/{id_user}")
+    public String myCourses(@PathVariable("id_user") int id, Model model){
+        model.addAttribute("course",courseService.findByUserId(id));
+        return "course/my_courses";
+    }
 }

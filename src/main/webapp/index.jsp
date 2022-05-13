@@ -32,7 +32,9 @@
             научить вас чему угодно: от программирования до кулинарии (я бы лучше научилась печь тортики, честно говоря)
             /не забудь это вырезать/.</p>
         <p>А ещё хотелось бы обратить ваше внимание на этого чудесного котика</p>
-        <img src="resources/img/kotik.jpg"/>
+        <img src="resources/img/rizhik.jpg"/>
+        <p><img src="resources/img/musya.jpg"/></p>
+        <p><img src="resources/img/sinya.jpg"/></p>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>

@@ -22,7 +22,7 @@
             <li><a href="/first/hello">Личный кабинет</a></li>
             <li><a href="index.jsp">Каталог курсов</a></li>
             <li><a href="../teaching.jsp">Преподавание</a></li>
-            <li><a href="../training.jsp">Моё обучение</a></li>
+            <li><a href="/course/my_courses/1">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
