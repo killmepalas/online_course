@@ -33,7 +33,7 @@ public class Course {
     @JoinColumn(name="teacher_id")
     private User teacher;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "courses")
     private List<User> users;
 
     @OneToMany()

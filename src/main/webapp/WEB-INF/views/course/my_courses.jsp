@@ -24,7 +24,7 @@
             <li><a href="/first/hello">Личный кабинет</a></li>
             <li><a href="/course">Каталог курсов</a></li>
             <li><a href="../teaching.jsp">Преподавание</a></li>
-            <li><a href="/course/my_courses/1">Моё обучение</a></li>
+            <li><a href="../training.jsp">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
@@ -39,25 +39,23 @@
         <c:when test="${course.indexOf(courselist) % 3==1}"><section id="center"></c:when>
             <c:otherwise><section id="right"></c:otherwise>
                 </c:choose>
-            <div>
-                <h4>${courselist.name}</h4>
-                <img src="${courselist.photolink}">
-                <article>
-                    <c:if test="${courselist.price==0}">
-                        <p id="free">Бесплатно</p>
-                    </c:if>
-                    <c:if test="${courselist.price!=0}">
-                        <p id="money">Цена: ${courselist.price} ₽</p>
-                    </c:if>
-                </article>
-                <form method="get" action="/course/${courselist.id}">
-                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                </form>
-            </div>
+                <div>
+                    <h4>${courselist.name}</h4>
+                    <img src="${courselist.photolink}">
+                    <article>
+                        <c:if test="${courselist.price==0}">
+                            <p id="free">Бесплатно</p>
+                        </c:if>
+                        <c:if test="${courselist.price!=0}">
+                            <p id="money">Цена: ${courselist.price} ₽</p>
+                        </c:if>
+                    </article>
+                    <form method="get" action="/course/${courselist.id}" >
+                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                    </form>
+                </div>
             </section>
-        </c:forEach>
-
-
+            </c:forEach>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
