@@ -1,8 +1,13 @@
 package kill.me.palas.controllers;
 
 import kill.me.palas.services.CourseService;
+import kill.me.palas.services.UserDetailsServiceImpl;
 import kill.me.palas.services.UserService;
+import kill.me.palas.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/course")
-public class CourseController {
+public class CourseController{
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Autowired
     CourseService courseService;
@@ -38,9 +43,15 @@ public class CourseController {
         return "course/find";
     }
 
-    @GetMapping("/my_courses/{id_user}")
-    public String myCourses(@PathVariable("id_user") int id, Model model){
-        model.addAttribute("course",courseService.findByUserId(id));
-        return "course/my_courses";
+    @GetMapping("/my_courses")
+    public String myCourses( Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        if (db_user !=null){
+            model.addAttribute("course",courseService.findByUserId(db_user.getId()));
+            return "course/my_courses";
+        }
+        else return "error/not_auth";
     }
 }
