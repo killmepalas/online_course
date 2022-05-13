@@ -54,4 +54,9 @@ public class CourseController{
         }
         else return "error/not_auth";
     }
+
+    @GetMapping("/teach")
+    public String teach(){
+        return "teach/teaching";
+    }
 }
