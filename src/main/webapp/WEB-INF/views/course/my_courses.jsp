@@ -28,7 +28,7 @@
         </ul>
     </nav>
 </header>
-<div id="container">
+<div class="container">
     <main id="course">
         <form action="/course/find/" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">

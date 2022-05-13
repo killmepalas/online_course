@@ -28,14 +28,16 @@
 </header>
 <div id="container">
     <main id="show">
-        <h2>${user.username}</h2>
-        <h4>${user.lastname} ${user.midname} ${user.name}</h4>
-        <img src="${user.photolink}">
-        <h4>${user.dateOfBirth}</h4>
-        <h4>${user.rating}</h4>
-        <form method="post" action="/update/${user.id}">
-            <button class="detailed" type="submit" value="update">Обновить данные профиля</button>
-        </form>
+        <section>
+            <h2>${user.username}</h2>
+            <h4>${user.lastname} ${user.midname} ${user.name}</h4>
+            <img src="${user.photolink}" alt="фотку поставь">
+            <h4>${user.dateOfBirth}</h4>
+            <h4>${user.rating}</h4>
+            <form method="post" action="/update/${user.id}">
+                <button class="detailed" type="submit" value="update">Обновить данные профиля</button>
+            </form>
+        </section>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
