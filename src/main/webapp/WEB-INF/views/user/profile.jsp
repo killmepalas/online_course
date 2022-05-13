@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>О курсе</title>
+    <title>Личный кабинет</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 
 </head>
