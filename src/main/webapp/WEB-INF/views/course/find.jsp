@@ -11,8 +11,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Каталог курсов</title>
-    <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
+    <title>Результаты поиска</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
 
 </head>
 
@@ -30,34 +30,32 @@
 </header>
 <div id="container">
     <main id="course">
-        <form action="/course/find/" path="name">
+        <form action="/course/find" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
-        <c:forEach items="${course}" var="courselist">
+        <c:forEach items="${courses}" var="courselist">
         <c:choose>
-        <c:when test="${course.indexOf(courselist) % 3==0}"><section id="left"></c:when>
-        <c:when test="${course.indexOf(courselist) % 3==1}"><section id="center"></c:when>
+        <c:when test="${courses.indexOf(courselist) % 3==0}"><section id="left"></c:when>
+        <c:when test="${courses.indexOf(courselist) % 3==1}"><section id="center"></c:when>
             <c:otherwise><section id="right"></c:otherwise>
                 </c:choose>
-            <div>
-                <h4>${courselist.name}</h4>
-                <img src="${courselist.photolink}">
-                <article>
-                    <c:if test="${courselist.price==0}">
-                        <p id="free">Бесплатно</p>
-                    </c:if>
-                    <c:if test="${courselist.price!=0}">
-                        <p id="money">Цена: ${courselist.price} ₽</p>
-                    </c:if>
-                </article>
-                <form method="get" action="/course/${courselist.id}" >
-                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                </form>
-            </div>
+                <div>
+                    <h4>${courselist.name}</h4>
+                    <img src="${courselist.photolink}">
+                    <article>
+                        <c:if test="${courselist.price==0}">
+                            <p id="free">Бесплатно</p>
+                        </c:if>
+                        <c:if test="${courselist.price!=0}">
+                            <p id="money">Цена: ${courselist.price} ₽</p>
+                        </c:if>
+                    </article>
+                    <form method="get" action="/course/${courselist.id}" >
+                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                    </form>
+                </div>
             </section>
-        </c:forEach>
-
-
+            </c:forEach>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
