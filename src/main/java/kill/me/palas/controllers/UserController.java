@@ -82,6 +82,8 @@ public class UserController {
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         if (db_user !=null){
             model.addAttribute("user",db_user);
+            int rating = 80;
+            model.addAttribute("rating",rating);
             return "user/profile";
         }
         else return "error/not_auth";
@@ -94,7 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@ModelAttribute("user") User user, BindingResult bindingResult,
+    public String edit(@ModelAttribute("user") User user, BindingResult bindingResult,
         @PathVariable("id") int id) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
@@ -103,6 +105,7 @@ public class UserController {
             if (bindingResult.hasErrors())
                 return "user/edit";
             userServiceImpl.update(id, user);
+            securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
             return "redirect:/profile";
     }
 

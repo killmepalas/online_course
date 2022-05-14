@@ -35,8 +35,8 @@
                 <h4>${user.dateOfBirth}</h4>
                 <h4>Рейтинг:</h4>
                 <h4>
-                    <progress id="progressbar" value="${user.rating}" max="100"></progress>
-                    <span class="progress-value">${user.rating}%</span>
+                    <progress id="progressbar" value="${rating}" max="100"></progress>
+                    <span class="progress-value">${rating}%</span>
                 </h4>
 
             </div>
