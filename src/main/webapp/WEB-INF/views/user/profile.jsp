@@ -31,9 +31,14 @@
         <section>
             <div class="show">
                 <h2>${user.username}</h2>
-                <h4>${user.lastname} ${user.midname} ${user.name}</h4>
+                <h4>${user.lastname} ${user.name} ${user.midname}</h4>
                 <h4>${user.dateOfBirth}</h4>
-                <h4>${user.rating}</h4>
+                <h4>Рейтинг:</h4>
+                <h4>
+                    <progress id="progressbar" value="${user.rating}" max="100"></progress>
+                    <span class="progress-value">${user.rating}%</span>
+                </h4>
+
             </div>
 
             <img src="${user.photolink}" alt="фотку поставь">
