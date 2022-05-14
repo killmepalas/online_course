@@ -1,5 +1,6 @@
 package kill.me.palas.controllers;
 
+import kill.me.palas.models.Course;
 import kill.me.palas.services.CourseService;
 import kill.me.palas.services.UserDetailsServiceImpl;
 import kill.me.palas.services.UserService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/course")
@@ -56,7 +59,16 @@ public class CourseController{
     }
 
     @GetMapping("/teach")
-    public String teach(){
-        return "teach/teaching";
+    public String teach(Model model){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        List<Course> courses = courseService.findTeacherCourses(db_user);
+        if (db_user !=null & !courses.isEmpty()){
+            model.addAttribute("course",courses);
+            return "teach/teach_courses";
+        }
+        else if(db_user == null) model.addAttribute("auth", "not");
+            return "teach/teaching";
     }
 }
