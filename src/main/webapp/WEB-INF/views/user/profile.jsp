@@ -18,7 +18,7 @@
 <header id="black">
     <nav>
         <ul>
-            <a href="../../../index.jsp"><img src="../../../resources/img/logo.png" width="400"/></a>
+            <a href="../../../index.jsp"><img src="/resources/img/logo.png" width="400"/></a>
             <li><a href="/profile">Личный кабинет</a></li>
             <li><a href="../course">Каталог курсов</a></li>
             <li><a href="/course/teach">Преподавание</a></li>
@@ -43,8 +43,12 @@
 
             <img src="${user.photolink}" alt="фотку поставь">
 
-            <form method="post" action="/update/${user.id}">
+            <form method="get" action="/update/${user.id}">
                 <button class="update" type="submit" value="update">Обновить данные профиля</button>
+            </form>
+
+            <form method="post" action="/delete/${user.id}">
+                <button class="delete" type="submit" value="delete">Удалить профиль</button>
             </form>
         </section>
     </main>

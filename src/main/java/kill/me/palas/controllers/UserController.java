@@ -1,8 +1,10 @@
 package kill.me.palas.controllers;
 
+import kill.me.palas.models.Person;
 import kill.me.palas.models.User;
 import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
+import kill.me.palas.services.UserServiceImpl;
 import kill.me.palas.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,15 +12,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private SecurityService securityService;
@@ -81,5 +85,24 @@ public class UserController {
             return "user/profile";
         }
         else return "error/not_auth";
+    }
+
+    @GetMapping("/update/{id}")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userServiceImpl.findOne(id));
+        return "user/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@ModelAttribute("user") User user, BindingResult bindingResult,
+        @PathVariable("id") int id) {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        userValidator.up_validate(user, bindingResult,db_user);
+            if (bindingResult.hasErrors())
+                return "user/edit";
+            userServiceImpl.update(id, user);
+            return "redirect:/profile";
     }
 }
