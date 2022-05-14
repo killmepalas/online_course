@@ -21,7 +21,6 @@ public class CourseGrade {
     private Course course;
 
     @ManyToOne()
-    @JoinColumn(name="user_id")
     private User user;
 
     public CourseGrade(){

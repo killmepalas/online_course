@@ -21,7 +21,6 @@ public class TestGrade {
     private Test test;
 
     @ManyToOne()
-    @JoinColumn(name="user_id")
     private User user;
 
     public TestGrade(){}
