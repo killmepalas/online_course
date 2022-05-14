@@ -27,9 +27,17 @@
         <h3>Конструктор курсов</h3>
         <p>Вы уверены в себе и своих знаниях?<br>Тогда можете попробовать себя в роли не просто обучаемого, а преподавателя.</p>
         <br>
-        <form method="post" action="/course/create">
-            <button type="submit" value="create">Создать курс</button>
-        </form>
+        <c:choose>
+            <c:when test="${auth == 'not'}">
+                <h4>Преподавателем может стать только зарегистрированный пользователь.</h4>
+                <h4><a href="/login">Пожалуйста, войдите</a></h4>
+            </c:when>
+            <c:otherwise>
+                <form method="post" action="/course/create">
+                    <button type="submit" value="create">Создать курс</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
     </main>
     <footer>
         <p>Мы ничего не успеваем и не понимаем.</p>

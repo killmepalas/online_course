@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,11 @@ public class CourseService {
     public List<Course> findByUserId(int id){
         User user = userService.findOne(id);
         List<Course> courses = courseRepository.findCourseByUsers(user);
+        return courses;
+    }
+
+    public List<Course> findTeacherCourses(User teacher){
+        List<Course> courses = courseRepository.findCourseByTeacher(teacher);
         return courses;
     }
 
