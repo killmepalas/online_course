@@ -18,7 +18,17 @@ body {
 #teaching {
     height: 375px;
 }
-.detailed {
+.update{
+    position:absolute;
+    left:50px;
+    top:560px;
+    width: 350px;
+}
+.detailed{
+    width: 100%;
+}
+
+.detailed, .update {
     appearance: none;
     background-color: transparent;
     border: 2px solid #1A1A1A;
@@ -42,27 +52,27 @@ body {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    width: 100%;
+
     will-change: transform;
 }
 
-.detailed:disabled {
+.detailed:disabled, .update:disabled {
     pointer-events: none;
 }
 
-.detailed:hover {
+.detailed:hover, .update:hover {
     color: #fff;
     background-color: #1A1A1A;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.detailed:active {
+.detailed:active, .update:active {
     box-shadow: none;
     transform: translateY(0);
 }
-/* кнопка для препода
-button {
+
+.teach {
     color:#00c6ff;
     padding: 10px 20px;
     width: 200px;
@@ -78,10 +88,10 @@ button {
     border: 1px solid #00C6FF;
 }
 
-button:hover {
+.teach:hover {
     background-position: 0 0;
     color:#fff;
-}*/
+}
 
 nav {
     top: 5vh;
@@ -155,7 +165,7 @@ footer {
 
 section {
     width: 80%;
-    height: 90%;
+    height: 75%;
     margin: 0 auto;
     padding: 2%;
     /*color: white;*/
@@ -218,10 +228,10 @@ article {
     position:absolute;
     left:50px;
     top:560px;
+    width: 350px;
     font-size: 20px;
     font-family: unset;
     color: white;
-    width: 350px;
 }
 
 #course p {
@@ -265,7 +275,7 @@ h2 {
     margin-bottom: 16px;
     padding: 8px 16px;
     transition: transform 0.3s ease-out;
-    color: brown;
+    color: #2a43a5;
     border-radius: 8px;
     background-color: #fff;
     font-size: 1em;
@@ -295,3 +305,4 @@ h2 {
     font-family: Arial;
     font-size: 20px;
 }
+
