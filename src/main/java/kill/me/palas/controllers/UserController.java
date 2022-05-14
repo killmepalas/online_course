@@ -105,4 +105,11 @@ public class UserController {
             userServiceImpl.update(id, user);
             return "redirect:/profile";
     }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id) {
+        userServiceImpl.delete(id);
+        return "error/not_auth";
+    }
+
 }

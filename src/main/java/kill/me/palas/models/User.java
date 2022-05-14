@@ -51,10 +51,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name="course_id"))
     private List<Course> courses;
 
-    @OneToMany()
+    @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
     private List<TestGrade> testGrades;
 
-    @OneToMany()
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
 
     @Column(name="rating")
