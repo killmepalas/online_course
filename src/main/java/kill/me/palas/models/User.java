@@ -57,7 +57,7 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
 
-    @Column(name="rating")
+    @Transient
     private int rating;
 
     public User() {
