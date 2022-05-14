@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService{
         return foundUser.orElse(null);
     }
 
-
+    @Override
     public void update(int id, User updatedUser) {
         updatedUser.setId(id);
         userRepository.save(updatedUser);

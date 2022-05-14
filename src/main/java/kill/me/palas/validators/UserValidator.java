@@ -40,4 +40,30 @@ public class UserValidator implements Validator {
             errors.rejectValue("confirmPassword", "Different.userForm.password");
         }
     }
+
+    public void up_validate(Object o, Errors errors, Object o2) {
+        User user = (User) o;
+        User user2 = (User) o;
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Required");
+        if (user.getUsername().length() < 8 || user.getUsername().length() > 32) {
+            errors.rejectValue("username", "Size.userForm.username");
+        }
+
+        if (user.getUsername() != user2.getUsername()){
+            if (userService.findByUsername(user.getUsername()) != null) {
+                errors.rejectValue("username", "Duplicate.userForm.username");
+            }
+        }
+
+        if (user.getPassword() != user2.getPassword()){
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required");
+            if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
+                errors.rejectValue("password", "Size.userForm.password");
+            }
+        }
+        if (!user.getConfirmPassword().equals(user.getPassword())) {
+            errors.rejectValue("confirmPassword", "Different.userForm.password");
+        }
+    }
 }
