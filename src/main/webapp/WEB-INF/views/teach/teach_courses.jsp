@@ -48,16 +48,18 @@
         <div>
           <h4>${courselist.name}</h4>
           <img src="${courselist.photolink}">
-          <form method="get" action="/course/${courselist.id}" >
-            <button class="detailed" type="submit" value="Подробнее">Управление</button>
-          </form>
+          <div id="management">
+            <form method="get" action="/course/${courselist.id}" >
+              <button class="detailed" type="submit" value="Подробнее">Управление</button>
+            </form>
+          </div>
         </div>
       </section>
       </c:forEach>
       </c:if>
 
       <form method="get" action="/course/create">
-        <button class="detailed" type="submit" value="Подробнее">Создать новый курс</button>
+        <button class="create-course" type="submit" value="Подробнее">Создать новый курс</button>
       </form>
   </main>
   <footer>

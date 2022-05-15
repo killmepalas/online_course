@@ -31,10 +31,45 @@ body {
     width: 350px;
 }
 .detailed{
+    width: 280px;
+}
+
+#management {
+    margin-top: 30px;
+}
+
+.create-course{
     width: 100%;
 }
 
-.detailed, .update, .delete {
+form{
+    margin-bottom: 5px;
+}
+.updatediv{
+    position:absolute;
+    left:50px;
+    top:560px;
+    width: 350px;
+}
+
+.deletediv{
+    position:absolute;
+    left:50px;
+    top:630px;
+    width: 350px;
+}
+.detaileddiv{
+    position:absolute;
+    left:50px;
+    top:700px;
+    width: 350px;
+}
+
+.button-teach input[type=submit]{
+    width: 100%;
+}
+
+.detailed, .update, .delete, .create-course, .button-teach input[type=submit] {
     appearance: none;
     background-color: transparent;
     border: 2px solid #1A1A1A;
@@ -62,18 +97,18 @@ body {
     will-change: transform;
 }
 
-.detailed:disabled, .update:disabled, .delete:disabled {
+.detailed:disabled, .update:disabled, .delete:disabled, .create-course:disabled, .button-teach input[type=submit]:disabled {
     pointer-events: none;
 }
 
-.detailed:hover, .update:hover, .delete:hover {
+.detailed:hover, .update:hover, .delete:hover, create-course:hover, .button-teach input[type=submit]:hover {
     color: #fff;
     background-color: #1A1A1A;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.detailed:active, .update:active, .delete:active {
+.detailed:active, .update:active, .delete:active, create-course:active, .button-teach input[type=submit]:active {
     box-shadow: none;
     transform: translateY(0);
 }
@@ -243,7 +278,7 @@ article {
     top:200px;
 }
 
-#show input[type=submit] {
+.not-teach input[type=submit] {
     padding:15px 19px;
     background: #1ce562;
     border:0 none;
@@ -257,6 +292,7 @@ article {
     font-family: unset;
     color: white;
 }
+
 
 input[type=text], input[type=password], input[type=date]{
     padding:10px;
