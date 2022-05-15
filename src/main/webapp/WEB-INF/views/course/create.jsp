@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Редактирование курса</title>
+    <title>Создание курса</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 </head>
 
@@ -29,7 +29,7 @@
     <main>
         <section>
             <form:form method="POST" modelAttribute="course" >
-                <h2 class="form-signin-heading">Редактирование курса</h2>
+                <h2 class="form-signin-heading">Создание курса</h2>
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="name" class="form-control" value="${course.name}"
@@ -56,8 +56,8 @@
                     <form:input type="text" path="photolink" class="form-control" value="${course.photolink}" placeholder="Пока пусто"></form:input>
                     <form:errors path="photolink"></form:errors>
                 </spring:bind>
-                <form method="post" action="/course/update/${course.id}">
-                    <button class="update" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
+                <form method="post" action="/course/create">
+                    <button class="create" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
                 </form>
             </form:form>
         </section>
@@ -69,4 +69,3 @@
 </body>
 
 </html>
-

@@ -55,6 +55,10 @@
       </section>
       </c:forEach>
       </c:if>
+
+      <form method="get" action="/course/create">
+        <button class="detailed" type="submit" value="Подробнее">Создать новый курс</button>
+      </form>
   </main>
   <footer>
     <p>Мы ничего не упеваем и ничего не понимаем.</p>
