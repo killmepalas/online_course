@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/test")
@@ -70,5 +71,11 @@ public class TestController {
             return "test/create";
         testService.save(test, id_course);
         return "redirect:/test/" + test.getCourse().getId();
+    }
+
+    @PostMapping("/delete/{test_id}/{course_id}")
+    public String delete(@PathVariable int test_id, @PathVariable int course_id) {
+        testService.delete(test_id);
+        return "redirect:/test/" + course_id;
     }
 }
