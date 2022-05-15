@@ -1,6 +1,7 @@
 package kill.me.palas.controllers;
 
 import kill.me.palas.models.Course;
+import kill.me.palas.models.User;
 import kill.me.palas.services.CourseService;
 import kill.me.palas.services.UserDetailsServiceImpl;
 import kill.me.palas.services.UserService;
@@ -8,14 +9,12 @@ import kill.me.palas.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,8 +34,14 @@ public class CourseController{
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
         model.addAttribute("teacher", courseService.findTeacher(id));
         model.addAttribute("course", courseService.findOne(id));
+        if (db_user.getId() == courseService.findOne(id).getTeacher().getId()){
+            model.addAttribute("teach_course", "teacher");
+        }
         return "course/show";
     }
 
@@ -70,5 +75,27 @@ public class CourseController{
         }
         else if(db_user == null) model.addAttribute("auth", "not");
             return "teach/teaching";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(Model model, @PathVariable("id") int id) {
+        model.addAttribute("course", courseService.findOne(id));
+        return "course/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String update(@ModelAttribute("user") Course course, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        if (bindingResult.hasErrors())
+            return "course/edit";
+        User teacher = courseService.findTeacher(id);
+        courseService.update(id, course,teacher);
+        return "redirect:/course/"+id;
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") int id) {
+        courseService.delete(id);
+        return "redirect:/course/teach";
     }
 }

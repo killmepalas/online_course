@@ -36,10 +36,10 @@ public class Course {
     @ManyToMany(mappedBy = "courses")
     private List<User> users;
 
-    @OneToMany()
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
     private List<Test> tests;
 
-    @OneToMany()
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
 
     public Course(String name, String description, int price) {

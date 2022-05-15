@@ -17,7 +17,6 @@ public class TestGrade {
     private int grade;
 
     @ManyToOne()
-    @JoinColumn(name="test_id")
     private Test test;
 
     @ManyToOne()

@@ -20,7 +20,6 @@ public class Answer {
     private Boolean is_right;
 
     @ManyToOne()
-    @JoinColumn(name = "question_id")
     private Question question;
 
     public Answer(){

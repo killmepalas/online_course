@@ -38,11 +38,14 @@ public class Test {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany()
+    @OneToMany(mappedBy="test", cascade = CascadeType.ALL)
     private List<Question> questions;
 
-    @OneToMany()
+    @OneToMany(mappedBy="test", cascade = CascadeType.ALL)
     private List<TestGrade> testGrades;
+
+    @OneToMany(mappedBy="test", cascade = CascadeType.ALL)
+    private List<Attempt> attempts;
 
     public Test(){
 
