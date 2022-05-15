@@ -31,8 +31,8 @@ public class TestService {
         return foundTest;
     }
 
-    public void save(Test test, Course course) {
-        test.setCourse(course);
+    public void save(Test test, int id) {
+        test.setCourse(courseService.findOne(id));
         testRepository.save(test);
     }
 
