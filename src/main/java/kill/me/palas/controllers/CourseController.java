@@ -2,11 +2,9 @@ package kill.me.palas.controllers;
 
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Person;
+import kill.me.palas.models.Test;
 import kill.me.palas.models.User;
-import kill.me.palas.services.CourseService;
-import kill.me.palas.services.UserDetailsServiceImpl;
-import kill.me.palas.services.UserService;
-import kill.me.palas.services.UserServiceImpl;
+import kill.me.palas.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +24,9 @@ public class CourseController{
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    TestService testService;
 
     @GetMapping()
     public String index (Model model) {
@@ -116,4 +117,12 @@ public class CourseController{
         courseService.save(course, db_user);
         return "redirect:/course/teach";
     }
+
+    @GetMapping("/manage/{id}")
+    public String manage(Model model, @PathVariable("id") int id){
+        List<Test> tests = testService.findTestByCourse(id);
+        model.addAttribute("tests", tests);
+        return "course/construct";
+    }
+
 }
