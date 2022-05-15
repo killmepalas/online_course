@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TestRepository extends JpaRepository<Test,Integer> {
     List<Test> findTestByCourse(Course course);
+    Test findById(int id);
 }

@@ -27,17 +27,19 @@ public class TestService {
     }
 
     public Test findOne(int id) {
-        Optional<Test> foundTest = testRepository.findById(id);
-        return foundTest.orElse(null);
+        Test foundTest = testRepository.findById(id);
+        return foundTest;
     }
 
-    public void save(Test test) {
+    public void save(Test test, Course course) {
+        test.setCourse(course);
         testRepository.save(test);
     }
 
 
-    public void update(int id, Test updatedTest) {
+    public void update(int id, Test updatedTest, Course course) {
         updatedTest.setId(id);
+        updatedTest.setCourse(course);
         testRepository.save(updatedTest);
     }
 
@@ -48,5 +50,11 @@ public class TestService {
     public List<Test> findTestByCourse(int id){
         List<Test> tests = testRepository.findTestByCourse(courseService.findOne(id));
         return tests;
+    }
+
+    public Course findCourse(int id){
+        Test foundTest = testRepository.findById(id);
+        Course course = foundTest.getCourse();
+        return course;
     }
 }

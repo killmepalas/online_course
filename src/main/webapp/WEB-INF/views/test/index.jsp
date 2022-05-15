@@ -45,28 +45,20 @@
             <c:otherwise><section id="right"></c:otherwise>
                 </c:choose>
                 <div>
-                    <h4>${test.name}</h4>
-                    <h4>${test.description}</h4>
-                    <h4>${test.start}</h4>
-                    <h4>${test.stop}</h4>
-                    <form method="get" action="/test/update/${test.id}">
-                        <button class="detailed" type="submit" value="Редактировать тест">Редактировать тест</button>
-                    </form>
-                    <form method="get" action="/test/manage/${test.id}">
-                        <button class="detailed" type="submit" value="Добавить вопросы">Добавить вопросы</button>
-                    </form>
-                    <form method="post" action="/test/delete/${test.id}">
-                        <button class="detailed" type="submit" value="Удалить тест">Удалить тест</button>
+                    <h4>Название: ${test.name}</h4>
+                    <h4>Описание: ${test.description}</h4>
+                    <form method="get" action="/test/show/${test.id}">
+                        <button class="detailed" type="submit" value="Управление">Управление</button>
                     </form>
                 </div>
             </section>
             </c:forEach>
-        </c:if>
-        <section id="center">
-            <form method="post" action="/test/create">
-                <button class="detailed" type="submit" value="Создать тест">Создать тест</button>
-            </form>
-        </section>
+            </c:if>
+            <section id="center">
+                <form method="post" action="/test/create">
+                    <button class="detailed" type="submit" value="Создать тест">Создать тест</button>
+                </form>
+            </section>
 
     </main>
     <footer>
