@@ -28,35 +28,42 @@
 </header>
 <div id="container">
     <main id="course">
-        <form action="/test/find/" path="name">
-            <input type="text" placeholder="Search" name="test" class="search">
+        <form action="/question/find/" path="name">
+            <input type="text" placeholder="Search" name="question" class="search">
         </form>
-        <c:if test="${tests.isEmpty()}">
+        <c:if test="${questions.isEmpty()}">
             <section>
-                <h4>У курса пока нет тестов. Создайте свой первый тест прямо сейчас!</h4>
+                <h4>У теста пока нет вопросов (к вам). Добавьте первый вопрос прямо сейчас!</h4>
             </section>
         </c:if>
 
-        <c:if test="${!tests.isEmpty()}">
-        <c:forEach items="${tests}" var="test">
-        <c:choose>
-        <c:when test="${tests.indexOf(test) % 3==0}"><section id="left"></c:when>
-        <c:when test="${tests.indexOf(test) % 3==1}"><section id="center"></c:when>
-            <c:otherwise><section id="right"></c:otherwise>
-                </c:choose>
+        <c:if test="${!questions.isEmpty()}">
+        <c:forEach items="${questions}" var="question">
+            <section>
                 <div>
-                    <h4>Название: ${test.name}</h4>
-                    <h4>Описание: ${test.description}</h4>
-                    <form method="get" action="/test/show/${test.id}">
-                        <button class="detailed" type="submit" value="Управление">Управление</button>
+                    <h4>№ ${questions.indexOf(question)+1}. ${question.text}</h4>
+                </div>
+                <div>
+                    <form method="get" action="/question/update/${question.id}">
+                        <input type="submit" value="Редактировать">
+                    </form>
+                </div>
+                <div>
+                    <form method="post" action="/question/delete/${question.id}/${question.test.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <input type="submit"   value="Удалить">
+                    </form>
+                </div>
+                <div>
+                    <form method="get" action="/answer/${question.id}">
+                        <input type="submit" value="Добавить ответы">
                     </form>
                 </div>
             </section>
             </c:forEach>
             </c:if>
             <section id="center">
-                <form method="get" action="/test/create/${course}">
-                    <button class="detailed" type="submit">Создать тест</button>
+                <form method="get" action="/question/create/${test}">
+                    <button class="detailed" type="submit" >Добавить вопрос</button>
                 </form>
             </section>
     </main>
