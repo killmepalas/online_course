@@ -56,9 +56,14 @@
             </div>
             <div>
                     <form method="post" action="/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
-                        <input type="submit"   value="Удалить к ебеням">
+                        <input type="submit"   value="Удалить">
                     </form>
             </div>
+                    <div>
+                        <form method="get" action="/course/manage/${course.id}">
+                            <input type="submit" value="Конструктор">
+                        </form>
+                    </div>
                 </c:otherwise>
             </c:choose>
         </section>
