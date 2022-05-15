@@ -53,7 +53,8 @@ public class CourseService {
         return courses;
     }
 
-    public void save(Course course) {
+    public void save(Course course, User teacher) {
+        course.setTeacher(teacher);
         courseRepository.save(course);
     }
 
