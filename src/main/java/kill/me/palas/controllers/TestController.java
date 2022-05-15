@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/test")
@@ -26,11 +25,17 @@ public class TestController {
     @Autowired
     TestValidator testValidator;
 
+    @GetMapping("/find")
+    public String find(@RequestParam(value = "test") String name, Model model){
+        model.addAttribute("tests", testService.findByName(name));
+        return "test/index";
+    }
+
     @GetMapping("/{id}")
     public String index(Model model, @PathVariable("id") int id){
         List<Test> tests = testService.findTestByCourse(id);
         model.addAttribute("tests", tests);
-        model.addAttribute("course", id);
+        model.addAttribute("course",id);
         return "test/index";
     }
 

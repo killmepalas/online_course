@@ -96,7 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@ModelAttribute("user") User user, BindingResult bindingResult,
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
         @PathVariable("id") int id) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
