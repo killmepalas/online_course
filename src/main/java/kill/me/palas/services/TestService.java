@@ -36,6 +36,11 @@ public class TestService {
         testRepository.save(test);
     }
 
+    public List<Test> findByName(String name){
+        List<Test> tests = testRepository.findTestByName(name);
+        return tests;
+    }
+
 
     public void update(int id, Test updatedTest, Course course) {
         updatedTest.setId(id);
