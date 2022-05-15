@@ -24,11 +24,17 @@ body {
     top:560px;
     width: 350px;
 }
+.delete{
+    position:absolute;
+    left:50px;
+    top:625px;
+    width: 350px;
+}
 .detailed{
     width: 100%;
 }
 
-.detailed, .update {
+.detailed, .update, .delete {
     appearance: none;
     background-color: transparent;
     border: 2px solid #1A1A1A;
@@ -56,18 +62,18 @@ body {
     will-change: transform;
 }
 
-.detailed:disabled, .update:disabled {
+.detailed:disabled, .update:disabled, .delete:disabled {
     pointer-events: none;
 }
 
-.detailed:hover, .update:hover {
+.detailed:hover, .update:hover, .delete:hover {
     color: #fff;
     background-color: #1A1A1A;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.detailed:active, .update:active {
+.detailed:active, .update:active, .delete:active {
     box-shadow: none;
     transform: translateY(0);
 }
@@ -140,13 +146,31 @@ nav ul li:hover {
     position:relative;
 }
 
+.edit{
+    padding: 2%;
+}
+#edit img {
+    width: 350px;
+    height: 350px;
+    position:absolute;
+    left: 50px;
+    top:200px;
+}
+.form-signin-heading{
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    position:relative;
+    font-size: unset;
+}
+
 #course{
     width: 76%;
     display: inline-block;
     padding: 2%;
 }
 
-#main{
+#main, #show{
     width: 90%;
     display: inline-block;
     padding: 2%;
@@ -232,6 +256,13 @@ article {
     font-size: 20px;
     font-family: unset;
     color: white;
+}
+
+input[type=text], input[type=password], input[type=date]{
+    padding:10px;
+    border-radius:10px;
+    width: 250px;
+    margin-top: 5px;
 }
 
 #course p {
@@ -327,3 +358,70 @@ progress::-moz-progress-bar {
     border-radius: 5px;
     background: #1ce562;
 }
+
+/*option {
+    padding-bottom: 200px;
+}
+
+option:hover {
+    background-color: rgb(237, 231, 255);
+}
+
+.ava1 {
+    background: url('../img/c1.jpeg');
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava2 {
+    background: url('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/fad0ae71303931.5bc07e548de8f.png') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava3 {
+    background: url('https://i.yapx.ru/CeBRo.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava4 {
+    background: url('https://i1.sndcdn.com/avatars-000633092163-lp76h1-t500x500.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava5 {
+    background: url('https://i1.sndcdn.com/avatars-000048517617-ovyexv-t500x500.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava6 {
+    background: url('https://i1.sndcdn.com/artworks-BXy0I9747uayEyIS-hKPiYA-t500x500.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava7 {
+    background: url('https://i1.sndcdn.com/artworks-i2pR3tJ52Xy5hjXf-QDJekg-t500x500.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava8 {
+    background: url('https://i1.sndcdn.com/artworks-4QMFLyKyJCzhY9QU-R0yyhA-t500x500.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+.ava9 {
+    background: url('https://i1.sndcdn.com/avatars-000455481750-xgq8dd-t500x500.jpg') no-repeat;
+    background-size: 200px;
+    padding-left: 200px;
+}
+
+select {
+    width: 200px;
+    height: 210px;
+}*/

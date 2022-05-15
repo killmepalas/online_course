@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <html>
 
@@ -11,6 +12,8 @@
     <meta charset="utf-8">
     <title>Редактирование профиля</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 </head>
 
 <body>
@@ -26,10 +29,9 @@
     </nav>
 </header>
 <div id="container">
-    <main>
-        <section>
-            <form:form method="POST" modelAttribute="user">
-                <h2 class="form-signin-heading">Создание аккаунта</h2>
+    <main class="edit">
+            <form:form method="POST" modelAttribute="user" action="/update/${user.id}?${_csrf.parameterName}=${_csrf.token}">
+                <h3 class="form-signin-heading">Создание аккаунта</h3>
                 <spring:bind path="username">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="username" class="form-control" value="${user.username}"
@@ -53,22 +55,31 @@
                 </spring:bind>
 
                 <spring:bind path="midname">
-                    <form:input type="text" path="midname" class="form-control" value="${user.midname}" placeholder="Пока пусто"></form:input>
-                    <form:errors path="midname"></form:errors>
+                    <div class="form-group">
+                        <form:input type="text" path="midname" class="form-control" value="${user.midname}" placeholder="Пока пусто"></form:input>
+                        <form:errors path="midname"></form:errors>
+                    </div>
                 </spring:bind>
 
                 <spring:bind path="dateOfBirth">
-                    <form:input type="date" path="dateOfBirth" class="form-control" value="${user.dateOfBirth}" placeholder="Пока пусто"></form:input>
-                    <form:errors path="dateOfBirth"></form:errors>
+                    <div class="form-group">
+                        <form:input type="date" path="dateOfBirth" class="form-control" value="${user.dateOfBirth}" placeholder="Пока пусто"></form:input>
+                        <form:errors path="dateOfBirth"></form:errors>
+                    </div>
                 </spring:bind>
 
                 <spring:bind path="photolink">
-                    <img src="${user.photolink}">
-                    <form:input type="text" path="photolink" class="form-control" value="${user.photolink}" placeholder="Ну пока пусть будет типа ссыль"></form:input>
-                    <form:errors path="photolink"></form:errors>
+                    <div id="edit">
+                        <img src="${user.photolink}">
+                    </div>
+
+                    <div class="form-group">
+                        <form:input type="text" path="photolink" class="form-control" value="${user.photolink}" placeholder="Ну пока пусть будет типа ссыль"></form:input>
+                        <form:errors path="photolink"></form:errors>
+                    </div>
                 </spring:bind>
 
-                <h4>Хотите сменить пароль?</h4>
+                <h3 class="form-signin-heading">Хотите сменить пароль?</h3>
                 <spring:bind path="password">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="password" path="password" class="form-control" value="${user.password}" placeholder="Пароль"></form:input>
@@ -83,16 +94,19 @@
                         <form:errors path="confirmPassword"></form:errors>
                     </div>
                 </spring:bind>
-                <form method="post" action="/edit/${user.id}" >
-                    <button class="edit" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
+
+                <form method="post" action="/edit/${user.id}">
+                    <button class="update" type="submit" value="edit">Обновить</button>
                 </form>
             </form:form>
-        </section>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
     </footer>
 </div>
+<!-- /container -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 
 </html>

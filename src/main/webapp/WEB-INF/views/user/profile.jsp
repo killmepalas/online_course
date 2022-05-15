@@ -48,7 +48,7 @@
             </form>
 
             <form method="post" action="/delete/${user.id}">
-                <button class="delete" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Удалить профиль</button>
+                <button onclick="return confirm('Вы действительно хотите удалить свой профиль?')" class="delete" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Удалить профиль</button>
             </form>
         </section>
     </main>
