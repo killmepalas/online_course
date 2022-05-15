@@ -1,8 +1,11 @@
 package kill.me.palas.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -24,15 +27,17 @@ public class Test {
     @Column(name = "description")
     private String description;
 
-    @NotEmpty(message = "Пожалуйста, введите дату начала")
+    @NotNull
     @Column(name = "start")
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date Start;
+    private Date start;
 
-    @NotEmpty(message = "Пожалуйста, введите дату окончания")
     @Column(name = "stop")
+    @NotNull
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date Stop;
+    private Date stop;
 
     @ManyToOne()
     @JoinColumn(name = "course_id")
@@ -54,8 +59,8 @@ public class Test {
     public Test(String name, String description, Date start, Date stop) {
         this.name = name;
         this.description = description;
-        Start = start;
-        Stop = stop;
+        this.start = start;
+        this.stop = stop;
     }
 
     public int getId() {
@@ -83,19 +88,19 @@ public class Test {
     }
 
     public Date getStart() {
-        return Start;
+        return start;
     }
 
     public void setStart(Date start) {
-        Start = start;
+        this.start = start;
     }
 
     public Date getStop() {
-        return Stop;
+        return stop;
     }
 
     public void setStop(Date stop) {
-        Stop = stop;
+        this.stop = stop;
     }
 
     public Course getCourse() {

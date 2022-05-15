@@ -60,7 +60,7 @@
                     </form>
             </div>
                     <div>
-                        <form method="get" action="/course/manage/${course.id}">
+                        <form method="get" action="/test/${course.id}">
                             <input type="submit" value="Конструктор">
                         </form>
                     </div>

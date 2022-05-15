@@ -86,7 +86,7 @@ public class CourseController{
     }
 
     @PostMapping("/update/{id}")
-    public String update(@ModelAttribute("user") @Valid Course course, BindingResult bindingResult,
+    public String update(@ModelAttribute("course") @Valid Course course, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "course/edit";
@@ -117,12 +117,4 @@ public class CourseController{
         courseService.save(course, db_user);
         return "redirect:/course/teach";
     }
-
-    @GetMapping("/manage/{id}")
-    public String manage(Model model, @PathVariable("id") int id){
-        List<Test> tests = testService.findTestByCourse(id);
-        model.addAttribute("tests", tests);
-        return "course/construct";
-    }
-
 }
