@@ -55,8 +55,8 @@
             </c:forEach>
             </c:if>
             <section id="center">
-                <form method="post" action="/test/create">
-                    <button class="detailed" type="submit" value="Создать тест">Создать тест</button>
+                <form method="get" action="/test/create/${course}">
+                    <button class="detailed" type="submit" >Создать тест</button>
                 </form>
             </section>
 
