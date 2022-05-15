@@ -70,4 +70,10 @@ public class QuestionController {
         questionService.update(id, question ,test);
         return "redirect:/question/" + test.getId();
     }
+
+    @PostMapping("/delete/{question_id}/{test_id}")
+    public String delete(@PathVariable int question_id, @PathVariable int test_id) {
+        questionService.delete(question_id);
+        return "redirect:/question/" + test_id;
+    }
 }
