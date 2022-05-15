@@ -1,6 +1,7 @@
 package kill.me.palas.controllers;
 
 import kill.me.palas.models.Course;
+import kill.me.palas.models.Person;
 import kill.me.palas.models.User;
 import kill.me.palas.services.CourseService;
 import kill.me.palas.services.UserDetailsServiceImpl;
@@ -84,7 +85,7 @@ public class CourseController{
     }
 
     @PostMapping("/update/{id}")
-    public String update(@ModelAttribute("user") Course course, BindingResult bindingResult,
+    public String update(@ModelAttribute("user") @Valid Course course, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
             return "course/edit";
@@ -96,6 +97,23 @@ public class CourseController{
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
         courseService.delete(id);
+        return "redirect:/course/teach";
+    }
+
+    @GetMapping("/create")
+    public String create(@ModelAttribute("course") Course course) {
+        return "course/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute("course") @Valid Course course,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "course/create";
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        courseService.save(course, db_user);
         return "redirect:/course/teach";
     }
 }
