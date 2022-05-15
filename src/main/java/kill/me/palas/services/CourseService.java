@@ -57,8 +57,9 @@ public class CourseService {
         courseRepository.save(course);
     }
 
-    public void update(int id, Course updatedCourse) {
+    public void update(int id, Course updatedCourse, User teacher) {
         updatedCourse.setId(id);
+        updatedCourse.setTeacher(teacher);
         courseRepository.save(updatedCourse);
     }
 

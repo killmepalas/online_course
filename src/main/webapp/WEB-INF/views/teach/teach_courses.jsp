@@ -48,16 +48,8 @@
         <div>
           <h4>${courselist.name}</h4>
           <img src="${courselist.photolink}">
-          <article>
-            <c:if test="${courselist.price==0}">
-              <p id="free">Бесплатно</p>
-            </c:if>
-            <c:if test="${courselist.price!=0}">
-              <p id="money">Цена: ${courselist.price} ₽</p>
-            </c:if>
-          </article>
           <form method="get" action="/course/${courselist.id}" >
-            <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+            <button class="detailed" type="submit" value="Подробнее">Управление</button>
           </form>
         </div>
       </section>

@@ -37,17 +37,30 @@
             <div class="show">
                 <p id="description">${course.description}</p>
             </div>
-
-            <c:if test="${course.price != 0}">
-                <form method="post" action="/course/buy/${course.id}">
-                    <input type="submit" value=${course.price}>
-                </form>
-            </c:if>
-            <c:if test="${course.price==0}">
-                <form method="post" action="/user/addCourse/${course.id}">
-                    <input type="submit" value="Бесплатно">
-                </form>
-            </c:if>
+            <c:choose>
+                <c:when test="${teach_course != 'teacher'}">
+                    <form method="post" action="/course/add/${course.id}">
+                        <c:if test="${course.price != 0}">
+                            <input type="submit" value=${course.price}>
+                        </c:if>
+                        <c:if test="${course.price==0}">
+                            <input type="submit" value="Бесплатно">
+                        </c:if>
+                    </form>
+                </c:when>
+                <c:otherwise>
+            <div>
+                    <form method="get" action="/course/update/${course.id}">
+                        <input type="submit" value="Редактировать">
+                    </form>
+            </div>
+            <div>
+                    <form method="post" action="/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <input type="submit"   value="Удалить к ебеням">
+                    </form>
+            </div>
+                </c:otherwise>
+            </c:choose>
         </section>
 
 

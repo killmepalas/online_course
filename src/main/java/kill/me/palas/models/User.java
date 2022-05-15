@@ -46,7 +46,7 @@ public class User {
     inverseJoinColumns = @JoinColumn(name="roles_id"))
     private Set<Role> roles;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="user_course", joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="course_id"))
     private List<Course> courses;
@@ -56,6 +56,9 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Attempt> attempts;
 
     @Transient
     private int rating;

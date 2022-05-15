@@ -90,13 +90,13 @@ public class UserController {
     }
 
     @GetMapping("/update/{id}")
-    public String edit(Model model, @PathVariable("id") int id) {
+    public String update(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userServiceImpl.findOne(id));
         return "user/edit";
     }
 
     @PostMapping("/update/{id}")
-    public String edit(@ModelAttribute("user") User user, BindingResult bindingResult,
+    public String update(@ModelAttribute("user") User user, BindingResult bindingResult,
         @PathVariable("id") int id) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
