@@ -41,7 +41,7 @@ public class CourseController{
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         model.addAttribute("teacher", courseService.findTeacher(id));
         model.addAttribute("course", courseService.findOne(id));
-        if (db_user.getId() == courseService.findOne(id).getTeacher().getId()){
+        if (db_user !=null && db_user.getId() == courseService.findOne(id).getTeacher().getId()){
             model.addAttribute("teach_course", "teacher");
         }
         return "course/show";
