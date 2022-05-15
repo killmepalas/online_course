@@ -18,10 +18,9 @@ public class Question {
     private String text;
 
     @ManyToOne()
-    @JoinColumn(name = "test_id")
     private Test test;
 
-    @OneToMany()
+    @OneToMany(mappedBy="question", cascade = CascadeType.ALL)
     private List<Answer> answers;
 
     public Question(){

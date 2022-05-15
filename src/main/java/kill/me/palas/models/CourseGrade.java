@@ -17,7 +17,6 @@ public class CourseGrade {
     private int grade;
 
     @ManyToOne()
-    @JoinColumn(name="course_id")
     private Course course;
 
     @ManyToOne()

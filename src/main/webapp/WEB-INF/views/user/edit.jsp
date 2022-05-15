@@ -4,7 +4,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <html>
 
@@ -12,8 +11,6 @@
     <meta charset="utf-8">
     <title>Редактирование профиля</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 </head>
 
 <body>
@@ -31,7 +28,7 @@
 <div id="container">
     <main>
         <section>
-            <form:form method="POST" modelAttribute="user" action="/update/${user.id}?${_csrf.parameterName}=${_csrf.token}">
+            <form:form method="POST" modelAttribute="user">
                 <h2 class="form-signin-heading">Создание аккаунта</h2>
                 <spring:bind path="username">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -86,9 +83,8 @@
                         <form:errors path="confirmPassword"></form:errors>
                     </div>
                 </spring:bind>
-
-                <form method="post" action="/edit/${user.id}">
-                    <button class="edit" type="submit" value="edit">Обновить</button>
+                <form method="post" action="/edit/${user.id}" >
+                    <button class="edit" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
                 </form>
             </form:form>
         </section>
@@ -97,9 +93,6 @@
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
     </footer>
 </div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 
 </html>
