@@ -41,7 +41,7 @@
                 </form>
             </div>
             <div>
-                <form method="post" action="/test/delete/${test.id}?${_csrf.parameterName}=${_csrf.token}">
+                <form method="post" action="/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
                     <input type="submit"   value="Удалить">
                 </form>
             </div>
