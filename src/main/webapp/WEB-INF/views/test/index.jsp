@@ -68,8 +68,8 @@
                             <div>
                                 <h4>Название: ${test.name}</h4>
                                 <h4>Описание: ${test.description}</h4>
-                                <form method="get" action="/test/execute/${test.id}">
-                                    <button class="detailed" type="submit" value="Пройти">Пройти</button>
+                                <form method="get" action="/test/show/${test.id}">
+                                    <button class="detailed" type="submit" value="Управление">Управление</button>
                                 </form>
                             </div>
                         </section>
