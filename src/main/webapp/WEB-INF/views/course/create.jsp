@@ -56,11 +56,13 @@
                     <div class="form-group">
                         <form:input type="text" path="photolink" class="form-control" value="${course.photolink}" placeholder="Ссылка на фото"></form:input>
                         <form:errors path="photolink"></form:errors>
-                    </div><br><br>
+                    </div><br>
                 </spring:bind>
+                <div class="form-group">
                     <form method="post" action="/course/create">
-                        <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
+                        <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
                     </form>
+                </div>
             </form:form>
         </section>
     </main>
