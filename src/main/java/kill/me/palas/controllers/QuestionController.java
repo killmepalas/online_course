@@ -1,11 +1,8 @@
 package kill.me.palas.controllers;
 
-import kill.me.palas.models.Course;
 import kill.me.palas.models.Question;
 import kill.me.palas.models.Test;
-import kill.me.palas.services.PeopleService;
 import kill.me.palas.services.QuestionService;
-import kill.me.palas.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
