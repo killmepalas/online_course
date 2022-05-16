@@ -29,7 +29,7 @@
     <main>
         <section class="help">
             <form:form method="POST" modelAttribute="test" >
-                <h2 class="form-signin-heading">Создание курса</h2>
+                <h1 class="form-signin-heading">Создание курса</h1>
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="name" class="form-control" value="${test.name}"
