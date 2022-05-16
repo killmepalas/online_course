@@ -30,7 +30,7 @@
 </header>
 <div id="container">
     <main id="auth">
-        <section>
+        <section class="help">
             <h4>Чтобы получить доступ к этому разделу, пожалуйста</h4>
             <h4><a href="/login">Войдите</a></h4>
         </section>

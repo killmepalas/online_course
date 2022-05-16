@@ -35,7 +35,7 @@
         </form>
 
         <c:if test="${courses.isEmpty()}">
-            <section>
+            <section class="help">
                 <h4> По вашему запросу ничего не найдено. </h4>
             </section>
         </c:if>
