@@ -1,19 +1,30 @@
 package kill.me.palas.controllers;
 
+import kill.me.palas.models.Role;
 import kill.me.palas.models.User;
 import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
 import kill.me.palas.services.UserServiceImpl;
 import kill.me.palas.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -24,10 +35,18 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
     private SecurityService securityService;
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    private String password;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -45,6 +64,8 @@ public class UserController {
         }
 
         userService.save(userForm);
+
+        password = userForm.getConfirmPassword();
 
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
@@ -102,8 +123,11 @@ public class UserController {
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         userValidator.up_validate(user, bindingResult,db_user);
             if (bindingResult.hasErrors()){return "user/edit";}
-        userServiceImpl.update(id, user);
-        securityService.autoLogin(user.getUsername(), user.getPassword());
+        String pass;
+        if (db_user.getPassword() != user.getConfirmPassword()) pass = user.getConfirmPassword();
+        else pass = password;
+        userServiceImpl.update(id, user,db_user);
+        securityService.autoLogin(user.getUsername(),pass);
         return "redirect:/profile";
     }
 

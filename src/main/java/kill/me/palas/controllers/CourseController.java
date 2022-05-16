@@ -1,10 +1,12 @@
 package kill.me.palas.controllers;
 
 import kill.me.palas.models.*;
+import kill.me.palas.repositories.RoleRepository;
 import kill.me.palas.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -115,8 +117,8 @@ public class CourseController{
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         courseService.save(course, db_user);
-        userService.setRoles(db_user,"ROLE_TEACHER");
-//        securityService.update(db_user.getUsername(), db_user.getPassword());
+        String role = "ROLE_TEACHER";
+        userService.setRoles(db_user,role);
         return "redirect:/course/teach";
     }
 }
