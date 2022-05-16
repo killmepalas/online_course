@@ -31,6 +31,50 @@
         <form action="/test/find/" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
+<<<<<<< HEAD
+        <c:if test="${status == 'teacher'}">
+            <c:if test="${tests.isEmpty()}">
+                <section class="help">
+                    <h4>У курса пока нет тестов. Создайте свой первый тест прямо сейчас!</h4>
+                </section>
+            </c:if>
+            <div>
+                <form method="get" action="/test/create/${id_course}">
+                    <button class="detailed" type="submit" >Создать тест</button>
+                </form>
+            </div>
+            <c:if test="${!tests.isEmpty()}">
+            <c:forEach items="${tests}" var="test">
+            <c:choose>
+            <c:when test="${tests.indexOf(test) % 3==0}"><section class="left"></c:when>
+            <c:when test="${tests.indexOf(test) % 3==1}"><section class="center"></c:when>
+                <c:otherwise><section class="right"></c:otherwise>
+                    </c:choose>
+                    <div>
+                        <h4>Название: ${test.name}</h4>
+                        <h4>Описание: ${test.description}</h4>
+                        <form method="get" action="/test/show/${test.id}">
+                            <button class="detailed" type="submit" value="Управление">Управление</button>
+                        </form>
+                    </div>
+                </section>
+            </c:forEach>
+            </c:if>
+        </c:if>
+        <c:if test="${status == 'student'}">
+            <c:if test="${tests.isEmpty()}">
+                <section class="help">
+                    <h4>У курса пока нет тестов.</h4>
+                </section>
+            </c:if>
+            <c:if test="${!tests.isEmpty()}">
+                <c:forEach items="${tests}" var="test">
+                <c:choose>
+                    <c:when test="${tests.indexOf(test) % 3==0}"><section class="left"></c:when>
+                    <c:when test="${tests.indexOf(test) % 3==1}"><section class="center"></c:when>
+                    <c:otherwise><section class="right"></c:otherwise>
+                </c:choose>
+=======
         <c:if test="${tests.isEmpty()}">
            <section class="help">
                 <h4>У курса пока нет тестов. Создайте свой первый тест прямо сейчас!</h4>
@@ -64,18 +108,26 @@
         </section>
             </c:when>
             <c:otherwise><section class="col-3">
+>>>>>>> origin/killmepalas
                 <div>
                     <h4>Название: ${test.name}</h4>
                     <h4>Описание: ${test.description}</h4>
-                    <form method="get" action="/test/show/${test.id}">
-                        <button class="detailed" type="submit" value="Управление">Управление</button>
+                    <form method="get" action="/test/execute/${test.id}">
+                        <button class="detailed" type="submit" value="Пройти">Пройти</button>
                     </form>
                 </div>
+<<<<<<< HEAD
+                </section>
+                </c:forEach>
+            </c:if>
+        </c:if>
+=======
             </section></div>
                 </c:otherwise>
                 </c:choose>
             </c:forEach>
             </c:if>
+>>>>>>> origin/killmepalas
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
