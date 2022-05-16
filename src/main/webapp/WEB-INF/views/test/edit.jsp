@@ -47,7 +47,7 @@
 
                 <spring:bind path="start">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="date" path="start" class="form-control" value=" ${test.start}>" placeholder="Пока пусто"></form:input>
+                        <form:input type="date" path="start" class="form-control" value="${test.start}" placeholder="Пока пусто"></form:input>
                         <form:errors path="start"></form:errors>
                     </div>
                 </spring:bind>
