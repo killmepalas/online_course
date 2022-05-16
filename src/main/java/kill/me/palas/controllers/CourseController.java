@@ -44,10 +44,12 @@ public class CourseController{
         model.addAttribute("teacher", courseService.findTeacher(id));
         model.addAttribute("course", courseService.findOne(id));
 
-        for (Course course: db_user.getCourses()){
-            if (course.getId() == id ){
-                model.addAttribute("teach_course","bought");
-                break;
+        if (db_user != null) {
+            for (Course course : db_user.getCourses()) {
+                if (course.getId() == id) {
+                    model.addAttribute("teach_course", "bought");
+                    break;
+                }
             }
         }
         if (db_user !=null && db_user.getId() == courseService.findOne(id).getTeacher().getId()){

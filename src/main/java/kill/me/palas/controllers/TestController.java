@@ -2,6 +2,8 @@ package kill.me.palas.controllers;
 
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Test;
+import kill.me.palas.models.User;
+import kill.me.palas.services.CourseService;
 import kill.me.palas.services.TestService;
 import kill.me.palas.services.UserServiceImpl;
 import kill.me.palas.validators.TestValidator;
@@ -26,11 +28,15 @@ public class TestController {
 
     private UserServiceImpl userService;
 
+    private CourseService courseService;
+
     @Autowired
-    public TestController(TestService testService, TestValidator testValidator, UserServiceImpl userService){
+    public TestController(TestService testService, TestValidator testValidator,
+                          UserServiceImpl userService, CourseService courseService){
         this.testService = testService;
         this.testValidator = testValidator;
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/find")
@@ -39,14 +45,26 @@ public class TestController {
         return "test/index";
     }
 
-    @GetMapping("/{id}")
-    public String index(Model model, @PathVariable("id") int id){
+    @GetMapping("/{id_course}")
+    public String index(Model model, @PathVariable("id_course") int id){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
-        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        User db_user = userService.findByUsername(loggedInUser.getName());
+
+        boolean check = false;
+        for (Course course: db_user.getCourses()){
+            if (course.getId() == id ){
+                check = true;
+                model.addAttribute("status","student");
+                break;
+            }
+        }
+
+        if (db_user !=null && db_user.getId() == courseService.findTeacher(id).getId()){
+            model.addAttribute("status", "teacher");
+        } else if(db_user == null ||  check == false){return "error/not_access";}
+
         List<Test> tests = testService.findTestByCourse(id);
         model.addAttribute("tests", tests);
-        model.addAttribute("course",id);
         return "test/index";
     }
 
