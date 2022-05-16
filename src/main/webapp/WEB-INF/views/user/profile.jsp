@@ -28,7 +28,7 @@
 </header>
 <div id="container">
     <main id="show">
-        <section>
+        <section class="help">
             <div class="show">
                 <h2>${user.username}</h2>
                 <h4>${user.lastname} ${user.name} ${user.midname}</h4>

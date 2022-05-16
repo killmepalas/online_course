@@ -27,7 +27,7 @@
 </header>
 <div id="container">
     <main>
-        <section>
+        <section class="help">
             <form:form method="POST" modelAttribute="course" >
                 <h2 class="form-signin-heading">Редактирование курса</h2>
                 <spring:bind path="name">

@@ -44,6 +44,11 @@ body {
 
 form{
     margin-bottom: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
 }
 .updatediv{
     position:absolute;
@@ -222,9 +227,21 @@ footer {
     text-indent: 10px;
 }
 
-section {
-    width: 80%;
-    height: 80%;
+.left{
+    height: 200px;
+    float: left;
+}
+.center{
+    height: 200px;
+
+}
+.right{
+    height: 200px;
+    float: right;
+}
+.help {
+    width: 90%;
+    height: 90%;
     margin: 0 auto;
     padding: 2%;
     /*color: white;*/
@@ -236,15 +253,17 @@ section {
 }
 
 #center {
-    float: center;
+    width: 260px;
 }
 
 #left {
     float: left;
+    width: 260px;
 }
 
 #right {
     float: right;
+    width: 400px;
 }
 
 article {
@@ -256,7 +275,7 @@ article {
 
 #container, .container {
     margin-top: 20vh;
-
+    margin-bottom: 50px;
 }
 
 
@@ -395,6 +414,27 @@ progress::-moz-progress-bar {
     background: #1ce562;
 }
 
+.col-3 {
+    width: 280px; /* Можно задать любую другую ширину блока */
+    margin: .5rem;
+    justify-content: center; align-items: center
+}
+
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+}
+.modal{
+    padding: 50px;
+    background: #ccc;
+    position: fixed; top: 50%; left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
 /*option {
     padding-bottom: 200px;
 }

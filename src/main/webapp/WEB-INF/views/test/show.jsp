@@ -28,7 +28,7 @@
 </header>
 <div id="container">
     <main id="course">
-        <section>
+        <section class="help">
             <div class="show">
                 <h2>${test.name}</h2>
                 <p id="description">${test.description}</p>

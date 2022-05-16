@@ -27,38 +27,40 @@
 </header>
 <div id="container">
     <main>
-        <section>
+        <section class="help">
             <form:form method="POST" modelAttribute="course" >
-                <h2 class="form-signin-heading">Создание курса</h2>
+                <h1 class="form-signin-heading">Создание курса</h1>
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="name" class="form-control" value="${course.name}"
-                                    placeholder="Пока пусто" field="${name}"></form:input>
+                                    placeholder="Название" field="${name}"></form:input>
                         <form:errors path="name"></form:errors>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="description">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="description" class="form-control" value="${course.description}" placeholder="Пока пусто"></form:input>
+                        <form:input type="text" path="description" class="form-control" value="${course.description}" placeholder="Описание"></form:input>
                         <form:errors path="description"></form:errors>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="price">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="price" class="form-control" value="${course.price}" placeholder="Пока пусто"></form:input>
+                        <form:input type="text" path="price" class="form-control" value="${course.price}" placeholder="Стоимость"></form:input>
                         <form:errors path="price"></form:errors>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="photolink">
-                    <form:input type="text" path="photolink" class="form-control" value="${course.photolink}" placeholder="Пока пусто"></form:input>
-                    <form:errors path="photolink"></form:errors>
+                    <div class="form-group">
+                        <form:input type="text" path="photolink" class="form-control" value="${course.photolink}" placeholder="Ссылка на фото"></form:input>
+                        <form:errors path="photolink"></form:errors>
+                    </div><br><br>
                 </spring:bind>
-                <form method="post" action="/course/create">
-                    <button class="create" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
-                </form>
+                    <form method="post" action="/course/create">
+                        <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
+                    </form>
             </form:form>
         </section>
     </main>
