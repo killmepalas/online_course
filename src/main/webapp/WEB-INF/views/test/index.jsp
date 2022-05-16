@@ -26,23 +26,27 @@
         </ul>
     </nav>
 </header>
-<div id="container">
+<div class="container">
     <main id="course">
         <form action="/test/find/" path="name">
-            <input type="text" placeholder="Search" name="test" class="search">
+            <input type="text" placeholder="Search" name="courses" class="search">
         </form>
         <c:if test="${tests.isEmpty()}">
-            <section>
+            <section class="help">
                 <h4>У курса пока нет тестов. Создайте свой первый тест прямо сейчас!</h4>
             </section>
         </c:if>
-
+        <div>
+            <form method="get" action="/test/create/${course}">
+                <button class="detailed" type="submit" >Создать тест</button>
+            </form>
+        </div>
         <c:if test="${!tests.isEmpty()}">
         <c:forEach items="${tests}" var="test">
         <c:choose>
-        <c:when test="${tests.indexOf(test) % 3==0}"><section id="left"></c:when>
-        <c:when test="${tests.indexOf(test) % 3==1}"><section id="center"></c:when>
-            <c:otherwise><section id="right"></c:otherwise>
+        <c:when test="${tests.indexOf(test) % 3==0}"><section class="left"></c:when>
+        <c:when test="${tests.indexOf(test) % 3==1}"><section class="center"></c:when>
+            <c:otherwise><section class="right"></c:otherwise>
                 </c:choose>
                 <div>
                     <h4>Название: ${test.name}</h4>
@@ -54,11 +58,8 @@
             </section>
             </c:forEach>
             </c:if>
-            <section id="center">
-                <form method="get" action="/test/create/${course}">
-                    <button class="detailed" type="submit">Создать тест</button>
-                </form>
-            </section>
+
+
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>

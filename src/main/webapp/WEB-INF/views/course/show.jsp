@@ -28,7 +28,7 @@
 </header>
 <div id="container">
     <main id="show">
-        <section>
+        <section class="help">
             <div class="show">
                 <h2>${course.name}</h2>
                 <h4>Автор - ${teacher.username}</h4>

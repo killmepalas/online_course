@@ -30,7 +30,7 @@
 </header>
 <div id="container">
     <main id="course">
-        <section>
+        <section class="help">
             <h4>Извините, что-то пошло не так</h4>
         </section>
     </main>

@@ -33,7 +33,7 @@
       <input type="text" placeholder="Search" name="courses" class="search">
     </form>
     <c:if test="${course.isEmpty()}">
-      <section>
+      <section class="help">
         <h4>У вас пока нет курсов. <a href="..">Начните обучение прямо сейчас</a></h4>
       </section>
     </c:if>
@@ -41,26 +41,53 @@
     <c:if test="${!course.isEmpty()}">
     <c:forEach items="${course}" var="courselist">
     <c:choose>
-    <c:when test="${course.indexOf(courselist) % 3==0}"><section id="left"></c:when>
-    <c:when test="${course.indexOf(courselist) % 3==1}"><section id="center"></c:when>
-      <c:otherwise><section id="right"></c:otherwise>
-        </c:choose>
-        <div>
-          <h4>${courselist.name}</h4>
-          <img src="${courselist.photolink}">
-          <div id="management">
-            <form method="get" action="/course/${courselist.id}" >
-              <button class="detailed" type="submit" value="Подробнее">Управление</button>
-            </form>
-          </div>
+    <c:when test="${course.indexOf(courselist) % 3==0}"><div class="row"><section class="col-3">
+    <div>
+      <h4>${courselist.name}</h4>
+      <img src="${courselist.photolink}">
+      <div id="management">
+        <form method="get" action="/course/${courselist.id}" >
+          <button class="detailed" type="submit" value="Подробнее">Управление</button>
+        </form>
+      </div>
+    </div>
+  </section>
+    </c:when>
+    <c:when test="${course.indexOf(courselist) % 3==1}"><section class="col-3">
+      <div>
+        <h4>${courselist.name}</h4>
+        <img src="${courselist.photolink}">
+        <div id="management">
+          <form method="get" action="/course/${courselist.id}" >
+            <button class="detailed" type="submit" value="Подробнее">Управление</button>
+          </form>
         </div>
-      </section>
+      </div>
+    </section>
+      </c:when>
+      <c:otherwise><section class="col-3">
+      <div>
+        <h4>${courselist.name}</h4>
+        <img src="${courselist.photolink}">
+        <div id="management">
+          <form method="get" action="/course/${courselist.id}" >
+            <button class="detailed" type="submit" value="Подробнее">Управление</button>
+          </form>
+        </div>
+      </div>
+    </section></div>
+        </c:otherwise>
+        </c:choose>
+
       </c:forEach>
       </c:if>
+</div>
+<div class="row">
+    <form method="get" action="/course/create">
+      <button class="detailed" type="submit" value="Подробнее">Создать новый курс</button>
+    </form>
+</div>
 
-      <form method="get" action="/course/create">
-        <button class="create-course" type="submit" value="Подробнее">Создать новый курс</button>
-      </form>
   </main>
   <footer>
     <p>Мы ничего не упеваем и ничего не понимаем.</p>
