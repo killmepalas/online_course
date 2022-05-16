@@ -43,4 +43,5 @@ public class SecurityServiceImpl implements SecurityService{
             logger.debug(String.format("Successfully %s auto logged in", username));
         }
     }
+
 }

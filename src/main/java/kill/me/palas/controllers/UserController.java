@@ -1,6 +1,5 @@
 package kill.me.palas.controllers;
 
-import kill.me.palas.models.Person;
 import kill.me.palas.models.User;
 import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
@@ -102,11 +101,10 @@ public class UserController {
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         userValidator.up_validate(user, bindingResult,db_user);
-            if (bindingResult.hasErrors())
-                return "user/edit";
-            userServiceImpl.update(id, user);
-            securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
-            return "redirect:/profile";
+            if (bindingResult.hasErrors()){return "user/edit";}
+        userServiceImpl.update(id, user);
+        securityService.autoLogin(user.getUsername(), user.getPassword());
+        return "redirect:/profile";
     }
 
     @PostMapping("/delete/{id}")
