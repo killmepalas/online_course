@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,7 +28,6 @@ public class AnswerController {
     public String index(Model model, @PathVariable("question_id") int id){
         List<Answer> answers = answerService.findAnswerByQuestion(id);
         model.addAttribute("answers", answers);
-        model.addAttribute("question", id);
         return "answer/index";
     }
 
@@ -62,8 +62,9 @@ public class AnswerController {
         return "redirect:/answer/" + question.getId();
     }
 
-    @PostMapping("/delete/{answer_id}/{question_id}")
-    public String delete(@PathVariable int answer_id, @PathVariable int question_id) {
+    @PostMapping("/delete/{answer_id}")
+    public String delete(@PathVariable int answer_id) {
+        int question_id = answerService.findQuestion(answer_id).getId();
         answerService.delete(answer_id);
         return "redirect:/answer/" + question_id;
     }

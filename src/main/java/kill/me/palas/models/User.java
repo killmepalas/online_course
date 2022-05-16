@@ -176,6 +176,14 @@ public class User {
         this.testGrades = testGrades;
     }
 
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
+    }
+
     public List<CourseGrade> getCourseGrades() {
         return courseGrades;
     }

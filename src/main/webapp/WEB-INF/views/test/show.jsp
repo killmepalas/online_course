@@ -34,6 +34,7 @@
                 <p id="description">${test.description}</p>
                 <p>${test.start}</p>
                 <p>${test.stop}</p>
+                <p>${test.count_attempt}</p>
             </div>
             <div>
                 <form method="get" action="/test/update/${test.id}">
