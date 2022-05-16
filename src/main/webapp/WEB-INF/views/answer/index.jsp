@@ -40,7 +40,7 @@
                     <div>
                         <h4>№ ${answers.indexOf(answer)+1}. ${answer.text}</h4>
 
-                        <c:if test="${answer.is_right == 1}">
+                        <c:if test="${answer.is_right == 'true'}">
                             <p>Правильный ответ</p>
                         </c:if>
                     </div>
@@ -50,7 +50,7 @@
                         </form>
                     </div>
                     <div>
-                        <form method="post" action="/answer/delete/${answer.id}/${answer.question.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <form method="post" action="/answer/delete/${answer.id}?${_csrf.parameterName}=${_csrf.token}">
                             <input type="submit"   value="Удалить">
                         </form>
                     </div>
@@ -58,7 +58,7 @@
             </c:forEach>
         </c:if>
         <section id="center">
-            <form method="get" action="/answer/create/${question}">
+            <form method="get" action="/answer/create/${question_id}">
                 <button class="detailed" type="submit" >Добавить ответ</button>
             </form>
         </section>

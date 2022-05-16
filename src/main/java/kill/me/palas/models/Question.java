@@ -13,7 +13,7 @@ public class Question {
     private int id;
 
     @NotEmpty(message = "Вопрос не может быть пустым")
-    @Size(min=5,max=200,message = "Вопрос не должен быть короче 5 и длиннее 200 символов")
+    @Size(min=2,max=200,message = "Вопрос не должен быть короче 2 и длиннее 200 символов")
     @Column(name = "text")
     private String text;
 
