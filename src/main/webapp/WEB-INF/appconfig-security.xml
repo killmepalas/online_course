@@ -11,6 +11,9 @@
         <intercept-url pattern="/" access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN','ROLE_TEACHER')"/>
         <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN','ROLE_TEACHER')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/test/update" access="hasRole('ROLE_TEACHER')"/>
+        <intercept-url pattern="/course/update" access="hasRole('ROLE_TEACHER')"/>
+        <intercept-url pattern="/test/update" access="hasRole('ROLE_TEACHER')"/>
 
         <form-login login-page="/login" default-target-url="/course" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
