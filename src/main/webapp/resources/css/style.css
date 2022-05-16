@@ -44,6 +44,11 @@ body {
 
 form{
     margin-bottom: 5px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
 }
 .updatediv{
     position:absolute;
