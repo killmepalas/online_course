@@ -55,10 +55,6 @@
                     <form:errors path="stop"></form:errors>
                 </spring:bind>
 
-                <spring:bind path="count_attempt">
-                    <form:input type="text" path="count_attempt" class="form-control" value="${test.count_attempt}" placeholder="Пока пусто"></form:input>
-                    <form:errors path="count_attempt"></form:errors>
-                </spring:bind>
                 <form method="post" action="/test/create/${course}">
                     <button class="create" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
                 </form>

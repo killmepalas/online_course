@@ -57,9 +57,6 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-    private List<Attempt> attempts;
-
     @Transient
     private int rating;
 
@@ -174,14 +171,6 @@ public class User {
 
     public void setTestGrades(List<TestGrade> testGrades) {
         this.testGrades = testGrades;
-    }
-
-    public List<Attempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(List<Attempt> attempts) {
-        this.attempts = attempts;
     }
 
     public List<CourseGrade> getCourseGrades() {
