@@ -28,6 +28,7 @@
 <div id="container">
     <main>
         <section>
+
             <form:form method="POST" modelAttribute="answer" >
                 <h2>Редактирование ответов на вопрос</h2>
 
@@ -39,10 +40,9 @@
                 </spring:bind>
 
                 <spring:bind path="is_right">
-                        <form:input type="text" path="is_right" class="form-control" value="${answer.is_right}" placeholder="Пока пусто"></form:input>
-                        <form:errors path="is_right"></form:errors>
+                        <label>Правильный ответ</label>
+                        <form:checkbox path="is_right" class="form-control" value="${answer.is_right}" placeholder="Пока пусто"/>
                 </spring:bind>
-
 
                 <form method="post" action="/answer/update/${answer.id}">
                     <button class="update" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>

@@ -19,7 +19,7 @@ public class Test {
     private int id;
 
     @NotEmpty(message = "Пожалуйста, введите название")
-    @Size(min = 2, max = 30, message = "Название не должно быть короче 2 и длиннее 30 символов")
+    @Size(min = 2, max = 50, message = "Название не должно быть короче 2 и длиннее 50 символов")
     @Column(name = "name")
     private String name;
 
@@ -39,6 +39,11 @@ public class Test {
     @Temporal(TemporalType.TIMESTAMP)
     private Date stop;
 
+    @Column(name="count_attempt")
+    @NotNull
+    @Min(value = 1, message = "Попыток не может быть меньше 1")
+    private int count_attempt;
+
     @ManyToOne()
     @JoinColumn(name = "course_id")
     private Course course;
@@ -56,11 +61,12 @@ public class Test {
 
     }
 
-    public Test(String name, String description, Date start, Date stop) {
+    public Test(String name, String description, Date start, Date stop, int count_attempt) {
         this.name = name;
         this.description = description;
         this.start = start;
         this.stop = stop;
+        this.count_attempt = count_attempt;
     }
 
     public int getId() {
@@ -101,6 +107,22 @@ public class Test {
 
     public void setStop(Date stop) {
         this.stop = stop;
+    }
+
+    public int getCount_attempt() {
+        return count_attempt;
+    }
+
+    public void setCount_attempt(int count_attempt) {
+        this.count_attempt = count_attempt;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 
     public Course getCourse() {

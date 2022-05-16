@@ -32,9 +32,15 @@
                 <h2 class="form-signin-heading">Добавление ответов</h2>
                 <spring:bind path="text">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="text" class="form-control" value="${answer.text}"
-                                    placeholder="Пока пусто"></form:input>
+                        <form:input type="text" path="text" class="form-control" placeholder="Пока пусто"></form:input>
                         <form:errors path="text"></form:errors>
+                    </div>
+                </spring:bind>
+
+                <spring:bind path="is_right">
+                    <div>
+                        <label>Правильный ответ</label>
+                        <form:checkbox path="is_right" class="form-control" name="is_right"/>
                     </div>
                 </spring:bind>
 

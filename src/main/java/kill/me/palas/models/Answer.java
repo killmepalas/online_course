@@ -12,7 +12,7 @@ public class Answer {
     private int id;
 
     @NotEmpty(message = "Пожалуйста, введите ответ")
-    @Size(min=2, max=200, message = "Ответ не должен быть короче 2 и длиннее 200 символов")
+    @Size(min=2, max=500, message = "Ответ не должен быть короче 2 и длиннее 500 символов")
     @Column(name="text")
     private String text;
 

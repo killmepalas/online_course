@@ -14,7 +14,7 @@ public class Course {
     private int id;
 
     @NotEmpty(message = "Пожалуйста, введите название")
-    @Size(min = 2, max = 30, message = "Название не должно быть короче 2 и длиннее 30 символов")
+    @Size(min = 2, max = 50, message = "Название не должно быть короче 2 и длиннее 50 символов")
     @Column(name = "name")
     private String name;
 
