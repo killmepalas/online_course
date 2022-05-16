@@ -1,9 +1,6 @@
 package kill.me.palas.controllers;
 
-import kill.me.palas.models.Course;
-import kill.me.palas.models.Person;
-import kill.me.palas.models.Test;
-import kill.me.palas.models.User;
+import kill.me.palas.models.*;
 import kill.me.palas.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,6 +24,9 @@ public class CourseController{
 
     @Autowired
     TestService testService;
+
+    @Autowired
+    SecurityServiceImpl securityService;
 
     @GetMapping()
     public String index (Model model) {
@@ -115,6 +115,8 @@ public class CourseController{
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         courseService.save(course, db_user);
+        userService.setRoles(db_user,"ROLE_TEACHER");
+//        securityService.update(db_user.getUsername(), db_user.getPassword());
         return "redirect:/course/teach";
     }
 }

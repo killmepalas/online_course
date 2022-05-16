@@ -34,7 +34,7 @@
                     <h4><a href="/login">Пожалуйста, войдите</a></h4>
                 </c:when>
                 <c:otherwise>
-                    <form method="post" action="/course/create">
+                    <form method="get" action="/course/create">
                         <button class="teach" type="submit" value="create">Создать курс</button>
                     </form>
                 </c:otherwise>

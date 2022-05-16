@@ -41,7 +41,7 @@ public class User {
     @Column(name="photo")
     private String photolink;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_role", joinColumns = @JoinColumn(name="users_id"),
     inverseJoinColumns = @JoinColumn(name="roles_id"))
     private Set<Role> roles;

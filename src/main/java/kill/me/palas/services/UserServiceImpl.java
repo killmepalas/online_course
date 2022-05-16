@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +40,13 @@ public class UserServiceImpl implements UserService{
     public User getCurrentAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findByUsername(auth.getName());
+    }
+
+    public void setRoles(User user, String role){
+        Set<Role> roles = user.getRoles();
+        roles.add(roleRepository.findRoleByName(role));
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 
     @Override
