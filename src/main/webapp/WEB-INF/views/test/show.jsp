@@ -30,25 +30,25 @@
     <main id="course">
         <section class="help">
             <div class="show">
-                <h2>${test.name}</h2>
+                <h1 class="description">${test.name}</h1>
                 <p id="description">${test.description}</p>
-                <p>${test.start}</p>
-                <p>${test.stop}</p>
-                <p>${test.count_attempt}</p>
+                <p id="description">Дата начала: ${test.start}</p>
+                <p id="description">Дата окончания: ${test.stop}</p>
+                <p id="description">Количество попыток: ${test.count_attempt}</p>
             </div>
             <div>
                 <form method="get" action="/test/update/${test.id}">
-                    <input type="submit" value="Редактировать">
+                    <input class="test" type="submit" value="Редактировать">
                 </form>
             </div>
             <div>
                 <form method="post" action="/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
-                    <input type="submit"   value="Удалить">
+                    <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
                 </form>
             </div>
             <div>
                 <form method="get" action="/question/${test.id}">
-                    <input type="submit" value="Конструктор">
+                    <input class="test" type="submit" value="Конструктор">
                 </form>
             </div>
         </section>

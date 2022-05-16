@@ -78,6 +78,31 @@ form{
     width: 250px;
 }
 
+.test {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #1A1A1A;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-width: 150px;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+}
+
 .detailed, .update, .delete, .create-course, .button-teach input[type=submit], .formcource {
     appearance: none;
     background-color: transparent;
@@ -106,18 +131,18 @@ form{
     will-change: transform;
 }
 
-.detailed:disabled, .update:disabled, .delete:disabled, .create-course:disabled, .button-teach input[type=submit]:disabled, .formcource:disabled {
+.detailed:disabled, .update:disabled, .delete:disabled, .create-course:disabled, .button-teach input[type=submit]:disabled, .formcource:disabled, .test:disabled {
     pointer-events: none;
 }
 
-.detailed:hover, .update:hover, .delete:hover, create-course:hover, .button-teach input[type=submit]:hover, .formcource:hover {
+.detailed:hover, .update:hover, .delete:hover, create-course:hover, .button-teach input[type=submit]:hover, .formcource:hover, .test:hover {
     color: #fff;
     background-color: #1A1A1A;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.detailed:active, .update:active, .delete:active, create-course:active, .button-teach input[type=submit]:active, .formcource:active {
+.detailed:active, .update:active, .delete:active, create-course:active, .button-teach input[type=submit]:active, .formcource:active, .test:active {
     box-shadow: none;
     transform: translateY(0);
 }
@@ -247,7 +272,7 @@ footer {
 }
 .help {
     width: 90%;
-    height: 90%;
+    min-height: 90%;
     margin: 0 auto;
     padding: 2%;
     /*color: white;*/
@@ -325,6 +350,9 @@ input[type=text], input[type=password], input[type=date]{
     width: 250px;
     margin-top: 5px;
 }
+.formtext {
+    font-size: 15px;
+}
 
 #course p {
     font-size: 20px;
@@ -398,6 +426,10 @@ p#description{
     font-size: 20px;
 }
 
+h1.description{
+    text-align: justify;
+}
+
 progress {
     border:0;
     width: 300px;
@@ -421,7 +453,7 @@ progress::-moz-progress-bar {
 }
 
 .col-3 {
-    width: 280px; /* Можно задать любую другую ширину блока */
+    width: 280px;
     margin: .5rem;
     justify-content: center; align-items: center
 }
@@ -433,14 +465,7 @@ progress::-moz-progress-bar {
     align-content: center;
     justify-content: space-evenly;
 }
-.modal{
-    padding: 50px;
-    background: #ccc;
-    position: fixed; top: 50%; left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
+
 /*option {
     padding-bottom: 200px;
 }
