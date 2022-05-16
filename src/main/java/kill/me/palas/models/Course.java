@@ -22,7 +22,7 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    @Min(value = 1, message = "Минимальная стоимость - 1 рубль")
+    @Min(value = 0, message = "Минимальная стоимость - 0 рублей")
     @Column(name = "price")
     private int price;
 
