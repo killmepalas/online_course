@@ -51,17 +51,21 @@ public class TestController {
         User db_user = userService.findByUsername(loggedInUser.getName());
 
         boolean check = false;
-        for (Course course: db_user.getCourses()){
-            if (course.getId() == id ){
-                check = true;
-                model.addAttribute("status","student");
-                break;
+
+        if (db_user != null){
+            for (Course course: db_user.getCourses()){
+                if (course.getId() == id ){
+                    check = true;
+                    model.addAttribute("status","student");
+                    break;
+                }
             }
         }
 
-        if (db_user !=null && db_user.getId() == courseService.findTeacher(id).getId()){
+        if (db_user != null && db_user.getId() == courseService.findTeacher(id).getId()){
             model.addAttribute("status", "teacher");
-        } else if(db_user == null ||  check == false){return "error/not_access";}
+        } else if (db_user == null || check == false) {return "error/not_access";}
+
 
         List<Test> tests = testService.findTestByCourse(id);
         model.addAttribute("tests", tests);
