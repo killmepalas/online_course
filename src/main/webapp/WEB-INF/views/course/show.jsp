@@ -38,19 +38,8 @@
                 <p id="description">${course.description}</p>
             </div>
             <c:choose>
-                <c:when test="${teach_course != 'teacher'}">
-                    <div class="not-teach">
-                        <form method="post" action="/course/add/${course.id}">
-                            <c:if test="${course.price != 0}">
-                                <input type="submit" value=${course.price}>
-                            </c:if>
-                            <c:if test="${course.price==0}">
-                                <input type="submit" value="Бесплатно">
-                            </c:if>
-                        </form>
-                    </div>
-                </c:when>
-                <c:otherwise>
+
+                <c:when test="${teach_course == 'teacher'}">
                     <div class="button-teach">
                         <div class="updatediv">
                             <form method="get" action="/course/update/${course.id}">
@@ -67,6 +56,27 @@
                                 <input type="submit" value="Конструктор">
                             </form>
                         </div>
+                    </div>
+                </c:when>
+
+                <c:when test="${teach_course == 'bought'}">
+                    <div class="not-teach">
+                        <form method="get" action="/test/${course.id}">
+                            <input type="submit" value="Обучение">
+                        </form>
+                    </div>
+                </c:when>
+
+                <c:otherwise>
+                    <div class="not-teach">
+                        <form method="post" action="/course/add/${course.id}">
+                            <c:if test="${course.price != 0}">
+                                <input type="submit" value=${course.price}>
+                            </c:if>
+                            <c:if test="${course.price==0}">
+                                <input type="submit" value="Бесплатно">
+                            </c:if>
+                        </form>
                     </div>
                 </c:otherwise>
             </c:choose>

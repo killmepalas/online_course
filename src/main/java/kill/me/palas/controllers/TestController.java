@@ -2,8 +2,8 @@ package kill.me.palas.controllers;
 
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Test;
-import kill.me.palas.models.User;
 import kill.me.palas.services.TestService;
+import kill.me.palas.services.UserServiceImpl;
 import kill.me.palas.validators.TestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,11 +19,19 @@ import java.util.List;
 @Controller
 @RequestMapping("/test")
 public class TestController {
-    @Autowired
-    TestService testService;
+
+    private TestService testService;
+
+    private TestValidator testValidator;
+
+    private UserServiceImpl userService;
 
     @Autowired
-    TestValidator testValidator;
+    public TestController(TestService testService, TestValidator testValidator, UserServiceImpl userService){
+        this.testService = testService;
+        this.testValidator = testValidator;
+        this.userService = userService;
+    }
 
     @GetMapping("/find")
     public String find(@RequestParam(value = "test") String name, Model model){
@@ -33,6 +41,9 @@ public class TestController {
 
     @GetMapping("/{id}")
     public String index(Model model, @PathVariable("id") int id){
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
         List<Test> tests = testService.findTestByCourse(id);
         model.addAttribute("tests", tests);
         model.addAttribute("course",id);
