@@ -47,7 +47,7 @@
 
                 <spring:bind path="start">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="date" path="start" class="form-control" value=" ${test.start}>" placeholder="Пока пусто"></form:input>
+                        <form:input type="date" path="start" class="form-control" value="${test.start}" placeholder="Пока пусто"></form:input>
                         <form:errors path="start"></form:errors>
                     </div>
                 </spring:bind>
@@ -57,11 +57,6 @@
                     <form:input type="date" path="stop" class="form-control" value="${test.stop}" placeholder="Пока пусто"></form:input>
                     <form:errors path="stop"></form:errors>
                 </div>
-                </spring:bind>
-
-                <spring:bind path="count_attempt">
-                    <form:input type="text" path="count_attempt" class="form-control" value="${test.count_attempt}" placeholder="Пока пусто"></form:input>
-                    <form:errors path="count_attempt"></form:errors>
                 </spring:bind>
 
                 <form method="post" action="/test/update/${test.id}">

@@ -39,11 +39,6 @@ public class Test {
     @Temporal(TemporalType.TIMESTAMP)
     private Date stop;
 
-    @Column(name="count_attempt")
-    @NotNull
-    @Min(value = 1, message = "Попыток не может быть меньше 1")
-    private int count_attempt;
-
     @ManyToOne()
     @JoinColumn(name = "course_id")
     private Course course;
@@ -54,19 +49,14 @@ public class Test {
     @OneToMany(mappedBy="test", cascade = CascadeType.ALL)
     private List<TestGrade> testGrades;
 
-    @OneToMany(mappedBy="test", cascade = CascadeType.ALL)
-    private List<Attempt> attempts;
-
     public Test(){
 
     }
-
-    public Test(String name, String description, Date start, Date stop, int count_attempt) {
+    public Test(String name, String description, Date start, Date stop) {
         this.name = name;
         this.description = description;
         this.start = start;
         this.stop = stop;
-        this.count_attempt = count_attempt;
     }
 
     public int getId() {
@@ -107,22 +97,6 @@ public class Test {
 
     public void setStop(Date stop) {
         this.stop = stop;
-    }
-
-    public int getCount_attempt() {
-        return count_attempt;
-    }
-
-    public void setCount_attempt(int count_attempt) {
-        this.count_attempt = count_attempt;
-    }
-
-    public List<Attempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(List<Attempt> attempts) {
-        this.attempts = attempts;
     }
 
     public Course getCourse() {
