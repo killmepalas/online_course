@@ -51,7 +51,7 @@
                 <button class="update" type="submit" value="update">Обновить данные профиля</button>
             </form>
 
-            <form method="get" action="/delete/${user.id}">
+            <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                 <button class="update" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
             </form>
 
