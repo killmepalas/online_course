@@ -27,9 +27,9 @@
 </header>
 <div id="container">
     <main>
-        <section>
+        <section class="help">
             <form:form method="POST" modelAttribute="answer" >
-                <h2 class="form-signin-heading">Добавление ответов</h2>
+                <h1 class="form-signin-heading">Добавление ответа</h1>
                 <spring:bind path="text">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="text" class="form-control" placeholder="Пока пусто"></form:input>
@@ -45,7 +45,7 @@
                 </spring:bind>
 
                 <form method="post" action="/answer/create/${question}">
-                    <button class="create" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Добавить</button>
+                    <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Добавить</button>
                 </form>
             </form:form>
         </section>

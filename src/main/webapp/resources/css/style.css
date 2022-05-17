@@ -148,19 +148,19 @@ form{
 }
 
 .teach {
-    color:#00c6ff;
+    color: #000000;
     padding: 10px 20px;
-    width: 200px;
-    text-decoration:none;
-    text-align:center;
-    margin:20px auto;
+    width: 250px;
+    text-decoration: none;
+    text-align: center;
+    margin: 20px auto;
     display: block;
-    background-image: linear-gradient(to left,transparent,transparent 50%,#00c6ff 50%,#00c6ff);
+    background-image: linear-gradient(to left,white,white 50%, rgb(0, 0, 0) 50%, rgb(0, 0, 0));
     background-position: 100% 0;
     background-size: 200% 100%;
     transition: all .25s ease-in;
     font: 400 18px tahoma;
-    border: 1px solid #00C6FF;
+    border: 2px solid #000000;
 }
 
 .teach:hover {
@@ -349,6 +349,10 @@ input[type=text], input[type=password], input[type=date]{
     border-radius:10px;
     width: 250px;
     margin-top: 5px;
+    margin-bottom: 5px;
+    height: 50px;
+    font-size: 16px;
+    color: #3B3B3B;
 }
 .formtext {
     font-size: 15px;
@@ -461,11 +465,35 @@ progress::-moz-progress-bar {
 .row {
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: end;
     align-content: center;
     justify-content: space-evenly;
 }
 
+table {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+
+tr#true{
+    color: #4fe881;
+    font-weight: bold;
+}
+
+tr#false{
+    color: #f01616;
+    font-weight: bold;
+}
+label{
+    font-size: 14px;
+    color: #3B3B3B;
+}
 /*option {
     padding-bottom: 200px;
 }

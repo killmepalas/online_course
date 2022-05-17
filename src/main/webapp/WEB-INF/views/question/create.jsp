@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Создание курса</title>
+    <title>Создание вопроса</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 </head>
 
@@ -27,19 +27,19 @@
 </header>
 <div id="container">
     <main>
-        <section>
+        <section class="help">
             <form:form method="POST" modelAttribute="question" >
-                <h2 class="form-signin-heading">Создание курса</h2>
+                <h1 class="form-signin-heading">Создание вопроса</h1>
                 <spring:bind path="text">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="text" class="form-control" value="${question.text}"
-                                    placeholder="Пока пусто"></form:input>
+                                    placeholder="Вопросы?"></form:input>
                         <form:errors path="text"></form:errors>
                     </div>
                 </spring:bind>
 
                 <form method="post" action="/question/create/${test}">
-                    <button class="create" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Добавить</button>
+                    <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Добавить</button>
                 </form>
             </form:form>
         </section>
