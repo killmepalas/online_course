@@ -178,4 +178,9 @@ public class UserController {
         return "redirect:/index";
     }
 
+    @PostMapping("/setRole/{role_id}/{user_id}")
+    public String setRoles(@PathVariable int role_id, @PathVariable int user_id){
+        userServiceImpl.setRoles(user_id,role_id);
+        return "redirect: /index";
+    }
 }

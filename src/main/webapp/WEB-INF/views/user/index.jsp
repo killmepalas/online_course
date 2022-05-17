@@ -47,6 +47,9 @@
                         <th>Дата рождения</th>
                         <th>Рейтинг</th>
                         <th>Удалить</th>
+                        <th>Студент</th>
+                        <th>Преподаватель</th>
+                        <th>Админ</th>
                     </tr>
                     <c:forEach items="${users}" var="user">
                         <tr>
@@ -61,6 +64,22 @@
                                 <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                                     <input class="test" onclick="return confirm('Вы хотите удалить пользователя?')" type="submit"   value="Удалить">
                                 </form>
+                            </td>
+
+                            <td>
+                                    <form method="post" action="/setRole/1/${user.id}">
+                                        <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
+                                    </form>
+                            </td>
+                            <td>
+                                <form method="post" action="/setRole/2/${user.id}">
+                                    <button class="test" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
+                                </form>
+                            </td>
+                            <td>
+                                    <form method="post" action="/setRole/3/${user.id}">
+                                        <button class="test" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
+                                    </form>
                             </td>
                         </tr>
                     </c:forEach>

@@ -60,10 +60,12 @@
                     <button class="update" type="submit" value="index">Управление пользователями</button>
                 </form>
             </c:if>
-    <div class="detaileddiv">
-        <a onclick="document.forms['logoutForm'].submit()">Выйти</a>
-    </div>
 
+            <div>
+            <form id="logoutForm" method="post" action="${contextPath}/logout">
+                <button type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Выйти</button>
+            </form>
+            </div>
         </section>
     </main>
     <footer>
