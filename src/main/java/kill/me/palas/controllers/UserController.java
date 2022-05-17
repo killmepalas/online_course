@@ -3,6 +3,7 @@ package kill.me.palas.controllers;
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Role;
 import kill.me.palas.models.User;
+import kill.me.palas.repositories.RoleRepository;
 import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
 import kill.me.palas.services.UserServiceImpl;
@@ -46,6 +47,9 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     private String password;
 
@@ -150,7 +154,8 @@ public class UserController {
         userServiceImpl.delete(id);
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
-        if (username != null) {
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        if (db_user != null) {
             model.addAttribute("users",userServiceImpl.findAll());
             return "user/index";
         }
@@ -158,7 +163,10 @@ public class UserController {
     }
 
     @GetMapping("/create")
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") User user, Model model) {
+        List<Role> roles = roleRepository.findAll();
+        model.addAttribute("roles", roles);
+
         return "user/create";
     }
 
@@ -170,4 +178,9 @@ public class UserController {
         return "redirect:/index";
     }
 
+    @PostMapping("/setRole/{role_id}/{user_id}")
+    public String setRoles(@PathVariable int role_id, @PathVariable int user_id){
+        userServiceImpl.setRoles(user_id,role_id);
+        return "redirect: /index";
+    }
 }

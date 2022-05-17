@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -47,6 +46,14 @@ public class UserServiceImpl implements UserService{
         roles.add(roleRepository.findRoleByName(role));
         user.setRoles(roles);
         userRepository.save(user);
+    }
+
+    public void setRoles(int user, int role){
+        User user1 = userRepository.findById(user);
+        Set<Role> roles = user1.getRoles();
+        roles.add(roleRepository.findById(role));
+        user1.setRoles(roles);
+        userRepository.save(user1);
     }
 
     @Override
