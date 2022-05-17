@@ -27,10 +27,9 @@
 </header>
 <div id="container">
     <main>
-        <section>
-
+        <section class="help">
             <form:form method="POST" modelAttribute="answer" >
-                <h2>Редактирование ответов на вопрос</h2>
+                <h3>Редактирование ответа на вопрос</h3>
 
                 <spring:bind path="text">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -43,10 +42,11 @@
                         <label>Правильный ответ</label>
                         <form:checkbox path="is_right" class="form-control" value="${answer.is_right}" placeholder="Пока пусто"/>
                 </spring:bind>
-
-                <form method="post" action="/answer/update/${answer.id}">
-                    <button class="update" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
-                </form>
+<div>
+    <form method="post" action="/answer/update/${answer.id}">
+        <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
+    </form>
+</div>
             </form:form>
         </section>
     </main>
