@@ -28,38 +28,41 @@
 </header>
 <div id="container">
     <main id="course">
+        <section class="help">
         <c:if test="${answers.isEmpty()}">
-            <section>
-                <h4>Ответов на вопрос пока нет.</h4>
-            </section>
+            <h4>Ответов на вопрос пока нет.</h4>
         </c:if>
-
         <c:if test="${!answers.isEmpty()}">
+            <table>
+                <tr>
+                    <th>№</th>
+                    <th>Ответ</th>
+                    <th>Редактирование</th>
+                    <th>Удаление</th>
+                </tr>
             <c:forEach items="${answers}" var="answer">
-                <section>
-                    <div>
-                        <h4>№ ${answers.indexOf(answer)+1}. ${answer.text}</h4>
-
-                        <c:if test="${answer.is_right == 'true'}">
-                            <p>Правильный ответ</p>
-                        </c:if>
-                    </div>
-                    <div>
+                <c:choose>
+                    <c:when test="${answer.is_right == 'true'}"><tr id="true"></c:when>
+                    <c:when test="${answer.is_right != 'true'}"><tr id="false"></c:when>
+                </c:choose>
+                    <td>${answers.indexOf(answer)+1}</td>
+                    <td>${answer.text}</td>
+                    <td>
                         <form method="get" action="/answer/update/${answer.id}">
-                            <input type="submit" value="Редактировать">
+                            <input type="submit" class="test" value="Редактировать">
                         </form>
-                    </div>
-                    <div>
+                    </td>
+                    <td>
                         <form method="post" action="/answer/delete/${answer.id}?${_csrf.parameterName}=${_csrf.token}">
-                            <input type="submit"   value="Удалить">
+                            <input type="submit" class="test" value="Удалить">
                         </form>
-                    </div>
-                </section>
+                    </td>
+                </tr>
             </c:forEach>
+            </table>
         </c:if>
-        <section id="center">
             <form method="get" action="/answer/create/${question_id}">
-                <button class="detailed" type="submit" >Добавить ответ</button>
+                <button class="teach" type="submit" >Добавить ответ</button>
             </form>
         </section>
     </main>
