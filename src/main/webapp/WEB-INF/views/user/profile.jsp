@@ -51,7 +51,7 @@
                 <button class="update" type="submit" value="update">Обновить данные профиля</button>
             </form>
 
-            <form method="get" action="/delete/${user.id}">
+            <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                 <button class="update" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
             </form>
 
@@ -59,11 +59,17 @@
                 <form method="get" action="/index">
                     <button class="update" type="submit" value="index">Управление пользователями</button>
                 </form>
-            </c:if>
-    <div class="detaileddiv">
-        <a onclick="document.forms['logoutForm'].submit()">Выйти</a>
-    </div>
 
+                <form method="get" action="/course/index">
+                    <button class="update" type="submit" value="index">Управление курсами</button>
+                </form>
+            </c:if>
+
+            <div>
+            <form id="logoutForm" method="post" action="${contextPath}/logout">
+                <button type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Выйти</button>
+            </form>
+            </div>
         </section>
     </main>
     <footer>

@@ -47,6 +47,11 @@
                     <p id="money">Цена: ${courselist.price} ₽</p>
                 </c:if>
             </article>
+            <c:if test="${status == 'admin'}">
+                <form method="post" action="/course/delete/${courselist.id}">
+                    <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                </form>
+            </c:if>
             <form method="get" action="/course/${courselist.id}">
                 <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
             </form>
@@ -65,6 +70,11 @@
                         <p id="money">Цена: ${courselist.price} ₽</p>
                     </c:if>
                 </article>
+                <c:if test="${status == 'admin'}">
+                    <form method="post" action="/course/delete/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                    </form>
+                </c:if>
                 <form method="get" action="/course/${courselist.id}">
                     <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
                 </form>
@@ -83,6 +93,11 @@
                         <p id="money">Цена: ${courselist.price} ₽</p>
                     </c:if>
                 </article>
+                <c:if test="${status == 'admin'}">
+                    <form method="post" action="/course/delete/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                    </form>
+                </c:if>
                 <form method="get" action="/course/${courselist.id}">
                     <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
                 </form>

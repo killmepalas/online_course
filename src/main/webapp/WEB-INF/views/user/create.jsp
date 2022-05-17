@@ -32,51 +32,46 @@
             <spring:bind path="username">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="username" class="form-control" value="${user.username}"
-                                placeholder="Пока пусто" field="${username}"></form:input>
+                                placeholder="Логин" field="${username}"></form:input>
                     <form:errors path="username"></form:errors>
                 </div>
             </spring:bind>
 
             <spring:bind path="lastname">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="lastname" class="form-control" value="${user.lastname}" placeholder="Пока пусто"></form:input>
+                    <form:input type="text" path="lastname" class="form-control" value="${user.lastname}" placeholder="Фамилия"></form:input>
                     <form:errors path="lastname"></form:errors>
                 </div>
             </spring:bind>
 
             <spring:bind path="name">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="name" class="form-control" value="${user.name}" placeholder="Пока пусто"></form:input>
+                    <form:input type="text" path="name" class="form-control" value="${user.name}" placeholder="Имя"></form:input>
                     <form:errors path="name"></form:errors>
                 </div>
             </spring:bind>
 
             <spring:bind path="midname">
                 <div class="form-group">
-                    <form:input type="text" path="midname" class="form-control" value="${user.midname}" placeholder="Пока пусто"></form:input>
+                    <form:input type="text" path="midname" class="form-control" value="${user.midname}" placeholder="Отчество"></form:input>
                     <form:errors path="midname"></form:errors>
                 </div>
             </spring:bind>
 
             <spring:bind path="dateOfBirth">
                 <div class="form-group">
-                    <form:input type="date" path="dateOfBirth" class="form-control" value="${user.dateOfBirth}" placeholder="Пока пусто"></form:input>
+                    <form:input type="date" path="dateOfBirth" class="form-control" value="${user.dateOfBirth}" placeholder="Дата рождения"></form:input>
                     <form:errors path="dateOfBirth"></form:errors>
                 </div>
             </spring:bind>
 
             <spring:bind path="photolink">
-                <div id="edit">
-                    <img src="${user.photolink}">
-                </div>
-
                 <div class="form-group">
-                    <form:input type="text" path="photolink" class="form-control" value="${user.photolink}" placeholder="Ну пока пусть будет типа ссыль"></form:input>
+                    <form:input type="text" path="photolink" class="form-control" value="${user.photolink}" placeholder="Фото"></form:input>
                     <form:errors path="photolink"></form:errors>
                 </div>
             </spring:bind>
 
-            <h3 class="form-signin-heading">Хотите сменить пароль?</h3>
             <spring:bind path="password">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="password" path="password" class="form-control" value="${user.password}" placeholder="Пароль"></form:input>
@@ -92,8 +87,8 @@
                 </div>
             </spring:bind>
 
-            <form method="post" action="/create?${_csrf.parameterName}=${_csrf.token}">
-                <button class="update" type="submit" value="edit">Создать</button>
+            <form method="post" action="/create">
+                <button class="update" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
             </form>
         </form:form>
     </main>
