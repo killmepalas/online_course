@@ -5,11 +5,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>Личный кабинет</title>
+    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 
 </head>
@@ -33,12 +36,13 @@
                 <h2>${user.username}</h2>
                 <h4>${user.lastname} ${user.name} ${user.midname}</h4>
                 <h4>${user.dateOfBirth}</h4>
+                <c:if test="${rating != null}">
                 <h4>Рейтинг:</h4>
                 <h4>
                     <progress id="progressbar" value="${rating}" max="100"></progress>
                     <span class="progress-value">${rating}%</span>
                 </h4>
-
+                </c:if>
             </div>
 
             <img src="${user.photolink}" alt="фотку поставь">
@@ -47,13 +51,17 @@
                 <button class="update" type="submit" value="update">Обновить данные профиля</button>
             </form>
 
-            <form method="post" action="/delete/${user.id}">
-                <button onclick="return confirm('Вы действительно хотите удалить свой профиль?')" class="delete" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Удалить профиль</button>
+            <form method="get" action="/delete/${user.id}">
+                <button class="update" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
             </form>
+
+            <c:if test="${status == 'admin'}">
+                <form method="get" action="/index">
+                    <button class="update" type="submit" value="index">Управление пользователями</button>
+                </form>
+            </c:if>
     <div class="detaileddiv">
-        <form method="get" action="/login">
-            <button class="logout" type="submit">Выход</button>
-        </form>
+        <a onclick="document.forms['logoutForm'].submit()">Выйти</a>
     </div>
 
         </section>
@@ -62,6 +70,8 @@
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
     </footer>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 
 </html>

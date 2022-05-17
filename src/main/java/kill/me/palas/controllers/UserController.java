@@ -1,5 +1,6 @@
 package kill.me.palas.controllers;
 
+import kill.me.palas.models.Course;
 import kill.me.palas.models.Role;
 import kill.me.palas.models.User;
 import kill.me.palas.services.SecurityService;
@@ -101,13 +102,26 @@ public class UserController {
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         if (db_user !=null){
+            Set<Role> roles = db_user.getRoles();
+            for (Role role: roles){
+                if (role.getId() == 3) model.addAttribute("status","admin");
+                else if (role.getId() == 2) {
+                    int rating = 80;
+                    model.addAttribute("rating",rating);
+                }
+            }
             model.addAttribute("user",db_user);
-            int rating = 80;
-            model.addAttribute("rating",rating);
             return "user/profile";
         }
         else return "error/not_auth";
     }
+
+    @GetMapping("/index")
+    public String index(Model model){
+        model.addAttribute("users",userServiceImpl.findAll());
+        return "user/index";
+    }
+
 
     @GetMapping("/update/{id}")
     public String update(Model model, @PathVariable("id") int id) {
@@ -132,9 +146,28 @@ public class UserController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") int id, Model model) {
         userServiceImpl.delete(id);
-        return "error/not_auth";
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        if (username != null) {
+            model.addAttribute("users",userServiceImpl.findAll());
+            return "user/index";
+        }
+        return "redirect:/login?logout";
+    }
+
+    @GetMapping("/create")
+    public String create(@ModelAttribute("user") User user) {
+        return "user/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()){return "user/create";}
+        userServiceImpl.save(user);
+        return "redirect:/index";
     }
 
 }
