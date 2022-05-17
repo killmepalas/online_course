@@ -32,15 +32,15 @@
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
         <c:if test="${status == 'teacher'}">
+        <section class="help">
             <c:if test="${tests.isEmpty()}">
-                <section class="help">
                 <h4>У курса пока нет тестов. Создайте свой первый тест прямо сейчас!</h4>
             </c:if>
                 <div>
                     <form method="get" action="/test/create/${id_course}">
                         <button class="detailed" type="submit" >Создать тест</button>
                     </form>
-                </div></section>
+                </div>
             <c:if test="${!tests.isEmpty()}">
                 <c:forEach items="${tests}" var="test">
                     <c:choose>
@@ -77,6 +77,7 @@
                     </c:choose>
                 </c:forEach>
             </c:if>
+        </section>
         </c:if>
 
         <c:if test="${status == 'student'}">
