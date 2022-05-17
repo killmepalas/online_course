@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/course")
@@ -32,12 +33,24 @@ public class CourseController{
 
     @GetMapping()
     public String index (Model model) {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+
+        if (db_user != null){
+            Set<Role> roles = db_user.getRoles();
+            for (Role role: roles)
+                if (role.getId() == 3) model.addAttribute("status","admin");
+
+        }
         model.addAttribute("course", courseService.findAll());
+
         return "course/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
+
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
