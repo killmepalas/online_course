@@ -70,7 +70,7 @@ form{
     width: 350px;
 }
 
-.button-teach input[type=submit]{
+.button-teach input[type=submit], .logout{
     width: 100%;
 }
 
@@ -103,7 +103,7 @@ form{
     will-change: transform;
 }
 
-.detailed, .update, .delete, .create-course, .button-teach input[type=submit], .formcource {
+.detailed, .update, .delete, .create-course, .button-teach input[type=submit], .formcource, .logout {
     appearance: none;
     background-color: transparent;
     border: 2px solid #1A1A1A;
@@ -131,18 +131,18 @@ form{
     will-change: transform;
 }
 
-.detailed:disabled, .update:disabled, .delete:disabled, .create-course:disabled, .button-teach input[type=submit]:disabled, .formcource:disabled, .test:disabled {
+.detailed:disabled, .update:disabled, .delete:disabled, .create-course:disabled, .button-teach input[type=submit]:disabled, .formcource:disabled, .test:disabled, .logout:disabled {
     pointer-events: none;
 }
 
-.detailed:hover, .update:hover, .delete:hover, create-course:hover, .button-teach input[type=submit]:hover, .formcource:hover, .test:hover {
+.detailed:hover, .update:hover, .delete:hover, create-course:hover, .button-teach input[type=submit]:hover, .formcource:hover, .test:hover, .logout:hover {
     color: #fff;
     background-color: #1A1A1A;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-.detailed:active, .update:active, .delete:active, create-course:active, .button-teach input[type=submit]:active, .formcource:active, .test:active {
+.detailed:active, .update:active, .delete:active, create-course:active, .button-teach input[type=submit]:active, .formcource:active, .test:active, .logout:active {
     box-shadow: none;
     transform: translateY(0);
 }
