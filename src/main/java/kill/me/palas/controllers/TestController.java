@@ -2,6 +2,7 @@ package kill.me.palas.controllers;
 
 import kill.me.palas.models.*;
 import kill.me.palas.services.CourseService;
+import kill.me.palas.services.QuestionService;
 import kill.me.palas.services.TestService;
 import kill.me.palas.services.UserServiceImpl;
 import kill.me.palas.validators.TestValidator;
@@ -28,13 +29,18 @@ public class TestController {
 
     private CourseService courseService;
 
+    private QuestionService questionService;
+
+    private int count;
+
     @Autowired
     public TestController(TestService testService, TestValidator testValidator,
-                          UserServiceImpl userService, CourseService courseService){
+                          UserServiceImpl userService, CourseService courseService, QuestionService questionService){
         this.testService = testService;
         this.testValidator = testValidator;
         this.userService = userService;
         this.courseService = courseService;
+        this.questionService = questionService;
     }
 
     @GetMapping("/find")
@@ -115,22 +121,18 @@ public class TestController {
         return "redirect:/test/" + course_id;
     }
 
-    @GetMapping({"/execute", "/execute/{id}"})
-    public String execute(@PathVariable(required = false) int id, Model model){
-        if (id == 0){
-            Question question = testService.findOne(id).getQuestions().get(0);
-            model.addAttribute("question", question);
-            List<Answer> answers = question.getAnswers();
-            model.addAttribute("answers",answers);
-        }
-//        List<Question> questions = testService.findOne(id).getQuestions();
-//        List<Answer> answers = questions.
-//        model.addAttribute("questions",questions);
-        return "e";
+    @GetMapping("start/{test_id}")
+    public String start(@PathVariable int test_id, Model model){
+        List<Question> questions = testService.findOne(test_id).getQuestions();
+        model.addAttribute("questions", questions);
+        count = 0;
+        return "test/execute";
     }
 
-    @PostMapping("/execute/{id}")
-    public String execute(@PathVariable int id){
+    @PostMapping({"/execute", "/execute/{question_id}"})
+    public String execute(@PathVariable(required = false) int question_id, Model model){
+        Question question = questionService.findOne(question_id);
+
         return "";
     }
 

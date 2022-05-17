@@ -30,22 +30,17 @@
     <main id="course">
         <section class="help">
             <div class="show">
-
-            </div>
-            <div>
-                <form method="get" action="/test/update/${test.id}">
-                    <input class="test" type="submit" value="Редактировать">
+                <c:forEach items="${questions}" var="question">
+                    <p>${questions.indexOf(question)+1}. ${question.text}</p>
+                        <form:form method="POST">
+                    <p>
+                            <form:radiobuttons path="answers" items="${question.answers}" />
+                    </p>
+                <form method="post" action="/test/execute/${question.id}/?${_csrf.parameterName}=${_csrf.token}">
+                    <button class="teach" type="submit">Следующий вопрос</button>
                 </form>
-            </div>
-            <div>
-                <form method="post" action="/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
-                    <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
-                </form>
-            </div>
-            <div>
-                <form method="get" action="/question/${test.id}">
-                    <input class="test" type="submit" value="Конструктор">
-                </form>
+                        </form:form>
+                </c:forEach>
             </div>
         </section>
     </main>
