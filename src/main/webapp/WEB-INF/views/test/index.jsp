@@ -37,7 +37,7 @@
                 <h4>У курса пока нет тестов. Создайте свой первый тест прямо сейчас!</h4>
             </c:if>
                 <div>
-                    <form method="get" action="/test/create/${course}">
+                    <form method="get" action="/test/create/${id_course}">
                         <button class="detailed" type="submit" >Создать тест</button>
                     </form>
                 </div></section>
