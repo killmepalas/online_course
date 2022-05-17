@@ -1,8 +1,6 @@
 package kill.me.palas.controllers;
 
-import kill.me.palas.models.Course;
-import kill.me.palas.models.Test;
-import kill.me.palas.models.User;
+import kill.me.palas.models.*;
 import kill.me.palas.services.CourseService;
 import kill.me.palas.services.TestService;
 import kill.me.palas.services.UserServiceImpl;
@@ -116,4 +114,24 @@ public class TestController {
         testService.delete(test_id);
         return "redirect:/test/" + course_id;
     }
+
+    @GetMapping({"/execute", "/execute/{id}"})
+    public String execute(@PathVariable(required = false) int id, Model model){
+        if (id == 0){
+            Question question = testService.findOne(id).getQuestions().get(0);
+            model.addAttribute("question", question);
+            List<Answer> answers = question.getAnswers();
+            model.addAttribute("answers",answers);
+        }
+//        List<Question> questions = testService.findOne(id).getQuestions();
+//        List<Answer> answers = questions.
+//        model.addAttribute("questions",questions);
+        return "e";
+    }
+
+    @PostMapping("/execute/{id}")
+    public String execute(@PathVariable int id){
+        return "";
+    }
+
 }
