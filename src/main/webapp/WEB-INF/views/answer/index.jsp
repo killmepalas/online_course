@@ -64,6 +64,9 @@
             <form method="get" action="/answer/create/${question_id}">
                 <button class="teach" type="submit" >Добавить ответ</button>
             </form>
+            <form method="get" action="/question/${test}">
+                <button class="teach" type="submit" >Назад</button>
+            </form>
         </section>
     </main>
     <footer>

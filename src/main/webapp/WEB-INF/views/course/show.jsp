@@ -32,51 +32,44 @@
             <div class="show">
                 <h2>${course.name}</h2>
                 <h4>Автор - ${teacher.username}</h4>
+                <p class="description">${course.description}</p>
             </div>
             <img src="${course.photolink}"/>
-            <div class="show">
-                <p id="description">${course.description}</p>
-            </div>
             <c:choose>
-
                 <c:when test="${teach_course == 'teacher'}">
-                    <div class="button-teach">
-                        <div class="updatediv">
-                            <form method="get" action="/course/update/${course.id}">
-                                <input type="submit" value="Редактировать">
-                            </form>
-                        </div>
-                        <div class="deletediv">
-                            <form method="post" action="/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
-                                <input type="submit" onclick="return confirm('Вы действительно хотите удалить данный курс?')" value="Удалить">
-                            </form>
-                        </div>
-                        <div class="detaileddiv">
-                            <form method="get" action="/test/${course.id}">
-                                <input type="submit" value="Конструктор">
-                            </form>
-                        </div>
+                    <div class="profile">
+                        <form method="get" action="/course/update/${course.id}">
+                            <input class="logout" type="submit" value="Редактировать">
+                        </form>
+                        <form method="post" action="/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                            <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите удалить данный курс?')" value="Удалить">
+                        </form>
+                        <form method="get" action="/test/${course.id}">
+                            <input class="logout" type="submit" value="Конструктор">
+                        </form>
                     </div>
                 </c:when>
 
                 <c:when test="${teach_course == 'bought'}">
-                    <div class="not-teach">
+                    <div class="profile">
                         <form method="get" action="/test/${course.id}">
-                            <input type="submit" value="Обучение">
+                            <input class="logout" type="submit" value="Обучение">
                         </form>
                     </div>
                 </c:when>
 
                 <c:otherwise>
-                    <div class="not-teach">
-                        <form method="post" action="/course/add/${course.id}">
-                            <c:if test="${course.price != 0}">
-                                <input type="submit" value=${course.price}>
-                            </c:if>
-                            <c:if test="${course.price==0}">
-                                <input type="submit" value="Бесплатно">
-                            </c:if>
-                        </form>
+                    <div class="profile">
+                        <div class="not-teach">
+                            <form method="post" action="/course/add/${course.id}">
+                                <c:if test="${course.price != 0}">
+                                    <input  type="submit" value=${course.price}>
+                                </c:if>
+                                <c:if test="${course.price==0}">
+                                    <input  type="submit" value="Бесплатно">
+                                </c:if>
+                            </form>
+                        </div>
                     </div>
                 </c:otherwise>
             </c:choose>

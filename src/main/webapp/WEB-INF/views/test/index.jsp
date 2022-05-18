@@ -41,6 +41,11 @@
                         <button class="detailed" type="submit" >Создать тест</button>
                     </form>
                 </div>
+            <div>
+                <form method="get" action="/course/${id_course}">
+                    <button class="detailed" type="submit" >Вернуться к курсу</button>
+                </form>
+            </div>
             <c:if test="${!tests.isEmpty()}">
                 <c:forEach items="${tests}" var="test">
                     <c:choose>
