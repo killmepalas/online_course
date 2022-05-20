@@ -1,10 +1,7 @@
 package kill.me.palas.controllers;
 
 import kill.me.palas.models.*;
-import kill.me.palas.services.CourseService;
-import kill.me.palas.services.QuestionService;
-import kill.me.palas.services.TestService;
-import kill.me.palas.services.UserServiceImpl;
+import kill.me.palas.services.*;
 import kill.me.palas.validators.TestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/test")
@@ -31,16 +29,22 @@ public class TestController {
 
     private QuestionService questionService;
 
-    private int count;
+    private AnswerService answerService;
+
+    private TestGradeService testGradeService;
 
     @Autowired
     public TestController(TestService testService, TestValidator testValidator,
-                          UserServiceImpl userService, CourseService courseService, QuestionService questionService){
+                          UserServiceImpl userService, CourseService courseService,
+                          QuestionService questionService, AnswerService answerService,
+                          TestGradeService testGradeService){
         this.testService = testService;
         this.testValidator = testValidator;
         this.userService = userService;
         this.courseService = courseService;
         this.questionService = questionService;
+        this.answerService = answerService;
+        this.testGradeService = testGradeService;
     }
 
     @GetMapping("/find")
@@ -61,6 +65,7 @@ public class TestController {
                 if (course.getId() == id ){
                     check = true;
                     model.addAttribute("status","student");
+                    model.addAttribute("grades", testGradeService.findByUser(db_user));
                     break;
                 }
             }
@@ -121,19 +126,56 @@ public class TestController {
         return "redirect:/test/" + course_id;
     }
 
-    @GetMapping("start/{test_id}")
-    public String start(@PathVariable int test_id, Model model){
-        List<Question> questions = testService.findOne(test_id).getQuestions();
-        model.addAttribute("questions", questions);
-        count = 0;
-        return "test/execute";
+    int mark;
+    @GetMapping("/start/{test_id}/{question_id}")
+    public String start(@PathVariable int test_id,
+                        @PathVariable int question_id, Model model,
+                        @ModelAttribute("answer") Answer answer){
+        if (question_id !=0){
+            Question q = new Question();
+            q.setId(0);
+            List<Question> questions = questionService.findQuestionByTest(test_id);
+            if (question_id == 1){
+                Question question = questionService.findQuestionByTestById(test_id,0);
+                List<Answer> answers = answerService.findAnswerByQuestion(question.getId());
+                model.addAttribute("question",question);
+                model.addAttribute("answers",answers);
+                mark = 0;
+                Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
+                model.addAttribute("next",next.getId());
+                return "test/execute";
+            } else {
+                Question question = questionService.findOne(question_id);
+                List<Answer> answers = answerService.findAnswerByQuestion(question_id);
+                Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
+                model.addAttribute("question", question);
+                model.addAttribute("answers", answers);
+                model.addAttribute("next", next.getId());
+                return "test/execute";
+            }
+        } else return "redirect:/test/" + testService.findCourse(test_id).getId();
     }
 
-    @PostMapping({"/execute", "/execute/{question_id}"})
-    public String execute(@PathVariable(required = false) int question_id, Model model){
-        Question question = questionService.findOne(question_id);
+    @PostMapping("/execute/{test_id}/{next}")
+    public String execute(@ModelAttribute("answer") Answer answer, BindingResult bindingResult,
+                          @PathVariable int next,
+                          @PathVariable int test_id){
+        testValidator.answers_validate(answer, bindingResult);
+        if (bindingResult.hasErrors())
+            return "test/execute";
+        int id_answer = answer.getId();
+        if (answerService.findOne(id_answer).getIs_right()){
+            mark +=1;
+        }
 
-        return "";
+        if (next == 0){
+            int grade = mark * 100/(questionService.findQuestionByTest(test_id).size());
+            Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+            User db_user = userService.findByUsername(loggedInUser.getName());
+            testGradeService.save(db_user,testService.findOne(test_id),grade);
+        }
+
+        return "redirect:/test/start/" + test_id + "/" + next;
     }
 
 }

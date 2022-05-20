@@ -98,7 +98,10 @@
                             <div>
                                 <h4>Название: ${test.name}</h4>
                                 <h4>Описание: ${test.description}</h4>
-                                <form method="get" action="/test/start/${test.id}">
+                                <c:forEach items="${grades}" var="grade">
+                                    <c:if test="${grade.test.id == test.id}"><h4>${grade.grade}</h4></c:if>
+                                </c:forEach>
+                                <form method="get" action="/test/start/${test.id}/1">
                                     <button class="detailed" type="submit" value="Пройти">Пройти</button>
                                 </form>
                             </div>
@@ -108,7 +111,10 @@
                             <div>
                                 <h4>Название: ${test.name}</h4>
                                 <h4>Описание: ${test.description}</h4>
-                                <form method="get" action="/test/start/${test.id}">
+                                <c:forEach items="${grades}" var="grade">
+                                    <c:if test="${grade.test.id == test.id}"><h4>${grade.grade}</h4></c:if>
+                                </c:forEach>
+                                <form method="get" action="/test/start/${test.id}/1">
                                     <button class="detailed" type="submit" value="Пройти">Пройти</button>
                                 </form>
                             </div>
@@ -118,7 +124,10 @@
                             <div>
                                 <h4>Название: ${test.name}</h4>
                                 <h4>Описание: ${test.description}</h4>
-                                <form method="get" action="/test/start/${test.id}">
+                                <c:forEach items="${grades}" var="grade">
+                                    <c:if test="${grade.test.id == test.id}"><h4>${grade.grade}</h4></c:if>
+                                </c:forEach>
+                                <form method="get" action="/test/start/${test.id}/1">
                                     <button class="detailed" type="submit" value="Пройти">Пройти</button>
                                 </form>
                             </div>

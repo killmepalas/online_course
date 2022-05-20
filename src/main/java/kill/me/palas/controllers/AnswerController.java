@@ -18,16 +18,19 @@ import java.util.List;
 @RequestMapping("/answer")
 public class AnswerController {
     private final AnswerService answerService;
+    private final QuestionService questionService;
 
     @Autowired
-    public AnswerController(AnswerService answerService) {
+    public AnswerController(AnswerService answerService, QuestionService questionService) {
         this.answerService = answerService;
+        this.questionService = questionService;
     }
 
     @GetMapping("/{question_id}")
     public String index(Model model, @PathVariable("question_id") int id){
         List<Answer> answers = answerService.findAnswerByQuestion(id);
         model.addAttribute("answers", answers);
+        model.addAttribute("test", questionService.findTest(id).getId());
         return "answer/index";
     }
 

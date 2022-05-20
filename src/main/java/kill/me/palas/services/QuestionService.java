@@ -59,4 +59,11 @@ public class QuestionService {
         Test test = foundQuestion.getTest();
         return test;
     }
+
+    public Question findQuestionByTestById(int test_id, int question_id){
+        Test test = testService.findOne(test_id);
+        List<Question> questions = questionRepository.findQuestionByTest(test);
+        Question question = questions.get(question_id);
+        return question;
+    }
 }
