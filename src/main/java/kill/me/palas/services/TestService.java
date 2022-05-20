@@ -1,6 +1,7 @@
 package kill.me.palas.services;
 
 import kill.me.palas.models.Course;
+import kill.me.palas.models.Question;
 import kill.me.palas.models.Test;
 import kill.me.palas.models.User;
 import kill.me.palas.repositories.TestRepository;

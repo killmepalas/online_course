@@ -29,19 +29,17 @@
 <div id="container">
     <main id="course">
         <section class="help">
-            <div class="show">
-                <c:forEach items="${questions}" var="question">
-                    <p>${questions.indexOf(question)+1}. ${question.text}</p>
-                        <form:form method="POST">
-                    <p>
-                            <form:radiobuttons path="answers" items="${question.answers}" />
-                    </p>
-                <form method="post" action="/test/execute/${question.id}/?${_csrf.parameterName}=${_csrf.token}">
+            <div>
+                <p>${question.text}</p>
+                <form:form modelAttribute="answer" action="/test/execute/${test_id}/${next}/?${_csrf.parameterName}=${_csrf.token}" method="POST">
+
+                    <c:forEach items="${answers}" var="ans">
+                        <form:radiobutton path="id" value="${ans.id}"/>${ans.text}<br/>
+                    </c:forEach>
                     <button class="teach" type="submit">Следующий вопрос</button>
-                </form>
-                        </form:form>
-                </c:forEach>
+                </form:form>
             </div>
+            <p>${next}</p>
         </section>
     </main>
     <footer>

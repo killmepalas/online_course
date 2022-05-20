@@ -1,6 +1,8 @@
 package kill.me.palas.services;
 
+import kill.me.palas.models.Test;
 import kill.me.palas.models.TestGrade;
+import kill.me.palas.models.User;
 import kill.me.palas.repositories.TestGradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +30,30 @@ public class TestGradeService {
     }
 
 
-    public void save(TestGrade testGrade) {
-        testGradeRepository.save(testGrade);
+    public void save(User user, Test test, int grade) {
+        List<TestGrade> testGrades = testGradeRepository.findAll();
+        boolean un = true;
+        if (!testGrades.isEmpty())
+            for (TestGrade tg : testGrades)
+                if (user.getId() == tg.getUser().getId() && test.getId() == tg.getTest().getId() && grade > tg.getGrade()) {
+                    testGradeRepository.delete(tg);
+                    break;
+                } else if (user.getId() == tg.getUser().getId() && test.getId() == tg.getTest().getId()){
+                    un = false;
+                    break;
+                }
+        if (un){
+            TestGrade testGrade = new TestGrade();
+            testGrade.setUser(user);
+            testGrade.setTest(test);
+            testGrade.setGrade(grade);
+            testGradeRepository.save(testGrade);
+        }
+    }
+
+    public List<TestGrade> findByUser(User user){
+        List<TestGrade> testGrades = testGradeRepository.findByUser(user);
+        return testGrades;
     }
 
 
