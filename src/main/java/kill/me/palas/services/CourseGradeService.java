@@ -75,4 +75,14 @@ public class CourseGradeService {
             courseGradeRepository.save(courseGrade);
         }
     }
+
+    public int getRating(User user){
+        int grades = 0;
+        List<CourseGrade> courseGrades = courseGradeRepository.findByUser(user);
+        for (CourseGrade cg: courseGrades){
+            grades +=cg.getGrade();
+        }
+        int rating = grades / courseGrades.size();
+        return rating;
+    }
 }

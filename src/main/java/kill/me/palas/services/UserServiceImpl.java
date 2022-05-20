@@ -1,5 +1,6 @@
 package kill.me.palas.services;
 
+import kill.me.palas.models.CourseGrade;
 import kill.me.palas.models.User;
 import kill.me.palas.models.Role;
 import kill.me.palas.repositories.UserRepository;
@@ -88,5 +89,4 @@ public class UserServiceImpl implements UserService{
     public void delete(int id) {
         userRepository.deleteById(id);
     }
-
 }
