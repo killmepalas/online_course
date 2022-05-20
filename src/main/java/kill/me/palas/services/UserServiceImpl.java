@@ -73,10 +73,11 @@ public class UserServiceImpl implements UserService{
 
     public void update(int id, User updatedUser, User oldUser) {
         updatedUser.setId(id);
-        if (bCryptPasswordEncoder.encode(updatedUser.getPassword()) == oldUser.getPassword()){
+        if (updatedUser.getPassword() == oldUser.getPassword()){
             updatedUser.setPassword(oldUser.getPassword());
         } else updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
         updatedUser.setRoles(oldUser.getRoles());
+        updatedUser.setCourses(oldUser.getCourses());
         userRepository.save(updatedUser);
     }
 

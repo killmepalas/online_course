@@ -30,13 +30,13 @@ public class Test {
     @NotNull
     @Column(name = "start")
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date start;
 
     @Column(name = "stop")
     @NotNull
     @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date stop;
 
     @ManyToOne()
