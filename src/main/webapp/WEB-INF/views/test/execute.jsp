@@ -39,7 +39,6 @@
                     <button class="teach" type="submit">Следующий вопрос</button>
                 </form:form>
             </div>
-            <p>${next}</p>
         </section>
     </main>
     <footer>
