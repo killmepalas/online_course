@@ -88,7 +88,7 @@
             </spring:bind>
 
             <form method="post" action="/create">
-                <button class="update" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
+                <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
             </form>
         </form:form>
     </main>

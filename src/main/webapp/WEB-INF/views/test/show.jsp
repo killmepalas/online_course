@@ -29,26 +29,31 @@
 <div id="container">
     <main id="course">
         <section class="help">
-            <div class="show">
+            <div class="cart">
                 <h1 class="description">${test.name}</h1>
-                <p id="description">${test.description}</p>
-                <p id="description">Дата начала: ${test.start}</p>
-                <p id="description">Дата окончания: ${test.stop}</p>
-            </div>
-            <div>
-                <form method="get" action="/test/update/${test.id}">
-                    <input class="test" type="submit" value="Редактировать">
-                </form>
-            </div>
-            <div>
-                <form method="post" action="/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
-                    <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
-                </form>
-            </div>
-            <div>
-                <form method="get" action="/question/${test.id}">
-                    <input class="test" type="submit" value="Конструктор">
-                </form>
+                <p class="description">${test.description}</p>
+                <p class="description">Дата начала: ${test.start}</p>
+                <p class="description">Дата окончания: ${test.stop}</p>
+                <div>
+                    <form method="get" action="/test/update/${test.id}">
+                        <input class="test" type="submit" value="Редактировать">
+                    </form>
+                </div>
+                <div>
+                    <form method="post" action="/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
+                    </form>
+                </div>
+                <div>
+                    <form method="get" action="/question/${test.id}">
+                        <input class="test" type="submit" value="Конструктор">
+                    </form>
+                </div>
+                <div>
+                    <form method="get" action="/test/${test.course.id}">
+                        <input class="test" type="submit" value="Назад">
+                    </form>
+                </div>
             </div>
         </section>
     </main>
