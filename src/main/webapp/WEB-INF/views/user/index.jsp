@@ -88,6 +88,9 @@
             <form method="get" action="/create">
                 <button class="teach" type="submit" >Добавить пользователя</button>
             </form>
+            <form method="get" action="/profile">
+                <button class="teach" type="submit" >Назад</button>
+            </form>
         </section>
     </main>
     <footer>

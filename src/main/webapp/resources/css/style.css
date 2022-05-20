@@ -211,8 +211,8 @@ nav ul li:hover {
     width: 50%;
     display: inline-block;
     padding: 2%;
-    margin-left: 30%;
     position:relative;
+    float: right;
 }
 
 .edit{
@@ -243,6 +243,9 @@ nav ul li:hover {
     width: 90%;
     display: inline-block;
     padding: 2%;
+    /*height:auto !important;  real browsers
+    height:100%;  IE6: treaded as min-height
+    min-height:100%;  real browsers */
 }
 
 footer {
@@ -272,7 +275,7 @@ footer {
 }
 .help {
     width: 90%;
-    min-height: 90%;
+    min-height: 80%;
     margin: 0 auto;
     padding: 2%;
     /*color: white;*/
@@ -323,9 +326,8 @@ article {
 #show img {
     width: 350px;
     height: 350px;
-    position:absolute;
-    left:50px;
-    top:200px;
+    float: left;
+    margin-bottom: 10px;
 }
 
 .not-teach input[type=submit] {
@@ -334,9 +336,6 @@ article {
     border:0 none;
     cursor:pointer;
     border-radius: 10px;
-    position:absolute;
-    left:50px;
-    top:560px;
     width: 350px;
     font-size: 20px;
     font-family: unset;
@@ -382,12 +381,19 @@ input[type=text], input[type=password], input[type=date]{
     text-align: justify;
 }
 
-
+.cart{
+    width: fit-content;
+    width: -moz-fit-content;
+    background-color: #f8f8ff;
+    border-radius: 20px;
+    padding: inherit;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #course h4 {
     color: black;
 }
-
 
 h2 {
     color: white;
@@ -424,7 +430,7 @@ h2 {
     color: black;
 }
 
-p#description{
+p.description{
     text-align: justify;
     font-family: Arial;
     font-size: 20px;
@@ -494,6 +500,25 @@ label{
     font-size: 14px;
     color: #3B3B3B;
 }
+
+.profile{
+    width: 350px;
+    float: revert;
+}
+
+/* для кнопки назад
+.previous{
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #f1f1f1;
+    color: black;
+    border-radius: 50%;
+}
+.previous hover {
+    background-color: #ddd;
+    color: black;
+}*/
 /*option {
     padding-bottom: 200px;
 }

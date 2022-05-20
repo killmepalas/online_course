@@ -46,30 +46,30 @@
             </div>
 
             <img src="${user.photolink}" alt="фотку поставь">
-
+        <div class="profile">
             <form method="get" action="/update/${user.id}">
-                <button class="update" type="submit" value="update">Обновить данные профиля</button>
+                <button class="logout" type="submit" value="update">Обновить данные профиля</button>
             </form>
 
             <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
-                <button class="update" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
+                <button class="logout" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
             </form>
 
             <c:if test="${status == 'admin'}">
                 <form method="get" action="/index">
-                    <button class="update" type="submit" value="index">Управление пользователями</button>
+                    <button class="logout" type="submit" value="index">Управление пользователями</button>
                 </form>
 
                 <form method="get" action="/course/index">
-                    <button class="update" type="submit" value="index">Управление курсами</button>
+                    <button class="logout" type="submit" value="index">Управление курсами</button>
                 </form>
             </c:if>
 
-            <div>
             <form id="logoutForm" method="post" action="${contextPath}/logout">
-                <button type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Выйти</button>
+                <button class="logout" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Выйти</button>
             </form>
-            </div>
+        </div>
+
         </section>
     </main>
     <footer>

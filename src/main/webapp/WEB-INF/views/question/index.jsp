@@ -71,6 +71,9 @@
         <form method="get" action="/question/create/${test}">
             <button class="teach" type="submit" >Добавить вопрос</button>
         </form>
+            <form method="get" action="/test/show/${test}">
+                <button class="teach" type="submit" >Назад</button>
+            </form>
         </section>
     </main>
     <footer>
