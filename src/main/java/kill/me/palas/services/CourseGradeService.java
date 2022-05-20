@@ -1,21 +1,24 @@
 package kill.me.palas.services;
 
-import kill.me.palas.models.CourseGrade;
+import kill.me.palas.models.*;
 import kill.me.palas.repositories.CourseGradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CourseGradeService {
     private final CourseGradeRepository courseGradeRepository;
+    private final TestGradeService testGradeService;
 
     @Autowired
-    public CourseGradeService(CourseGradeRepository courseGradeRepository) {
+    public CourseGradeService(CourseGradeRepository courseGradeRepository, TestGradeService testGradeService) {
         this.courseGradeRepository = courseGradeRepository;
+        this.testGradeService = testGradeService;
     }
 
     public List<CourseGrade> findAll() {
@@ -32,13 +35,44 @@ public class CourseGradeService {
     }
 
 
-    public void update(int id, CourseGrade updatedCourseGrade) {
+    public void update(int id, CourseGrade updatedCourseGrade, int grade) {
         updatedCourseGrade.setId(id);
+        updatedCourseGrade.setGrade(grade);
         courseGradeRepository.save(updatedCourseGrade);
     }
 
 
     public void delete(int id) {
         courseGradeRepository.deleteById(id);
+    }
+
+    public CourseGrade findByUserAndCourse(User user, Course course){
+        List<CourseGrade> courseGrades = courseGradeRepository.findByUser(user);
+        CourseGrade result = null;
+        for (CourseGrade courseGrade : courseGrades){
+            if (courseGrade.getCourse().getId() == course.getId()) result = courseGrade;
+        }
+        return  result;
+    }
+
+    public void add(User user, Course course){
+        List<TestGrade> testGrades = testGradeService.findByUserAndCourse(user,course);
+        CourseGrade courseGrade = findByUserAndCourse(user,course);
+        int result = 0;
+        int grades = 0;
+        for (TestGrade tg: testGrades){
+            grades +=tg.getGrade();
+        }
+        result = grades/testGrades.size();
+        if (courseGrade == null){
+            courseGrade = new CourseGrade();
+            courseGrade.setCourse(course);
+            courseGrade.setUser(user);
+            courseGrade.setGrade(result);
+            courseGradeRepository.save(courseGrade);
+        } else {
+            courseGrade.setGrade(result);
+            courseGradeRepository.save(courseGrade);
+        }
     }
 }
