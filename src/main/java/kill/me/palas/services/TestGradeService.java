@@ -1,13 +1,12 @@
 package kill.me.palas.services;
 
-import kill.me.palas.models.Test;
-import kill.me.palas.models.TestGrade;
-import kill.me.palas.models.User;
+import kill.me.palas.models.*;
 import kill.me.palas.repositories.TestGradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +14,16 @@ import java.util.Optional;
 public class TestGradeService {
     private final TestGradeRepository testGradeRepository;
 
+//    private final CourseGradeService courseGradeService;
+
+    private final CourseService courseService;
+
     @Autowired
-    public TestGradeService(TestGradeRepository testGradeRepository) {
+    public TestGradeService(TestGradeRepository testGradeRepository, /*CourseGradeService courseGradeService,*/
+                            CourseService courseService) {
         this.testGradeRepository = testGradeRepository;
+//        this.courseGradeService = courseGradeService;
+        this.courseService = courseService;
     }
 
     public List<TestGrade> findAll() {
@@ -54,6 +60,15 @@ public class TestGradeService {
     public List<TestGrade> findByUser(User user){
         List<TestGrade> testGrades = testGradeRepository.findByUser(user);
         return testGrades;
+    }
+
+    public List<TestGrade> findByUserAndCourse(User user, Course course){
+        List<TestGrade> testGrades = testGradeRepository.findByUser(user);
+        List<TestGrade> result = new ArrayList<>();
+        for (TestGrade testGrade : testGrades){
+            if (testGrade.getTest().getCourse().getId() == course.getId()) result.add(testGrade);
+        }
+        return  result;
     }
 
 

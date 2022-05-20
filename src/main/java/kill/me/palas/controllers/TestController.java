@@ -33,11 +33,13 @@ public class TestController {
 
     private TestGradeService testGradeService;
 
+    private CourseGradeService courseGradeService;
+
     @Autowired
     public TestController(TestService testService, TestValidator testValidator,
                           UserServiceImpl userService, CourseService courseService,
                           QuestionService questionService, AnswerService answerService,
-                          TestGradeService testGradeService){
+                          TestGradeService testGradeService, CourseGradeService courseGradeService){
         this.testService = testService;
         this.testValidator = testValidator;
         this.userService = userService;
@@ -45,6 +47,7 @@ public class TestController {
         this.questionService = questionService;
         this.answerService = answerService;
         this.testGradeService = testGradeService;
+        this.courseGradeService = courseGradeService;
     }
 
     @GetMapping("/find")
@@ -173,6 +176,7 @@ public class TestController {
             Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
             User db_user = userService.findByUsername(loggedInUser.getName());
             testGradeService.save(db_user,testService.findOne(test_id),grade);
+            courseGradeService.add(db_user,testService.findOne(test_id).getCourse());
         }
 
         return "redirect:/test/start/" + test_id + "/" + next;
