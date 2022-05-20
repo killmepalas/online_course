@@ -85,6 +85,8 @@
         </section>
         </c:if>
 
+        <jsp:useBean id="now" class="java.util.Date" scope="page"/>
+
         <c:if test="${status == 'student'}">
             <c:if test="${tests.isEmpty()}">
                 <section class="help">
@@ -93,6 +95,7 @@
             </c:if>
             <c:if test="${!tests.isEmpty()}">
                 <c:forEach items="${tests}" var="test">
+                    <c:if test="${test.start < now && test.stop > now}">
                     <c:choose>
                         <c:when test="${tests.indexOf(test) % 3==0}"><div class="row"><section class="col-3">
                             <div>
@@ -134,6 +137,7 @@
                         </section></div>
                         </c:otherwise>
                     </c:choose>
+                    </c:if>
                 </c:forEach>
             </c:if>
         </c:if>

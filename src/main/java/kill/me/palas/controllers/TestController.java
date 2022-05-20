@@ -120,6 +120,7 @@ public class TestController {
         if (bindingResult.hasErrors())
             return "test/create";
         testService.save(test, id_course);
+        courseGradeService.recalc(courseService.findOne(id_course));
         return "redirect:/test/" + test.getCourse().getId();
     }
 
