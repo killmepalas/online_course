@@ -1,8 +1,10 @@
 package kill.me.palas.services;
 
+import kill.me.palas.models.Course;
 import kill.me.palas.models.CourseGrade;
 import kill.me.palas.models.User;
 import kill.me.palas.models.Role;
+import kill.me.palas.repositories.CourseRepository;
 import kill.me.palas.repositories.UserRepository;
 import kill.me.palas.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Override
     public void save(User user) {
@@ -88,6 +93,17 @@ public class UserServiceImpl implements UserService{
     }
 
     public void delete(int id) {
+        Role teacher = roleRepository.findById(2);
+        User user = userRepository.findById(id);
+        for (Role role: user.getRoles()){
+            if (role.getName() == role.getName()){
+                List<Course> courses = courseRepository.findCourseByTeacher(user);
+                for (Course course: courses){
+                    course.setTeacher(userRepository.findById(13));
+                    courseRepository.save(course);
+                }
+            }
+        }
         userRepository.deleteById(id);
     }
 }
