@@ -1,6 +1,7 @@
 package kill.me.palas.services;
 
 import kill.me.palas.models.Course;
+import kill.me.palas.models.CourseGrade;
 import kill.me.palas.models.User;
 import kill.me.palas.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.util.Optional;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final UserServiceImpl userService;
-
     @Autowired
     public CourseService(CourseRepository courseRepository, UserServiceImpl userService) {
         this.courseRepository = courseRepository;
@@ -67,4 +67,5 @@ public class CourseService {
     public void delete(int id) {
         courseRepository.deleteById(id);
     }
+
 }

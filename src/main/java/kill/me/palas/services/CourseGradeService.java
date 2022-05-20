@@ -14,11 +14,14 @@ import java.util.Optional;
 public class CourseGradeService {
     private final CourseGradeRepository courseGradeRepository;
     private final TestGradeService testGradeService;
+    private final TestService testService;
 
     @Autowired
-    public CourseGradeService(CourseGradeRepository courseGradeRepository, TestGradeService testGradeService) {
+    public CourseGradeService(CourseGradeRepository courseGradeRepository, TestGradeService testGradeService,
+                              TestService testService) {
         this.courseGradeRepository = courseGradeRepository;
         this.testGradeService = testGradeService;
+        this.testService = testService;
     }
 
     public List<CourseGrade> findAll() {
@@ -63,7 +66,7 @@ public class CourseGradeService {
         for (TestGrade tg: testGrades){
             grades +=tg.getGrade();
         }
-        result = grades/testGrades.size();
+        result = grades/testService.findTestByCourse(course.getId()).size();
         if (courseGrade == null){
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
@@ -76,13 +79,21 @@ public class CourseGradeService {
         }
     }
 
+    public void recalc(Course course){
+        for (CourseGrade courseGrade : courseGradeRepository.findByCourse(course)){
+            courseGrade.setGrade(courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()-1)/testService.findTestByCourse(course.getId()).size());
+            courseGradeRepository.save(courseGrade);
+        }
+    }
+
     public int getRating(User user){
         int grades = 0;
         List<CourseGrade> courseGrades = courseGradeRepository.findByUser(user);
         for (CourseGrade cg: courseGrades){
             grades +=cg.getGrade();
         }
-        int rating = grades / courseGrades.size();
+        int rating = 0;
+        if (courseGrades.size() != 0) {rating = grades / courseGrades.size();}
         return rating;
     }
 }
