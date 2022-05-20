@@ -4,6 +4,7 @@ import kill.me.palas.models.Course;
 import kill.me.palas.models.Role;
 import kill.me.palas.models.User;
 import kill.me.palas.repositories.RoleRepository;
+import kill.me.palas.services.CourseGradeService;
 import kill.me.palas.services.SecurityService;
 import kill.me.palas.services.UserService;
 import kill.me.palas.services.UserServiceImpl;
@@ -44,6 +45,9 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private CourseGradeService courseGradeService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -110,7 +114,7 @@ public class UserController {
             for (Role role: roles){
                 if (role.getId() == 3) model.addAttribute("status","admin");
                 else if (role.getId() == 2) {
-                    int rating = 80;
+                    int rating = courseGradeService.getRating(db_user);
                     model.addAttribute("rating",rating);
                 }
             }
