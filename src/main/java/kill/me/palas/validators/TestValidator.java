@@ -1,5 +1,6 @@
 package kill.me.palas.validators;
 
+import kill.me.palas.models.Answer;
 import kill.me.palas.models.Test;
 import kill.me.palas.models.User;
 import kill.me.palas.services.UserService;
@@ -24,6 +25,11 @@ public class TestValidator implements Validator {
             if (!(test.getStop().compareTo(test.getStart()) > 0)) {
                 errors.rejectValue("start", "Start.More.Than.Stop");
             }
+        }
+
+        public void answers_validate(Object o, Errors errors){
+            Answer answer = (Answer) o;
+            if(answer.getId() == 0) errors.rejectValue("answer", "Answer.Not.Null");
         }
     }
 

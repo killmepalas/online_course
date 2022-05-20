@@ -11,8 +11,6 @@ public class TestGrade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "Пожалуйста, введите оценку")
-    @Min(value = 0, message = "Оценка не должна быть меньше нуля")
     @Column(name="grade")
     private int grade;
 
