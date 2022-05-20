@@ -60,9 +60,6 @@
                     <button class="logout" type="submit" value="index">Управление пользователями</button>
                 </form>
 
-                <form method="get" action="/course/index">
-                    <button class="logout" type="submit" value="index">Управление курсами</button>
-                </form>
             </c:if>
 
             <form id="logoutForm" method="post" action="${contextPath}/logout">
