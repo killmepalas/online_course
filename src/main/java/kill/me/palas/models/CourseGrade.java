@@ -5,14 +5,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "CourseGrade")
+@Table(name = "coursegrade")
 public class CourseGrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "Пожалуйста, введите оценку")
-    @Min(value = 0, message = "Оценка не должна быть меньше нуля")
     @Column(name="grade")
     private int grade;
 

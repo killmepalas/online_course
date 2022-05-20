@@ -55,6 +55,7 @@
                         <form method="get" action="/test/${course.id}">
                             <input class="logout" type="submit" value="Обучение">
                         </form>
+                        <c:if test="${grade != null}"><p>${grade.grade}</p></c:if>
                     </div>
                 </c:when>
 

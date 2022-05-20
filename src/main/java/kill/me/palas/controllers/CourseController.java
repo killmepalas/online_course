@@ -19,17 +19,25 @@ import java.util.Set;
 @Controller
 @RequestMapping("/course")
 public class CourseController{
-    @Autowired
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
+
+    private CourseService courseService;
+
+    private TestService testService;
+
+    private SecurityServiceImpl securityService;
+
+    private CourseGradeService courseGradeService;
 
     @Autowired
-    CourseService courseService;
-
-    @Autowired
-    TestService testService;
-
-    @Autowired
-    SecurityServiceImpl securityService;
+    public CourseController(UserServiceImpl userService, CourseService courseService, TestService testService,
+                            SecurityServiceImpl securityService, CourseGradeService courseGradeService){
+        this.userService = userService;
+        this.courseService = courseService;
+        this.testService = testService;
+        this.securityService = securityService;
+        this.courseGradeService = courseGradeService;
+    }
 
     @GetMapping()
     public String index (Model model) {
@@ -54,8 +62,10 @@ public class CourseController{
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
+        Course c = courseService.findOne(id);
         model.addAttribute("teacher", courseService.findTeacher(id));
-        model.addAttribute("course", courseService.findOne(id));
+        model.addAttribute("course", c);
+        model.addAttribute("grade", courseGradeService.findByUserAndCourse(db_user,c));
 
         if (db_user != null) {
             for (Course course : db_user.getCourses()) {
