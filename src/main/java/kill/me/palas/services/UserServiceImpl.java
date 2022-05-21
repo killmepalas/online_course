@@ -93,16 +93,11 @@ public class UserServiceImpl implements UserService{
     }
 
     public void delete(int id) {
-        Role teacher = roleRepository.findById(2);
         User user = userRepository.findById(id);
-        for (Role role: user.getRoles()){
-            if (role.getName() == role.getName()){
-                List<Course> courses = courseRepository.findCourseByTeacher(user);
-                for (Course course: courses){
-                    course.setTeacher(userRepository.findById(13));
-                    courseRepository.save(course);
-                }
-            }
+        List<Course> courses = courseRepository.findCourseByTeacher(user);
+        for (Course course: courses) {
+            course.setTeacher(userRepository.findById(13));
+            courseRepository.save(course);
         }
         userRepository.deleteById(id);
     }
