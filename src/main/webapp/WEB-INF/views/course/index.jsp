@@ -108,6 +108,15 @@
 
             </c:forEach>
 
+        <c:if test="${num>0}">
+        <form method="get" action="/course/index/${num-1}">
+            <button class="detailed" type="submit" value="Подробнее">${num}</button>
+        </form>
+        </c:if>
+        <p> Мы тут - ${num+1}. (Надо как нибудь красиво оформить, как на всяких сайтах с постраничным выводом)</p>
+        <form method="get" action="/course/index/${num+1}">
+            <button class="detailed" type="submit" value="Подробнее">${num +2}</button>
+        </form>
 
     </main>
     <footer>
