@@ -71,11 +71,12 @@ public class CourseController{
         if (db_user != null) {
             for (Course course : db_user.getCourses()) {
                 if (course.getId() == id) {
-                    model.addAttribute("teach_course", "bought");
+                    model.addAttribute("teach_course", "added");
                     break;
                 }
             }
         }
+        if (db_user == null) model.addAttribute("teach_course","not_auth");
         if (db_user !=null && db_user.getId() == courseService.findOne(id).getTeacher().getId()){
             model.addAttribute("teach_course", "teacher");
         }
@@ -153,5 +154,14 @@ public class CourseController{
         String role = "ROLE_TEACHER";
         userService.setRoles(db_user,role);
         return "redirect:/course/teach";
+    }
+
+    @PostMapping("/add/{id}")
+    public String add(@PathVariable int id){
+        Course course = courseService.findOne(id);
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        kill.me.palas.models.User db_user = userService.findByUsername(loggedInUser.getName());
+        courseService.add(db_user,course);
+        return "redirect:/course/" + id;
     }
 }

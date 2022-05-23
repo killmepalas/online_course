@@ -35,7 +35,7 @@
         <intercept-url pattern="/answer/update/{id}" access="hasRole('ROLE_TEACHER')"/>
         <intercept-url pattern="/answer/delete/{answer_id}" access="hasRole('ROLE_TEACHER')"/>
 
-        <form-login login-page="/login" default-target-url="/course" authentication-failure-url="/login?error"
+        <form-login login-page="/login" default-target-url="/course/index/0" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
 
         <logout logout-success-url="/login?logout"/>
