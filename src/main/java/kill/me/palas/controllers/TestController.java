@@ -120,13 +120,14 @@ public class TestController {
         if (bindingResult.hasErrors())
             return "test/create";
         testService.save(test, id_course);
-        courseGradeService.recalc(courseService.findOne(id_course));
+        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
         return "redirect:/test/" + test.getCourse().getId();
     }
 
     @PostMapping("/delete/{test_id}/{course_id}")
     public String delete(@PathVariable int test_id, @PathVariable int course_id) {
         testService.delete(test_id);
+        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(course_id),"delete",test_id);
         return "redirect:/test/" + course_id;
     }
 
