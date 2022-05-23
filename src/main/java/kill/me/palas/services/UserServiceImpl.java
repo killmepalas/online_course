@@ -101,4 +101,9 @@ public class UserServiceImpl implements UserService{
         }
         userRepository.deleteById(id);
     }
+
+    public User findByCourseGrades(List<CourseGrade> courseGrades){
+//        User user = userRepository.findByCourseGrades(courseGrades);
+        return null;
+    }
 }
