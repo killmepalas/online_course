@@ -511,7 +511,6 @@ label{
     float: revert;
 }
 
-/* для кнопки назад
 .previous{
     text-decoration: none;
     display: inline-block;
@@ -519,11 +518,42 @@ label{
     background-color: #f1f1f1;
     color: black;
     border-radius: 50%;
+    font-size: 17px;
 }
-.previous hover {
-    background-color: #ddd;
+.next {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #140e1d;
+    color: white;
+    border-radius: 50%;
+    font-size: 17px;
+}
+
+.page {
+    margin: .5rem;
+    justify-content: center; align-items: center
+}
+
+.pages {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+
+.previous:hover, .next:hover {
+    background-color: rgba(255, 255, 255, 0.5);
     color: black;
-}*/
+}
+
+span {
+    font-family: Trebuchet MS;
+    font-size: 17px;
+    text-align: center;
+    vertical-align: baseline;
+}
 /*option {
     padding-bottom: 200px;
 }
