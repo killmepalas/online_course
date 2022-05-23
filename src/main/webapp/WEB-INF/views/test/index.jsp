@@ -95,7 +95,6 @@
             </c:if>
             <c:if test="${!tests.isEmpty()}">
                 <c:forEach items="${tests}" var="test">
-                    <c:if test="${test.start < now && test.stop > now}">
                     <c:choose>
                         <c:when test="${tests.indexOf(test) % 3==0}"><div class="row"><section class="col-3">
                             <div>
@@ -104,9 +103,17 @@
                                 <c:forEach items="${grades}" var="grade">
                                     <c:if test="${grade.test.id == test.id}"><h4>${grade.grade}</h4></c:if>
                                 </c:forEach>
+                                <c:if test="${test.start <= now && test.stop >= now}">
                                 <form method="get" action="/test/start/${test.id}/1">
                                     <button class="detailed" type="submit" value="Пройти">Пройти</button>
                                 </form>
+                                </c:if>
+                                <c:if test="${test.start > now}">
+                                    <div class="detailed"><span>Доступен с ${test.start}</span></div>
+                                </c:if>
+                                <c:if test="${test.stop < now}">
+                                    <div class="detailed"><span>Завершён</span></div>
+                                </c:if>
                             </div>
                         </section>
                         </c:when>
@@ -117,9 +124,17 @@
                                 <c:forEach items="${grades}" var="grade">
                                     <c:if test="${grade.test.id == test.id}"><h4>${grade.grade}</h4></c:if>
                                 </c:forEach>
-                                <form method="get" action="/test/start/${test.id}/1">
-                                    <button class="detailed" type="submit" value="Пройти">Пройти</button>
-                                </form>
+                                <c:if test="${test.start <= now && test.stop >= now}">
+                                    <form method="get" action="/test/start/${test.id}/1">
+                                        <button class="detailed" type="submit" value="Пройти">Пройти</button>
+                                    </form>
+                                </c:if>
+                                <c:if test="${test.start > now}">
+                                    <div class="detailed"><span>Доступен с ${test.start}</span></div>
+                                </c:if>
+                                <c:if test="${test.stop < now}">
+                                    <div class="detailed"><span>Завершён</span></div>
+                                </c:if>
                             </div>
                         </section>
                         </c:when>
@@ -128,16 +143,23 @@
                                 <h4>Название: ${test.name}</h4>
                                 <h4>Описание: ${test.description}</h4>
                                 <c:forEach items="${grades}" var="grade">
-                                    <c:if test="${grade.test.id == test.id}"><h4>${grade.grade}</h4></c:if>
+                                    <c:if test="${grade.test.id == test.id}"><h4>Оценка: ${grade.grade}</h4></c:if>
                                 </c:forEach>
-                                <form method="get" action="/test/start/${test.id}/1">
-                                    <button class="detailed" type="submit" value="Пройти">Пройти</button>
-                                </form>
+                                <c:if test="${test.start <= now && test.stop >= now}">
+                                    <form method="get" action="/test/start/${test.id}/1">
+                                        <button class="detailed" type="submit" value="Пройти">Пройти</button>
+                                    </form>
+                                </c:if>
+                                <c:if test="${test.start > now}">
+                                    <div class="detailed"><span>Доступен с ${test.start}</span></div>
+                                </c:if>
+                                <c:if test="${test.stop < now}">
+                                    <div class="detailed"><span>Завершён</span></div>
+                                </c:if>
                             </div>
                         </section></div>
                         </c:otherwise>
                     </c:choose>
-                    </c:if>
                 </c:forEach>
             </c:if>
         </c:if>
