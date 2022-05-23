@@ -65,6 +65,9 @@
                     <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
                 </form>
             </form:form>
+            <form method="get" action="/test/show/${test.id}">
+                <button class="formcource" type="submit">Назад</button>
+            </form>
         </section>
     </main>
     <footer>
