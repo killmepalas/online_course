@@ -42,21 +42,21 @@
 
                 <spring:bind path="lastname">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="lastname" class="form-control" value="${user.lastname}" placeholder="Пока пусто"></form:input>
+                        <form:input type="text" path="lastname" class="form-control" value="${user.lastname}" placeholder="Фамилия"></form:input>
                         <form:errors path="lastname"></form:errors>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="name" class="form-control" value="${user.name}" placeholder="Пока пусто"></form:input>
+                        <form:input type="text" path="name" class="form-control" value="${user.name}" placeholder="Имя"></form:input>
                         <form:errors path="name"></form:errors>
                     </div>
                 </spring:bind>
 
                 <spring:bind path="midname">
                     <div class="form-group">
-                        <form:input type="text" path="midname" class="form-control" value="${user.midname}" placeholder="Пока пусто"></form:input>
+                        <form:input type="text" path="midname" class="form-control" value="${user.midname}" placeholder="Отчество"></form:input>
                         <form:errors path="midname"></form:errors>
                     </div>
                 </spring:bind>
@@ -100,6 +100,7 @@
                 </form>
             </form:form>
     </main>
+        <a class="formcource" href="/profile">Вернуться к профилю</a>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
     </footer>

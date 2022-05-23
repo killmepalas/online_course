@@ -91,6 +91,9 @@
                 <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
             </form>
         </form:form>
+        <form method="get" action="/index">
+            <button class="formcource" type="submit">Назад</button>
+        </form>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>

@@ -65,6 +65,9 @@
                     </form>
                 </div>
             </form:form>
+            <form method="get" action="/course/${course.id}">
+                <button class="formcource" type="submit" >Вернуться к курсу</button>
+            </form>
         </section>
     </main>
     <footer>
