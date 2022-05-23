@@ -67,19 +67,28 @@
                             </td>
 
                             <td>
-                                    <form method="post" action="/setRole/1/${user.id}">
-                                        <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
-                                    </form>
+                                <form method="post" action="/setRole/1/${user.id}">
+                                    <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
+                                </form>
+                                <form method="post" action="/deleteRole/1/${user.id}">
+                                    <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Понизить</button>
+                                </form>
                             </td>
                             <td>
                                 <form method="post" action="/setRole/2/${user.id}">
                                     <button class="test" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
                                 </form>
+                                <form method="post" action="/deleteRole/2/${user.id}">
+                                    <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Понизить</button>
+                                </form>
                             </td>
                             <td>
-                                    <form method="post" action="/setRole/3/${user.id}">
-                                        <button class="test" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
-                                    </form>
+                                <form method="post" action="/setRole/3/${user.id}">
+                                    <button class="test" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
+                                </form>
+                                <form method="post" action="/deleteRole/3/${user.id}">
+                                    <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Понизить</button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

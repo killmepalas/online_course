@@ -62,6 +62,14 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user1);
     }
 
+    public void deleteRoles(int user, int role){
+        User user1 = userRepository.findById(user);
+        Set<Role> roles = user1.getRoles();
+        roles.remove(roleRepository.findById(role));
+        user1.setRoles(roles);
+        userRepository.save(user1);
+    }
+
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -102,8 +110,5 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
     }
 
-    public User findByCourseGrades(List<CourseGrade> courseGrades){
-//        User user = userRepository.findByCourseGrades(courseGrades);
-        return null;
-    }
+
 }
