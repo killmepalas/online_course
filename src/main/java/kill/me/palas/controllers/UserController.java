@@ -187,4 +187,10 @@ public class UserController {
         userServiceImpl.setRoles(user_id,role_id);
         return "redirect: /index";
     }
+
+    @PostMapping("/deleteRole/{role_id}/{user_id}")
+    public String deleteRoles(@PathVariable int role_id, @PathVariable int user_id){
+        userServiceImpl.deleteRoles(user_id,role_id);
+        return "redirect: /index";
+    }
 }

@@ -39,14 +39,7 @@
         <div>
             <h4>${courselist.name}</h4>
             <img src="${courselist.photolink}">
-            <article>
-                <c:if test="${courselist.price==0}">
-                    <p id="free">Бесплатно</p>
-                </c:if>
-                <c:if test="${courselist.price!=0}">
-                    <p id="money">Цена: ${courselist.price} ₽</p>
-                </c:if>
-            </article>
+
             <c:if test="${status == 'admin'}">
                 <form method="post" action="/course/delete/${courselist.id}">
                     <button class="detailed" type="submit" value="Подробнее">Удалить</button>
@@ -62,14 +55,7 @@
             <div>
                 <h4>${courselist.name}</h4>
                 <img src="${courselist.photolink}">
-                <article>
-                    <c:if test="${courselist.price==0}">
-                        <p id="free">Бесплатно</p>
-                    </c:if>
-                    <c:if test="${courselist.price!=0}">
-                        <p id="money">Цена: ${courselist.price} ₽</p>
-                    </c:if>
-                </article>
+
                 <c:if test="${status == 'admin'}">
                     <form method="post" action="/course/delete/${courselist.id}">
                         <button class="detailed" type="submit" value="Подробнее">Удалить</button>
@@ -85,14 +71,7 @@
             <div>
                 <h4>${courselist.name}</h4>
                 <img src="${courselist.photolink}">
-                <article>
-                    <c:if test="${courselist.price==0}">
-                        <p id="free">Бесплатно</p>
-                    </c:if>
-                    <c:if test="${courselist.price!=0}">
-                        <p id="money">Цена: ${courselist.price} ₽</p>
-                    </c:if>
-                </article>
+
                 <c:if test="${status == 'admin'}">
                     <form method="post" action="/course/delete/${courselist.id}">
                         <button class="detailed" type="submit" value="Подробнее">Удалить</button>

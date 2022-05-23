@@ -31,7 +31,7 @@
 <div id="container">
     <main class="edit">
             <form:form method="POST" modelAttribute="user" action="/update/${user.id}?${_csrf.parameterName}=${_csrf.token}">
-                <h3 class="form-signin-heading">Создание аккаунта</h3>
+                <h3 class="form-signin-heading">Редактирование профиля</h3>
                 <spring:bind path="username">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="username" class="form-control" value="${user.username}"
