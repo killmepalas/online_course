@@ -69,13 +69,7 @@ public class CourseService {
     }
 
     public List<Course> getPage(int num){
-        List<Course> courses;
-        if (num == 0){
-            courses = courseRepository.findAll().stream().skip(num).limit(9).toList();
-        } else {
-            courses = courseRepository.findAll().stream().skip(num*9).limit(9).toList();
-        }
-
+        List<Course> courses = courseRepository.findAll().stream().skip(num*9).limit(9).toList();
         return courses;
     }
 

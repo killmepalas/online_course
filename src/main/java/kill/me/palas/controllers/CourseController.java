@@ -52,7 +52,8 @@ public class CourseController{
 
         }
         model.addAttribute("course", courseService.getPage(num));
-
+        if (courseService.findAll().size()<=num*9+9)
+            model.addAttribute("end","true");
         return "course/index";
     }
 

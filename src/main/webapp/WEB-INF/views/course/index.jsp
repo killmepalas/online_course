@@ -114,10 +114,11 @@
         </form>
         </c:if>
         <p> Мы тут - ${num+1}. (Надо как нибудь красиво оформить, как на всяких сайтах с постраничным выводом)</p>
+        <c:if test="${end != 'true'}">
         <form method="get" action="/course/index/${num+1}">
             <button class="detailed" type="submit" value="Подробнее">${num +2}</button>
         </form>
-
+        </c:if>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>
