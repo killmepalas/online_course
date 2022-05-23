@@ -50,7 +50,7 @@
                     </div>
                 </c:when>
 
-                <c:when test="${teach_course == 'bought'}">
+                <c:when test="${teach_course == 'added'}">
                     <div class="profile">
                         <form method="get" action="/test/${course.id}">
                             <input class="logout" type="submit" value="Обучение">
@@ -59,10 +59,17 @@
                     </div>
                 </c:when>
 
+                <c:when test="${teach_course == 'not_auth'}">
+                    <div class="profile">
+                       <p>Пожалуйста, сначала</p>
+                       <p><a href="/login">Войдите</a></p>
+                    </div>
+                </c:when>
+
                 <c:otherwise>
                     <div class="profile">
                         <div class="not-teach">
-                            <form method="post" action="/course/add/${course.id}">
+                            <form method="post" action="/course/add/${course.id}?${_csrf.parameterName}=${_csrf.token}">
                                 <c:if test="${course.price != 0}">
                                     <input  type="submit" value=${course.price}>
                                 </c:if>
