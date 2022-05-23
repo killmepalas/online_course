@@ -50,7 +50,7 @@ form{
     align-content: center;
     justify-content: space-evenly;
 }
-.updatediv{
+/*.updatediv{
     position:absolute;
     left:50px;
     top:560px;
@@ -68,7 +68,7 @@ form{
     left:50px;
     top:700px;
     width: 350px;
-}
+}*/
 
 .button-teach input[type=submit], .logout{
     width: 100%;
@@ -127,7 +127,6 @@ form{
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-
     will-change: transform;
 }
 
