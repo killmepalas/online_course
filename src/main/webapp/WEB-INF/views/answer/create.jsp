@@ -48,6 +48,9 @@
                     <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Добавить</button>
                 </form>
             </form:form>
+            <form method="get" action="/answer/${question}">
+                <button class="teach" type="submit" >Назад</button>
+            </form>
         </section>
     </main>
     <footer>

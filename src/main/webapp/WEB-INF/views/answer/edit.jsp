@@ -42,11 +42,14 @@
                         <label>Правильный ответ</label>
                         <form:checkbox path="is_right" class="form-control" value="${answer.is_right}" placeholder="Пока пусто"/>
                 </spring:bind>
-<div>
-    <form method="post" action="/answer/update/${answer.id}">
-        <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
-    </form>
-</div>
+                <div>
+                    <form method="post" action="/answer/update/${answer.id}">
+                        <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
+                    </form>
+                </div>
+                <form method="get" action="/answer/${question_id}">
+                    <button class="teach" type="submit" >Назад</button>
+                </form>
             </form:form>
         </section>
     </main>

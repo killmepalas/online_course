@@ -12,9 +12,7 @@
 <head>
     <meta charset="utf-8">
     <title>Личный кабинет</title>
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
-
 </head>
 
 <body>
