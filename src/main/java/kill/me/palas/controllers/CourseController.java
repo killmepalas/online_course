@@ -39,8 +39,8 @@ public class CourseController{
         this.courseGradeService = courseGradeService;
     }
 
-    @GetMapping()
-    public String index (Model model) {
+    @GetMapping("/index/{num}")
+    public String index (@PathVariable int num,Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
@@ -51,7 +51,7 @@ public class CourseController{
                 if (role.getId() == 3) model.addAttribute("status","admin");
 
         }
-        model.addAttribute("course", courseService.findAll());
+        model.addAttribute("course", courseService.getPage(num));
 
         return "course/index";
     }
