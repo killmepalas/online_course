@@ -73,4 +73,11 @@ public class CourseService {
         return courses;
     }
 
+    public void add(User user,Course course){
+        List<Course> courses = courseRepository.findCourseByUsers(user);
+        courses.add(course);
+        user.setCourses(courses);
+        userService.save(user);
+    }
+
 }
