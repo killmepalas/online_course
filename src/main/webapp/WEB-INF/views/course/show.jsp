@@ -55,7 +55,13 @@
                         <form method="get" action="/test/${course.id}">
                             <input class="logout" type="submit" value="Обучение">
                         </form>
-                        <c:if test="${grade != null}"><p>${grade.grade}</p></c:if>
+                        <c:if test="${grade != null}">
+                            <p>Шкала прогресса:</p>
+                            <p>
+                                <progress id="progressbar" value="${grade.grade}" max="100"></progress>
+                                <span class="progress-value">${grade.grade}%</span>
+                            </p>
+                        </c:if>
                     </div>
                 </c:when>
 
