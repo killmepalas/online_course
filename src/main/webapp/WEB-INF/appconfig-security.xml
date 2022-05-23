@@ -19,7 +19,6 @@
         <intercept-url pattern="/test/{id}" access="hasAnyRole('ROLE_STUDENT','ROLE_TEACHER')"/>
 
         <intercept-url pattern="/course/update/{id}" access="hasRole('ROLE_TEACHER')"/>
-        <intercept-url pattern="/course/my_courses" access="hasAnyRole('ROLE_STUDENT', 'ROLE_TEACHER')"/>
         <intercept-url pattern="/course/update/{id}" access="hasRole('ROLE_TEACHER')"/>
         <intercept-url pattern="/course/create" access="hasAnyRole('ROLE_TEACHER','ROLE_STUDENT')"/>
         <intercept-url pattern="/delete/{test_id}/{course_id}" access="hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')"/>
@@ -34,6 +33,11 @@
         <intercept-url pattern="/answer/create/{id}" access="hasRole('ROLE_TEACHER')"/>
         <intercept-url pattern="/answer/update/{id}" access="hasRole('ROLE_TEACHER')"/>
         <intercept-url pattern="/answer/delete/{answer_id}" access="hasRole('ROLE_TEACHER')"/>
+
+        <intercept-url pattern="/profile" access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN','ROLE_TEACHER')"/>
+        <intercept-url pattern="/index" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/create" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/setRole/{role_id}/{user_id}" access="hasRole('ROLE_ADMIN')"/>
 
         <form-login login-page="/login" default-target-url="/course/index/0" authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>

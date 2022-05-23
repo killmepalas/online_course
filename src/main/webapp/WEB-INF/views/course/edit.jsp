@@ -45,12 +45,6 @@
                     </div>
                 </spring:bind>
 
-                <spring:bind path="price">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="price" class="form-control" value="${course.price}" placeholder="Стоимость"></form:input>
-                        <form:errors path="price"></form:errors>
-                    </div>
-                </spring:bind>
 
                 <spring:bind path="photolink">
                     <div class="form-group">

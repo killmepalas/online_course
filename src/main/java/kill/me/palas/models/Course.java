@@ -22,10 +22,6 @@ public class Course {
     @Column(name = "description")
     private String description;
 
-    @Min(value = 0, message = "Минимальная стоимость - 0 рублей")
-    @Column(name = "price")
-    private int price;
-
     @Column(name="photo")
     private String photolink;
 
@@ -45,7 +41,6 @@ public class Course {
     public Course(String name, String description, int price) {
         this.name = name;
         this.description = description;
-        this.price = price;
     }
 
     public Course(){
@@ -106,14 +101,6 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public List<User> getUsers() {
