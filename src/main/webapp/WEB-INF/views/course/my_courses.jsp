@@ -30,9 +30,6 @@
 </header>
 <div class="container">
     <main id="course">
-        <form action="/course/find/" path="name">
-            <input type="text" placeholder="Search" name="courses" class="search">
-        </form>
         <c:if test="${course.isEmpty()}">
          <section class="help">
              <h4>У вас пока нет курсов. <a href="../course/index/0">Начните обучение прямо сейчас</a></h4>

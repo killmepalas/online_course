@@ -29,9 +29,6 @@
 <div id="container">
     <main id="course">
         <section class="help">
-        <form action="/question/find/" path="name">
-            <input type="text" placeholder="Search" name="question" class="search">
-        </form>
         <c:if test="${questions.isEmpty()}">
                 <h4>У теста пока нет вопросов (к вам). Добавьте первый вопрос прямо сейчас!</h4>
         </c:if>

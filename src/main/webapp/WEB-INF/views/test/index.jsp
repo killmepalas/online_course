@@ -28,9 +28,6 @@
 </header>
 <div class="container">
     <main id="course">
-        <form action="/test/find/" path="name">
-            <input type="text" placeholder="Search" name="courses" class="search">
-        </form>
         <c:if test="${status == 'teacher'}">
         <section class="help">
             <c:if test="${tests.isEmpty()}">
