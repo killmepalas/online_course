@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -64,8 +65,14 @@ public class UserServiceImpl implements UserService{
 
     public void deleteRoles(int user, int role){
         User user1 = userRepository.findById(user);
-        Set<Role> roles = user1.getRoles();
-        roles.remove(roleRepository.findById(role));
+        Set<Role> roles =  user1.getRoles();
+        Iterator<Role> setIterator = roles.iterator();
+        while (setIterator.hasNext()) {
+            Role currentElement = setIterator.next();
+            if (currentElement.getName().equals(roleRepository.findById(role).getName())) {
+                setIterator.remove();
+            }
+        }
         user1.setRoles(roles);
         userRepository.save(user1);
     }

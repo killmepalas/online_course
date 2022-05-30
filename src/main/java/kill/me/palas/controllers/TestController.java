@@ -140,9 +140,13 @@ public class TestController {
             Question q = new Question();
             q.setId(0);
             List<Question> questions = questionService.findQuestionByTest(test_id);
+            if (questions.size() == 0) {
+                model.addAttribute("course", testService.findCourse(test_id));
+                return "error/test";}
             if (question_id == 1){
                 Question question = questionService.findQuestionByTestById(test_id,0);
                 List<Answer> answers = answerService.findAnswerByQuestion(question.getId());
+                if (answers == null) return "error/test";
                 model.addAttribute("question",question);
                 model.addAttribute("answers",answers);
                 mark = 0;
@@ -152,6 +156,7 @@ public class TestController {
             } else {
                 Question question = questionService.findOne(question_id);
                 List<Answer> answers = answerService.findAnswerByQuestion(question_id);
+                if (answers == null) return "error/test";
                 Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
                 model.addAttribute("question", question);
                 model.addAttribute("answers", answers);
