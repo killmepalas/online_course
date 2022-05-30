@@ -30,6 +30,9 @@ public class User {
     @Transient
     private String confirmPassword;
 
+    @Transient
+    private String oldPassword;
+
     @Column(name = "password")
     private String password;
 
@@ -179,5 +182,13 @@ public class User {
 
     public void setCourseGrades(List<CourseGrade> courseGrades) {
         this.courseGrades = courseGrades;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 }

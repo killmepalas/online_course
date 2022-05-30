@@ -91,20 +91,27 @@ public class UserServiceImpl implements UserService{
         return foundUser;
     }
 
-    public void update(int id, User updatedUser, User oldUser) {
+    @Override
+    public void update(int id, User updatedUser) {
         updatedUser.setId(id);
-        if (updatedUser.getPassword() == oldUser.getPassword()){
-            updatedUser.setPassword(oldUser.getPassword());
-        } else updatedUser.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
+        User oldUser = userRepository.findById(id);
+        updatedUser.setPassword(oldUser.getPassword());
+        updatedUser.setUsername(oldUser.getUsername());
         updatedUser.setRoles(oldUser.getRoles());
         updatedUser.setCourses(oldUser.getCourses());
         userRepository.save(updatedUser);
     }
 
-    @Override
-    public void update(int id, User updatedUser) {
-        updatedUser.setId(id);
-        userRepository.save(updatedUser);
+    public void updateUsername(int id, User updatedUser){
+        User user = userRepository.findById(id);
+        user.setUsername(updatedUser.getUsername());
+        userRepository.save(user);
+    }
+
+    public void updatePassword(int id, User updatedUser){
+        User user = userRepository.findById(id);
+        user.setPassword(bCryptPasswordEncoder.encode(updatedUser.getPassword()));
+        userRepository.save(user);
     }
 
     public void delete(int id) {

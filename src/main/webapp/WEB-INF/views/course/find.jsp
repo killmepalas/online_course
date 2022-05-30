@@ -34,29 +34,63 @@
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
 
-        <c:if test="${courses.isEmpty()}">
-            <section class="help">
-                <h4> По вашему запросу ничего не найдено. </h4>
-            </section>
-        </c:if>
-
-        <c:if test="${!courses.isEmpty()}">
-        <c:forEach items="${courses}" var="courselist">
+        <c:forEach items="${course}" var="courselist">
         <c:choose>
-        <c:when test="${courses.indexOf(courselist) % 3==0}"><section id="left"></c:when>
-        <c:when test="${courses.indexOf(courselist) % 3==1}"><section id="center"></c:when>
-            <c:otherwise><section id="right"></c:otherwise>
-                </c:choose>
-                <div>
-                    <h4>${courselist.name}</h4>
-                    <img src="${courselist.photolink}">
-                    <form method="get" action="/course/${courselist.id}" >
+        <c:when test="${course.indexOf(courselist) % 3==0}"><div class="row"><section class="col-3">
+        <div>
+            <h4>${courselist.name}</h4>
+            <img src="${courselist.photolink}">
+            <div id="management">
+                <form method="get" action="/course/${courselist.id}">
+                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                </form>
+            </div>
+            <c:if test="${status == 'admin'}">
+                <form method="post" action="/course/delete/${courselist.id}">
+                    <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                </form>
+            </c:if>
+        </div>
+    </section>
+        </c:when>
+        <c:when test="${course.indexOf(courselist) % 3==1}"><section class="col-3">
+            <div>
+                <h4>${courselist.name}</h4>
+                <img src="${courselist.photolink}">
+                <div id="management">
+                    <form method="get" action="/course/${courselist.id}">
                         <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
                     </form>
                 </div>
-            </section>
-            </c:forEach>
-            </c:if>
+                <c:if test="${status == 'admin'}">
+                    <form method="post" action="/course/delete/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                    </form>
+                </c:if>
+            </div>
+        </section>
+        </c:when>
+        <c:otherwise><section class="col-3">
+            <div>
+                <h4>${courselist.name}</h4>
+                <img src="${courselist.photolink}">
+                <div id="management">
+                    <form method="get" action="/course/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                    </form>
+                </div>
+                <c:if test="${status == 'admin'}">
+                    <form method="post" action="/course/delete/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                    </form>
+                </c:if>
+            </div>
+        </section></div>
+        </c:otherwise>
+        </c:choose>
+
+        </c:forEach>
+</div>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>

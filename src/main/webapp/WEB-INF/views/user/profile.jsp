@@ -49,6 +49,14 @@
                 <button class="logout" type="submit" value="update">Обновить данные профиля</button>
             </form>
 
+            <form method="get" action="/updateUsername/${user.id}">
+                <button class="logout" type="submit" value="update">Сменить логин</button>
+            </form>
+
+            <form method="get" action="/updatePassword/${user.id}">
+                <button class="logout" type="submit" value="update">Сменить пароль</button>
+            </form>
+
             <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                 <button class="logout" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
             </form>
