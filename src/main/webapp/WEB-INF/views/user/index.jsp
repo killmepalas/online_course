@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Конструктор курса</title>
+    <title>Управление пользователями</title>
     <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
 
 </head>
