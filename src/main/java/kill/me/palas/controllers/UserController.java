@@ -189,8 +189,9 @@ public class UserController {
     }
 
     @PostMapping("/deleteRole/{role_id}/{user_id}")
-    public String deleteRoles(@PathVariable int role_id, @PathVariable int user_id){
+    public String deleteRoles(@PathVariable int role_id, @PathVariable int user_id, Model model){
         userServiceImpl.deleteRoles(user_id,role_id);
-        return "redirect: /index";
+        model.addAttribute("users",userServiceImpl.findAll());
+        return "user/index";
     }
 }
