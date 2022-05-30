@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -38,8 +39,16 @@ public class CourseService {
     }
 
     public List<Course> findByName(String name){
-        List<Course> courses = courseRepository.findCourseByName(name);
-        return courses;
+        List<Course> courses = courseRepository.findAll();
+        List<Course> foundCourses = new ArrayList<>();
+        for (Course course: courses){
+            String courseName = course.getName().toLowerCase(Locale.ROOT).replaceAll("\\s+","");
+            name = name.toLowerCase(Locale.ROOT).replaceAll("\\s+","");
+            if (courseName.contains(name)){
+                foundCourses.add(course);
+            }
+        }
+        return foundCourses;
     }
 
     public List<Course> findByUserId(int id){

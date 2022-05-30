@@ -32,13 +32,6 @@
     <main class="edit">
             <form:form method="POST" modelAttribute="user" action="/update/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                 <h3 class="form-signin-heading">Редактирование профиля</h3>
-                <spring:bind path="username">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="username" class="form-control" value="${user.username}"
-                                    placeholder="Пока пусто" field="${username}"></form:input>
-                        <form:errors path="username"></form:errors>
-                    </div>
-                </spring:bind>
 
                 <spring:bind path="lastname">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -79,21 +72,7 @@
                     </div>
                 </spring:bind>
 
-                <h3 class="form-signin-heading">Хотите сменить пароль?</h3>
-                <spring:bind path="password">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="password" path="password" class="form-control" value="${user.password}" placeholder="Пароль"></form:input>
-                        <form:errors path="password"></form:errors>
-                    </div>
-                </spring:bind>
 
-                <spring:bind path="confirmPassword">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="password" path="confirmPassword" class="form-control" value="${user.password}"
-                                    placeholder="Введите пароль ещё раз"></form:input>
-                        <form:errors path="confirmPassword"></form:errors>
-                    </div>
-                </spring:bind>
 
                 <form method="post" action="/edit/${user.id}">
                     <button class="update" type="submit" value="edit">Обновить</button>

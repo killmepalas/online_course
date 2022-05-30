@@ -55,8 +55,6 @@ public class UserController {
     @Autowired
     RoleRepository roleRepository;
 
-    private String password;
-
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
@@ -73,8 +71,6 @@ public class UserController {
         }
 
         userService.save(userForm);
-
-        password = userForm.getConfirmPassword();
 
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
@@ -143,13 +139,52 @@ public class UserController {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
-        userValidator.up_validate(user, bindingResult,db_user);
-            if (bindingResult.hasErrors()){return "user/edit";}
-        String pass;
-        if (db_user.getPassword() != user.getConfirmPassword()) pass = user.getConfirmPassword();
-        else pass = password;
-        userServiceImpl.update(id, user,db_user);
-        securityService.autoLogin(user.getUsername(),pass);
+        if (bindingResult.hasErrors()){
+            return "user/edit";
+        }
+        userServiceImpl.update(id, user);
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/updateUsername/{id}")
+    public String updateUsername(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userServiceImpl.findOne(id));
+        return "user/editUsername";
+    }
+
+    @PostMapping("/updateUsername/{id}")
+    public String updateUsername(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        userValidator.up_validate(user, bindingResult, db_user);
+        if (bindingResult.hasErrors()){
+            return "user/editUsername";
+        }
+        String pass = user.getPassword();
+        userServiceImpl.updateUsername(id, user);
+        securityService.autoLogin(user.getUsername(), pass);
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/updatePassword/{id}")
+    public String updatePassword(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userServiceImpl.findOne(id));
+        return "user/editPassword";
+    }
+
+    @PostMapping("/updatePassword/{id}")
+    public String updatePassword(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                                 @PathVariable("id") int id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        kill.me.palas.models.User db_user = userService.findByUsername(username);
+        userValidator.pass_validate(user, bindingResult, db_user);
+        if (bindingResult.hasErrors()){
+            return "user/editPassword";
+        }
+        String pass = user.getPassword();
+        userServiceImpl.updatePassword(id, user);
+        securityService.autoLogin(db_user.getUsername(), pass);
         return "redirect:/profile";
     }
 

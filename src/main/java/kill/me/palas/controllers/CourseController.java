@@ -85,7 +85,14 @@ public class CourseController{
 
     @GetMapping("/find")
     public String find(@RequestParam(value = "courses") String name, Model model){
-        model.addAttribute("courses", courseService.findByName(name));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (userService.findByUsername(username) != null){
+            Set<Role> roles = userService.findByUsername(username).getRoles();
+            for (Role role: roles)
+                if (role.getId() == 3) model.addAttribute("status","admin");
+
+        }
+        model.addAttribute("course", courseService.findByName(name));
         return "course/find";
     }
 
