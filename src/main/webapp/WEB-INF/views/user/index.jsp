@@ -29,9 +29,6 @@
 <div id="container">
     <main id="course">
         <section class="help">
-            <form action="/user/find/" path="name">
-                <input type="text" placeholder="Search" name="user" class="search">
-            </form>
             <c:if test="${users.isEmpty()}">
                 <h4>Пользователей пока нет</h4>
             </c:if>
@@ -45,7 +42,6 @@
                         <th>Имя</th>
                         <th>Отчество</th>
                         <th>Дата рождения</th>
-                        <th>Рейтинг</th>
                         <th>Удалить</th>
                         <th>Студент</th>
                         <th>Преподаватель</th>
@@ -59,7 +55,6 @@
                             <td>${user.name}</td>
                             <td>${user.midname}</td>
                             <td>${user.dateOfBirth}</td>
-                            <td>${user.rating}</td>
                             <td>
                                 <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                                     <input class="test" onclick="return confirm('Вы хотите удалить пользователя?')" type="submit"   value="Удалить">
