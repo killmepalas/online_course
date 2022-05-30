@@ -32,9 +32,15 @@
             научить вас чему угодно: от программирования до кулинарии (я бы лучше научилась печь тортики, честно говоря)
             /не забудь это вырезать/.</p>
         <p>А ещё хотелось бы обратить ваше внимание на этих чудесных котиков</p>
-        <img width="300" height="400" src="resources/img/rizhik.jpg"/>
-        <img width="400" height="400" src="resources/img/musya.jpg"/>
-        <img width="450" height="400" src="resources/img/sinya.jpg"/>
+        <div class="collage">
+            <div>
+                <img width="289" height="385" src="resources/img/rizhik.jpg"/>
+            </div>
+            <div class="cat">
+                <img width="200" height="175" src="resources/img/sinya.jpg"/>
+                <img width="200" height="200" src="resources/img/musya.jpg"/>
+            </div>
+        </div>
     </main>
     <footer>
         <p>Мы ничего не упеваем и ничего не понимаем.</p>

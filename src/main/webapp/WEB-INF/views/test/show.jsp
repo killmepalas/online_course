@@ -45,9 +45,17 @@
                     </form>
                 </div>
                 <div>
-                    <form method="get" action="/question/${test.id}">
-                        <input class="test" type="submit" value="Конструктор">
-                    </form>
+                    <jsp:useBean id="now" class="java.util.Date" scope="page"/>
+                    <c:choose>
+                        <c:when test="${test.start <= now && test.stop >= now}">
+                            <p class="description">Закройте тест, чтобы добавить вопросы.</p>
+                        </c:when>
+                        <c:otherwise>
+                            <form method="get" action="/question/${test.id}">
+                                <input class="test" type="submit" value="Конструктор">
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div>
                     <form method="get" action="/test/${test.course.id}">

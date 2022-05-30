@@ -39,15 +39,16 @@
         <div>
             <h4>${courselist.name}</h4>
             <img src="${courselist.photolink}">
-
+            <div id="management">
+                <form method="get" action="/course/${courselist.id}">
+                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                </form>
+            </div>
             <c:if test="${status == 'admin'}">
                 <form method="post" action="/course/delete/${courselist.id}">
                     <button class="detailed" type="submit" value="Подробнее">Удалить</button>
                 </form>
             </c:if>
-            <form method="get" action="/course/${courselist.id}">
-                <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-            </form>
         </div>
     </section>
         </c:when>
@@ -55,15 +56,16 @@
             <div>
                 <h4>${courselist.name}</h4>
                 <img src="${courselist.photolink}">
-
+                <div id="management">
+                    <form method="get" action="/course/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                    </form>
+                </div>
                 <c:if test="${status == 'admin'}">
                     <form method="post" action="/course/delete/${courselist.id}">
                         <button class="detailed" type="submit" value="Подробнее">Удалить</button>
                     </form>
                 </c:if>
-                <form method="get" action="/course/${courselist.id}">
-                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                </form>
             </div>
         </section>
             </c:when>
@@ -71,15 +73,16 @@
             <div>
                 <h4>${courselist.name}</h4>
                 <img src="${courselist.photolink}">
-
+                <div id="management">
+                    <form method="get" action="/course/${courselist.id}">
+                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                    </form>
+                </div>
                 <c:if test="${status == 'admin'}">
                     <form method="post" action="/course/delete/${courselist.id}">
                         <button class="detailed" type="submit" value="Подробнее">Удалить</button>
                     </form>
                 </c:if>
-                <form method="get" action="/course/${courselist.id}">
-                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                </form>
             </div>
         </section></div>
                 </c:otherwise>

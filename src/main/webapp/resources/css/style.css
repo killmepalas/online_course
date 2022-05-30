@@ -323,8 +323,18 @@ article {
     border-radius: 150px;
 }
 
-#main img {
+.collage img {
     border-radius: 10px;
+    margin: 5px;
+}
+
+.collage {
+    display: flex;
+    justify-content: center;
+}
+
+.cat {
+    display: inline-grid;
 }
 
 #show img {
