@@ -43,10 +43,11 @@
             <div>
                 <h4>${courselist.name}</h4>
                 <img src="${courselist.photolink}">
-
-                <form method="get" action="/course/${courselist.id}" >
-                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                </form>
+                <div id="management">
+                    <form method="get" action="/course/${courselist.id}" >
+                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                    </form>
+                </div>
             </div>
         </section>
         </c:when>

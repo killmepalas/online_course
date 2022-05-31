@@ -30,28 +30,31 @@
 </header>
 <div id="container">
     <main class="edit">
-        <form:form method="POST" modelAttribute="user" action="/updateUsername/${user.id}?${_csrf.parameterName}=${_csrf.token}">
-            <h3 class="form-signin-heading">Сменить пароль</h3>
+        <section class="help">
+            <form:form method="POST" modelAttribute="user" action="/updateUsername/${user.id}?${_csrf.parameterName}=${_csrf.token}">
+                <h3 class="form-signin-heading">Сменить логин</h3>
 
-            <spring:bind path="username">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="username" class="form-control" value="${user.username}"
-                                placeholder="Логин" field="${username}"></form:input>
-                    <form:errors path="username"></form:errors>
-                </div>
-            </spring:bind>
+                <spring:bind path="username">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="text" path="username" class="form-control" value="${user.username}"
+                                    placeholder="Логин" field="${username}"></form:input>
+                        <form:errors path="username"></form:errors>
+                    </div>
+                </spring:bind>
 
-            <spring:bind path="password">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:password path="password" class="form-control" placeholder="Пароль"></form:password>
-                    <form:errors path="password"></form:errors>
-                </div>
-            </spring:bind>
+                <spring:bind path="password">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:password path="password" class="form-control" placeholder="Пароль"></form:password>
+                        <form:errors path="password"></form:errors>
+                    </div>
+                </spring:bind>
 
-            <form method="post" action="/updateUsername/${user.id}">
-                <button class="formcource" type="submit" value="edit">Обновить</button>
-            </form>
-        </form:form>
+                <form method="post" action="/updateUsername/${user.id}">
+                    <button class="formcource" type="submit" value="edit">Обновить</button>
+                </form>
+            </form:form>
+        </section>
+
     </main>
     <a class="formcource" href="/profile">Вернуться к профилю</a>
     <footer>
