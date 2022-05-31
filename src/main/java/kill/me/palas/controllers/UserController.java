@@ -74,7 +74,7 @@ public class UserController {
 
         securityService.autoLogin(userForm.getUsername(), userForm.getConfirmPassword());
 
-        return  "redirect:/course";
+        return  "redirect:/course/index/0";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
