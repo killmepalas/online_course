@@ -1,9 +1,6 @@
 package kill.me.palas.services;
 
-import kill.me.palas.models.Course;
-import kill.me.palas.models.CourseGrade;
-import kill.me.palas.models.User;
-import kill.me.palas.models.Role;
+import kill.me.palas.models.*;
 import kill.me.palas.repositories.CourseRepository;
 import kill.me.palas.repositories.UserRepository;
 import kill.me.palas.repositories.RoleRepository;
@@ -13,10 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -46,6 +41,40 @@ public class UserServiceImpl implements UserService{
     public User getCurrentAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findByUsername(auth.getName());
+    }
+
+    public void modifyRoles(CheckRoles checkRoles){
+        List<Integer> admins = checkRoles.getAdmRoles();
+        List<Integer> teachers = checkRoles.getTeachRoles();
+        List<Integer> students = checkRoles.getStuRoles();
+        List<List<Integer>> users = new ArrayList<>();
+        users.add(admins);
+        users.add(teachers);
+        users.add(students);
+        int number=0;
+        for (List<Integer> userVar: users){
+            boolean check = false;
+            if (userVar.equals(admins)) number = 3; else
+            if (userVar.equals(students)) number = 1; else
+            if (userVar.equals(teachers)) number = 2;
+            for (Integer var: userVar){
+                User user = userRepository.findById((int)var);
+                Set<Role> roles = user.getRoles();
+                Iterator<Role> setIterator = roles.iterator();
+                while (setIterator.hasNext()) {
+                    Role currentElement = setIterator.next();
+                    if (currentElement.getName().equals(roleRepository.findById(number).getName())) {
+                        check = true;
+                        setIterator.remove();
+                    }
+                }
+                if (!check) {
+                    roles.add(roleRepository.findById(number));
+                }
+                user.setRoles(roles);
+                userRepository.save(user);
+            }
+        }
     }
 
     public void setRoles(User user, String role){
