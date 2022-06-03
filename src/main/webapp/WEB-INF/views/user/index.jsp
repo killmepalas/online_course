@@ -34,6 +34,7 @@
             </c:if>
 
             <c:if test="${!users.isEmpty()}">
+                <div class="table">
                 <table>
                     <tr>
                         <th>id</th>
@@ -60,19 +61,21 @@
                         </tr>
                     </c:forEach>
                 </table>
+                </div>
             </c:if>
 
             <c:if test="${!users.isEmpty()}">
                 <form:form modelAttribute="checkRoles" method="POST" action="/modifyRoles">
-                <table border="4" bordercolor="#000000">
-                    <tr>
+                    <div class="table">
+                <table class="role">
+                    <tr class="role">
                         <th>Логин</th>
                         <th>Назначить</th>
                         <th>Понизить</th>
                     </tr>
                     <form>
                     <c:forEach items="${users}" var="user">
-                        <tr>
+                        <tr class="role">
                             <td>${user.username}</td>
                             <td>
                                 <c:forEach items="${user.roles}" var="role">
@@ -87,34 +90,46 @@
                                     </c:if>
                                 </c:forEach>
                                 <c:if test="${student != 'true'}">
-                                    <label>Студент</label>
-                                    <form:checkbox path="stuRoles" value="${user.id}" /> </br>
+                                    <div class="rowtable">
+                                        <label>Студент</label>
+                                        <form:checkbox path="stuRoles" value="${user.id}" />
+                                    </div>
                                 </c:if>
                                 <c:if test="${teacher != 'true'}">
-                                    <label>Преподаватель</label>
-                                    <form:checkbox path="teachRoles" value="${user.id}" /> </br>
+                                    <div class="rowtable">
+                                        <label>Преподаватель</label>
+                                        <form:checkbox path="teachRoles" value="${user.id}" />
+                                    </div>
                                 </c:if>
                                 <c:if test="${admin != 'true'}">
-                                    <label>Админ</label>
-                                    <form:checkbox path="admRoles" value="${user.id}" /> </br>
+                                    <div class="rowtable">
+                                        <label>Админ</label>
+                                        <form:checkbox path="admRoles" value="${user.id}" />
+                                    </div>
                                 </c:if>
                             </td>
                             <td>
                                 <c:if test="${student == 'true'}">
-                                    <label>Студент</label>
-                                    <form:checkbox path="stuRoles" value="${user.id}" /> </br>
+                                    <div class="rowtable">
+                                        <label>Студент</label>
+                                        <form:checkbox path="stuRoles" value="${user.id}" />
+                                    </div>
                                 </c:if>
                                 <c:set var="student" value="false"/>
 
                                 <c:if test="${teacher == true}">
-                                    <label>Преподаватель</label>
-                                    <form:checkbox path="teachRoles" value="${user.id}" /> </br>
+                                    <div class="rowtable">
+                                        <label>Преподаватель</label>
+                                        <form:checkbox path="teachRoles" value="${user.id}" />
+                                    </div>
                                 </c:if>
                                 <c:set var="teacher" value="false"/>
 
                                 <c:if test="${admin == true}">
-                                    <label>Админ</label>
-                                    <form:checkbox path="admRoles" value="${user.id}" /> </br>
+                                    <div class="rowtable">
+                                        <label>Админ</label>
+                                        <form:checkbox path="admRoles" value="${user.id}" />
+                                    </div>
                                 </c:if>
                                 <c:set var="admin" value="false"/>
                             </td>
@@ -123,6 +138,7 @@
                     </form>
                 </table>
                         <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
+                    </div>
                 </form:form>
             </c:if>
             <form method="get" action="/create">
@@ -131,7 +147,6 @@
             <form method="get" action="/profile">
                 <button class="teach" type="submit" >Назад</button>
             </form>
-            <p>${model}</p>
         </section>
     </main>
     <footer>
