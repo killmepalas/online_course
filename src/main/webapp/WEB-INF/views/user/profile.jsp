@@ -57,12 +57,14 @@
                 <button class="logout" type="submit" value="update">Сменить пароль</button>
             </form>
 
+            <c:if test="${user.id != 13}">
             <form method="post" action="/delete/${user.id}?${_csrf.parameterName}=${_csrf.token}">
                 <button class="logout" type="submit" onclick="return confirm('Вы действительно хотите удалить профиль?')" value="Удалить">Удалить профиль</button>
             </form>
+            </c:if>
 
             <c:if test="${status == 'admin'}">
-                <form method="get" action="/index">
+                <form method="get" action="${pageContext.request.contextPath}/index">
                     <button class="logout" type="submit" value="index">Управление пользователями</button>
                 </form>
 

@@ -43,9 +43,6 @@
                         <th>Отчество</th>
                         <th>Дата рождения</th>
                         <th>Удалить</th>
-                        <th>Студент</th>
-                        <th>Преподаватель</th>
-                        <th>Админ</th>
                     </tr>
                     <c:forEach items="${users}" var="user">
                         <tr>
@@ -60,64 +57,73 @@
                                     <input class="test" onclick="return confirm('Вы хотите удалить пользователя?')" type="submit"   value="Удалить">
                                 </form>
                             </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:if>
 
+            <c:if test="${!users.isEmpty()}">
+                <form:form modelAttribute="checkRoles" method="POST" action="/modifyRoles">
+                <table border="4" bordercolor="#000000">
+                    <tr>
+                        <th>Логин</th>
+                        <th>Назначить</th>
+                        <th>Понизить</th>
+                    </tr>
+                    <form>
+                    <c:forEach items="${users}" var="user">
+                        <tr>
+                            <td>${user.username}</td>
                             <td>
                                 <c:forEach items="${user.roles}" var="role">
                                     <c:if test="${role.id == 1}">
                                         <c:set var="student" value="true"/>
                                     </c:if>
-                                </c:forEach>
-                                <c:if test="${student != 'true'}">
-                                <form method="post" action="/setRole/1/${user.id}">
-                                    <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
-                                </form>
-                                </c:if>
-                                <c:if test="${student == 'true'}">
-                                <form method="post" action="/deleteRole/1/${user.id}">
-                                    <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Понизить</button>
-                                </form>
-                                </c:if>
-                                <c:set var="student" value="false"/>
-                            </td>
-                            <td>
-                                <c:forEach items="${user.roles}" var="role">
                                     <c:if test="${role.id == 2}">
                                         <c:set var="teacher" value="true"/>
                                     </c:if>
-                                </c:forEach>
-                                <c:if test="${teacher != 'true'}">
-                                    <form method="post" action="/setRole/2/${user.id}">
-                                        <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
-                                    </form>
-                                </c:if>
-                                <c:if test="${teacher == true}">
-                                    <form method="post" action="/deleteRole/2/${user.id}">
-                                        <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Понизить</button>
-                                    </form>
-                                </c:if>
-                                <c:set var="teacher" value="false"/>
-                            </td>
-                            <td>
-                                <c:forEach items="${user.roles}" var="role">
                                     <c:if test="${role.id == 3}">
                                         <c:set var="admin" value="true"/>
                                     </c:if>
                                 </c:forEach>
-                                <c:if test="${admin != 'true'}">
-                                    <form method="post" action="/setRole/3/${user.id}">
-                                        <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Назначить</button>
-                                    </form>
+                                <c:if test="${student != 'true'}">
+                                    <label>Студент</label>
+                                    <form:checkbox path="stuRoles" value="${user.id}" /> </br>
                                 </c:if>
+                                <c:if test="${teacher != 'true'}">
+                                    <label>Преподаватель</label>
+                                    <form:checkbox path="teachRoles" value="${user.id}" /> </br>
+                                </c:if>
+                                <c:if test="${admin != 'true'}">
+                                    <label>Админ</label>
+                                    <form:checkbox path="admRoles" value="${user.id}" /> </br>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="${student == 'true'}">
+                                    <label>Студент</label>
+                                    <form:checkbox path="stuRoles" value="${user.id}" /> </br>
+                                </c:if>
+                                <c:set var="student" value="false"/>
+
+                                <c:if test="${teacher == true}">
+                                    <label>Преподаватель</label>
+                                    <form:checkbox path="teachRoles" value="${user.id}" /> </br>
+                                </c:if>
+                                <c:set var="teacher" value="false"/>
+
                                 <c:if test="${admin == true}">
-                                    <form method="post" action="/deleteRole/3/${user.id}">
-                                        <button class="test" type="submit"   name="${_csrf.parameterName}" value="${_csrf.token}">Понизить</button>
-                                    </form>
+                                    <label>Админ</label>
+                                    <form:checkbox path="admRoles" value="${user.id}" /> </br>
                                 </c:if>
                                 <c:set var="admin" value="false"/>
                             </td>
                         </tr>
                     </c:forEach>
+                    </form>
                 </table>
+                        <button class="teach" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
+                </form:form>
             </c:if>
             <form method="get" action="/create">
                 <button class="teach" type="submit" >Добавить пользователя</button>
