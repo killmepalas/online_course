@@ -17,11 +17,11 @@
 <header id="black">
     <nav>
         <ul>
-            <a href="../../../index.jsp"><img src="/resources/img/logo.png" width="400"/></a>
-            <li><a href="/profile">Личный кабинет</a></li>
-            <li><a href="../course/index/0">Каталог курсов</a></li>
-            <li><a href="/course/teach">Преподавание</a></li>
-            <li><a href="/course/my_courses">Моё обучение</a></li>
+            <a href="../../../index.jsp"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="400"/></a>
+            <li><a href="${pageContext.request.contextPath}/profile">Личный кабинет</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/index/0">Каталог курсов</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/teach">Преподавание</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
 </header>

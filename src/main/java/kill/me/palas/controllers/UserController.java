@@ -1,5 +1,6 @@
 package kill.me.palas.controllers;
 
+import kill.me.palas.models.CheckRoles;
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Role;
 import kill.me.palas.models.User;
@@ -123,6 +124,7 @@ public class UserController {
     @GetMapping("/index")
     public String index(Model model){
         model.addAttribute("users",userServiceImpl.findAll());
+        model.addAttribute("checkRoles",new CheckRoles());
         return "user/index";
     }
 
@@ -217,16 +219,22 @@ public class UserController {
         return "redirect:/index";
     }
 
-    @PostMapping("/setRole/{role_id}/{user_id}")
-    public String setRoles(@PathVariable int role_id, @PathVariable int user_id){
-        userServiceImpl.setRoles(user_id,role_id);
-        return "redirect: /index";
-    }
+//    @PostMapping("/setRole/{role_id}/{user_id}")
+//    public String setRoles(@PathVariable int role_id, @PathVariable int user_id){
+//        userServiceImpl.setRoles(user_id,role_id);
+//        return "redirect: /index";
+//    }
+//
+//    @PostMapping("/deleteRole/{role_id}/{user_id}")
+//    public String deleteRoles(@PathVariable int role_id, @PathVariable int user_id, Model model){
+//        userServiceImpl.deleteRoles(user_id,role_id);
+//        model.addAttribute("users",userServiceImpl.findAll());
+//        return "user/index";
+//    }
 
-    @PostMapping("/deleteRole/{role_id}/{user_id}")
-    public String deleteRoles(@PathVariable int role_id, @PathVariable int user_id, Model model){
-        userServiceImpl.deleteRoles(user_id,role_id);
-        model.addAttribute("users",userServiceImpl.findAll());
-        return "user/index";
+    @PostMapping("/modifyRoles")
+    public String modifyRoles(@ModelAttribute("checkRoles") CheckRoles checkRoles){
+        userServiceImpl.modifyRoles(checkRoles);
+        return "redirect: /index";
     }
 }
