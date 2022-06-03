@@ -323,6 +323,14 @@ article {
     border-radius: 150px;
 }
 
+#error img {
+    width: 289px;
+    height: 300px;
+    position:absolute;
+    left: 500px;
+    top:200px;
+}
+
 .collage img {
     border-radius: 10px;
     margin: 5px;
