@@ -110,7 +110,7 @@ public class UserController {
             Set<Role> roles = db_user.getRoles();
             for (Role role: roles){
                 if (role.getId() == 3) model.addAttribute("status","admin");
-                else if (role.getId() == 2) {
+                else if (role.getId() == 1) {
                     int rating = courseGradeService.getRating(db_user);
                     model.addAttribute("rating",rating);
                 }
