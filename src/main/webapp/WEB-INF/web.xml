@@ -58,10 +58,10 @@
 
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/Error.html</location>
+        <location>/WEB-INF/views/error/error.jsp</location>
     </error-page>
 
     <error-page>
-        <location>/Error.html</location>
+        <location>/WEB-INF/views/error/error.jsp</location>
     </error-page>
 </web-app>
