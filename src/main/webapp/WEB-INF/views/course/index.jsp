@@ -20,17 +20,17 @@
 <header id="black">
     <nav>
         <ul>
-            <a href="../../../index.jsp"><img src="../../../resources/img/logo.png" width="400"/></a>
-            <li><a href="/profile">Личный кабинет</a></li>
-            <li><a href="/course/index/0">Каталог курсов</a></li>
-            <li><a href="/course/teach">Преподавание</a></li>
-            <li><a href="/course/my_courses">Моё обучение</a></li>
+            <a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/resources/img/logo.png" width="400"/></a>
+            <li><a href="${pageContext.request.contextPath}/profile">Личный кабинет</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/index/0">Каталог курсов</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/teach">Преподавание</a></li>
+            <li><a href="${pageContext.request.contextPath}/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
 <div class="container">
     <main id="course">
-        <form action="/course/find/" path="name">
+        <form action="${pageContext.request.contextPath}/course/find/" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
         <c:forEach items="${course}" var="courselist">
@@ -46,7 +46,7 @@
             </div>
             <c:if test="${status == 'admin'}">
                 <form method="post" action="/course/delete/${courselist.id}">
-                    <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                    <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Удалить</button>
                 </form>
             </c:if>
         </div>
@@ -63,7 +63,7 @@
                 </div>
                 <c:if test="${status == 'admin'}">
                     <form method="post" action="/course/delete/${courselist.id}">
-                        <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                        <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Удалить</button>
                     </form>
                 </c:if>
             </div>
@@ -80,7 +80,7 @@
                 </div>
                 <c:if test="${status == 'admin'}">
                     <form method="post" action="/course/delete/${courselist.id}">
-                        <button class="detailed" type="submit" value="Подробнее">Удалить</button>
+                        <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Удалить</button>
                     </form>
                 </c:if>
             </div>

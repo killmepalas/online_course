@@ -30,10 +30,16 @@
 </header>
 <div id="container">
     <main>
-        <section>
-            <br/>
-            <h3>Ой. Мы не знаем, что это было, но уже работаем над тем, чтобы такого больше не повторилось.</h3>
-            <img id="error" src="${pageContext.request.contextPath}/resources/img/otchislenie.png"/>
+        <br>
+        <br/>
+        <h3>Ой. Мы не знаем, что это было, но уже работаем над тем, чтобы такого больше не повторилось.</h3>
+        <img height="300" width="400" src="${pageContext.request.contextPath}/resources/img/duck_start.png"/>
+        <img height="300" width="400" src="${pageContext.request.contextPath}/resources/img/duck_end.png"/>
+        <br/>
+        <br/>
+        <img id="error" src="${pageContext.request.contextPath}/resources/img/otchislenie.png"/>
+        <br/>
+        <br/>
         </section>
     </main>
     <footer>

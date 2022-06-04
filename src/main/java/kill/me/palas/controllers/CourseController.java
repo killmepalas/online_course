@@ -139,9 +139,16 @@ public class CourseController{
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") int id, Model model) {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        User db_user = userService.findByUsername(loggedInUser.getName());
+        if (courseService.findTeacher(id).getId() == db_user.getId())
+        {
+            courseService.delete(id);
+            return "redirect:/course/teach";
+        }
         courseService.delete(id);
-        return "redirect:/course/teach";
+        return "redirect:/course/index/0";
     }
 
     @GetMapping("/create")
