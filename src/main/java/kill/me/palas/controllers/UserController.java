@@ -1,7 +1,7 @@
 package kill.me.palas.controllers;
 
-import kill.me.palas.models.CheckRoles;
-import kill.me.palas.models.Course;
+import kill.me.palas.classes.ArrayCheckRoles;
+import kill.me.palas.classes.CheckRoles;
 import kill.me.palas.models.Role;
 import kill.me.palas.models.User;
 import kill.me.palas.repositories.RoleRepository;
@@ -12,12 +12,8 @@ import kill.me.palas.services.UserServiceImpl;
 import kill.me.palas.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +48,7 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -124,7 +118,7 @@ public class UserController {
     @GetMapping("/index")
     public String index(Model model){
         model.addAttribute("users",userServiceImpl.findAll());
-        model.addAttribute("checkRoles",new CheckRoles());
+        model.addAttribute("checkRoles",new ArrayCheckRoles());
         return "user/index";
     }
 
@@ -219,6 +213,12 @@ public class UserController {
         return "redirect:/index";
     }
 
+    @PostMapping("/block/{user_id}")
+    public String block(@PathVariable("user_id") int userId) {
+        userServiceImpl.block(userId);
+        return "redirect:/index";
+    }
+
 //    @PostMapping("/setRole/{role_id}/{user_id}")
 //    public String setRoles(@PathVariable int role_id, @PathVariable int user_id){
 //        userServiceImpl.setRoles(user_id,role_id);
@@ -233,8 +233,10 @@ public class UserController {
 //    }
 
     @PostMapping("/modifyRoles")
-    public String modifyRoles(@ModelAttribute("checkRoles") CheckRoles checkRoles){
-        userServiceImpl.modifyRoles(checkRoles);
+    public String modifyRoles(@ModelAttribute("checkRoles") ArrayCheckRoles checkRoles, Model model){
+        userServiceImpl.modifyRoles(checkRoles.getAddRoles(), 1);
+        userServiceImpl.modifyRoles(checkRoles.getDelRoles(), 0);
         return "redirect: /index";
+//        return "error/404";
     }
 }

@@ -33,10 +33,18 @@ public class Course {
     private List<User> users;
 
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
-    private List<Test> tests;
+    private List<Topic> topics;
 
     @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
+
+    @ManyToOne()
+    @JoinColumn(name = "status_id")
+    private Status status;
+
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Course(String name, String description, int price) {
         this.name = name;
@@ -63,12 +71,12 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<Test> getTests() {
-        return tests;
+    public List<Topic> getTopics() {
+        return topics;
     }
 
-    public void setTests(List<Test> tests) {
-        this.tests = tests;
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 
     public List<CourseGrade> getCourseGrades() {
@@ -109,5 +117,21 @@ public class Course {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

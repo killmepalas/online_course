@@ -27,21 +27,13 @@ public class Test {
     @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Column(name = "start")
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    @Temporal(TemporalType.DATE)
-    private Date start;
-
-    @Column(name = "stop")
-    @NotNull
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    @Temporal(TemporalType.DATE)
-    private Date stop;
+    @ManyToOne()
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
 
     @ManyToOne()
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     @OneToMany(mappedBy="test", cascade = CascadeType.ALL)
     private List<Question> questions;
@@ -52,11 +44,9 @@ public class Test {
     public Test(){
 
     }
-    public Test(String name, String description, Date start, Date stop) {
+    public Test(String name, String description) {
         this.name = name;
         this.description = description;
-        this.start = start;
-        this.stop = stop;
     }
 
     public int getId() {
@@ -83,30 +73,6 @@ public class Test {
         this.description = description;
     }
 
-    public Date getStart() {
-        return start;
-    }
-
-    public void setStart(Date start) {
-        this.start = start;
-    }
-
-    public Date getStop() {
-        return stop;
-    }
-
-    public void setStop(Date stop) {
-        this.stop = stop;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
     public List<Question> getQuestions() {
         return questions;
     }
@@ -121,5 +87,21 @@ public class Test {
 
     public void setTestGrades(List<TestGrade> testGrades) {
         this.testGrades = testGrades;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

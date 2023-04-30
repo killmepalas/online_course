@@ -29,14 +29,33 @@ public class CourseController{
 
     private CourseGradeService courseGradeService;
 
+    private CategoryService categoryService;
+
     @Autowired
     public CourseController(UserServiceImpl userService, CourseService courseService, TestService testService,
-                            SecurityServiceImpl securityService, CourseGradeService courseGradeService){
+                            SecurityServiceImpl securityService, CourseGradeService courseGradeService,
+                            CategoryService categoryService){
         this.userService = userService;
         this.courseService = courseService;
         this.testService = testService;
         this.securityService = securityService;
         this.courseGradeService = courseGradeService;
+        this.categoryService = categoryService;
+    }
+
+    @GetMapping("/category/index")
+    public String categories(Model model){
+        model.addAttribute("categories",categoryService.findAll());
+        return "category/index";
+    }
+
+    @GetMapping("category/{category_id}/{num}")
+    public String category(@PathVariable("category_id") int categoryId, @PathVariable("num") int num, Model model){
+        model.addAttribute("category",categoryService.findOne(categoryId));
+        model.addAttribute("course", courseService.findPageByCategory(categoryId,num));
+        if (courseService.findByCategory(categoryId).size()<=num*9+9)
+            model.addAttribute("end","true");
+        return "course/index";
     }
 
     @GetMapping("/index/{num}")
@@ -66,6 +85,7 @@ public class CourseController{
         Course c = courseService.findOne(id);
         model.addAttribute("teacher", courseService.findTeacher(id));
         model.addAttribute("course", c);
+        model.addAttribute("sCount", courseService.findStudentsOnCourse(id).size());
         model.addAttribute("grade", courseGradeService.findByUserAndCourse(db_user,c));
 
         if (db_user != null) {

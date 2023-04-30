@@ -5,24 +5,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>Конструктор курса</title>
-    <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
-
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
 
 <body>
+
 <header id="black">
     <nav>
         <ul>
-            <a href="../../../index.jsp"><img src="../../../resources/img/logo.png" width="400"/></a>
-            <li><a href="/profile">Личный кабинет</a></li>
-            <li><a href="/course/index/0">Каталог курсов</a></li>
-            <li><a href="/course/teach">Преподавание</a></li>
-            <li><a href="/course/my_courses">Моё обучение</a></li>
+            <a href="${contextPath}/index.jsp"><img src="${contextPath}/resources/img/logo.png" width="400"/></a>
+            <li><a href="${contextPath}/profile">Личный кабинет</a></li>
+            <li><a href="${contextPath}/course/category/index">Каталог курсов</a></li>
+            <li><a href="${contextPath}/course/teach">Преподавание</a></li>
+            <li><a href="${contextPath}/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
@@ -32,15 +34,13 @@
             <div class="cart">
                 <h1 class="description">${test.name}</h1>
                 <p class="description">${test.description}</p>
-                <p class="description">Дата начала: ${test.start}</p>
-                <p class="description">Дата окончания: ${test.stop}</p>
                 <div>
-                    <form method="get" action="/test/update/${test.id}">
+                    <form method="get" action="${contextPath}/test/update/${test.id}">
                         <input class="test" type="submit" value="Редактировать">
                     </form>
                 </div>
                 <div>
-                    <form method="post" action="/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
+                    <form method="post" action="${contextPath}/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
                         <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
                     </form>
                 </div>
@@ -51,14 +51,14 @@
                             <p class="description">Закройте тест, чтобы добавить вопросы.</p>
                         </c:when>
                         <c:otherwise>
-                            <form method="get" action="/question/${test.id}">
+                            <form method="get" action="${contextPath}/question/${test.id}">
                                 <input class="test" type="submit" value="Конструктор">
                             </form>
                         </c:otherwise>
                     </c:choose>
                 </div>
                 <div>
-                    <form method="get" action="/test/${test.course.id}">
+                    <form method="get" action="${contextPath}/test/${test.course.id}">
                         <input class="test" type="submit" value="Назад">
                     </form>
                 </div>
@@ -66,7 +66,8 @@
         </section>
     </main>
     <footer>
-        <p>Мы ничего не упеваем и ничего не понимаем.</p>
+        <p>Телефон: +6(666)-666-66-66</p>
+        <p>E-mail: thebestonlinecoursesintheworld@the.best</p>
     </footer>
 </div>
 </body>

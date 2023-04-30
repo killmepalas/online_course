@@ -40,9 +40,7 @@ create table Test
     name        varchar(255) not null,
     description varchar(255) default 'Нет описания',
     start       datetime     not null,
-    stop        datetime     not null,
-    course_id   int          not null,
-    foreign key (course_id) references Course (id)
+    stop        datetime     not null
 );
 
 create table Question(

@@ -79,7 +79,7 @@ public class TestController {
         } else if (db_user == null || check == false) {return "error/not_access";}
 
 
-        List<Test> tests = testService.findTestByCourse(id);
+        List<Test> tests = testService.findTestByTopic(id);
         model.addAttribute("tests", tests);
         return "test/index";
     }
@@ -102,8 +102,8 @@ public class TestController {
         testValidator.validate(test, bindingResult);
         if (bindingResult.hasErrors())
             return "test/edit";
-        Course course = testService.findCourse(id);
-        testService.update(id, test,course);
+        Topic topic = testService.findTopic(id);
+        testService.update(id, test,topic);
         return "redirect:/test/show/" + test.getId();
     }
 
@@ -121,7 +121,9 @@ public class TestController {
             return "test/create";
         testService.save(test, id_course);
         courseGradeService.recalc(courseService.findOne(id_course),"create",0);
-        return "redirect:/test/" + test.getCourse().getId();
+        return "redirect:/test/"
+//                + test.getCourse().getId()
+                ;
     }
 
     @PostMapping("/delete/{test_id}/{course_id}")
@@ -141,7 +143,7 @@ public class TestController {
             q.setId(0);
             List<Question> questions = questionService.findQuestionByTest(test_id);
             if (questions.size() == 0) {
-                model.addAttribute("course", testService.findCourse(test_id));
+                model.addAttribute("topic", testService.findTopic(test_id));
                 return "error/test";}
             if (question_id == 1){
                 Question question = questionService.findQuestionByTestById(test_id,0);
@@ -163,7 +165,7 @@ public class TestController {
                 model.addAttribute("next", next.getId());
                 return "test/execute";
             }
-        } else return "redirect:/test/" + testService.findCourse(test_id).getId();
+        } else return "redirect:/test/" + testService.findTopic(test_id).getId();
     }
 
     @PostMapping("/execute/{test_id}/{next}")
@@ -183,7 +185,7 @@ public class TestController {
             Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
             User db_user = userService.findByUsername(loggedInUser.getName());
             testGradeService.save(db_user,testService.findOne(test_id),grade);
-            courseGradeService.add(db_user,testService.findOne(test_id).getCourse());
+//            courseGradeService.add(db_user,testService.findOne(test_id).getCourse());
         }
 
         return "redirect:/test/start/" + test_id + "/" + next;

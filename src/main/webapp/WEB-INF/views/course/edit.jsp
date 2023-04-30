@@ -5,23 +5,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>Редактирование курса</title>
-    <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
 
 <body>
+
 <header id="black">
     <nav>
         <ul>
-            <a href="../../../index.jsp"><img src="/resources/img/logo.png" width="400"/></a>
-            <li><a href="/profile">Личный кабинет</a></li>
-            <li><a href="../course/index/0">Каталог курсов</a></li>
-            <li><a href="/course/teach">Преподавание</a></li>
-            <li><a href="/course/my_courses">Моё обучение</a></li>
+            <a href="${contextPath}/index.jsp"><img src="${contextPath}/resources/img/logo.png" width="400"/></a>
+            <li><a href="${contextPath}/profile">Личный кабинет</a></li>
+            <li><a href="${contextPath}/course/category/index">Каталог курсов</a></li>
+            <li><a href="${contextPath}/course/teach">Преподавание</a></li>
+            <li><a href="${contextPath}/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
@@ -54,18 +57,19 @@
                 </spring:bind>
                 <br>
                 <div class="form-group">
-                    <form method="post" action="/course/update/${course.id}">
+                    <form method="post" action="${contextPath}/course/update/${course.id}">
                         <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
                     </form>
                 </div>
             </form:form>
-            <form method="get" action="/course/${course.id}">
+            <form method="get" action="${contextPath}/course/${course.id}">
                 <button class="formcource" type="submit" >Вернуться к курсу</button>
             </form>
         </section>
     </main>
     <footer>
-        <p>Мы ничего не упеваем и ничего не понимаем.</p>
+        <p>Телефон: +6(666)-666-66-66</p>
+        <p>E-mail: thebestonlinecoursesintheworld@the.best</p>
     </footer>
 </div>
 </body>

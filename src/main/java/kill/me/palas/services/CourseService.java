@@ -51,6 +51,14 @@ public class CourseService {
         return foundCourses;
     }
 
+    public List<Course> findByCategory(int categoryId){
+        return courseRepository.findByCategoryId(categoryId);
+    }
+
+    public List<Course> findPageByCategory(int categoryId, int num){
+        return courseRepository.findByCategoryId(categoryId).stream().skip(num * 9).limit(9).toList();
+    }
+
     public List<Course> findByUserId(int id){
         User user = userService.findOne(id);
         List<Course> courses = courseRepository.findCourseByUsers(user);
@@ -89,4 +97,14 @@ public class CourseService {
         userService.save(user);
     }
 
+    public List<User> findStudentsOnCourse(int id){
+        List<User> students = userService.findAllStudents();
+        List<User> studentsOfCourse = new ArrayList<>();
+        for (User user: students){
+            for (Course course: user.getCourses()){
+                if (course.getId() == id) studentsOfCourse.add(user);
+            }
+        }
+        return studentsOfCourse;
+    }
 }

@@ -22,9 +22,6 @@ public class TestValidator implements Validator {
         @Override
         public void validate(Object o, Errors errors) {
             Test test = (Test) o;
-            if (!(test.getStop().compareTo(test.getStart()) > 0)) {
-                errors.rejectValue("start", "Start.More.Than.Stop");
-            }
         }
 
         public void answers_validate(Object o, Errors errors){

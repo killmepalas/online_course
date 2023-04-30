@@ -252,15 +252,23 @@ nav ul li:hover {
     min-height:100%;  real browsers */
 }
 
+/*footer {*/
+/*    width: 100%;*/
+/*    height: 10%;*/
+/*    float: left;*/
+/*    margin-top: 10px;*/
+/*    color: white;*/
+/*    font-size: 18px;*/
+/*    text-align: center;*/
+/*    text-indent: 10px;*/
+/*}*/
+
 footer {
-    width: 100%;
-    height: 10%;
-    float: left;
-    margin-top: 10px;
+    background-color: rgb(20, 14, 29);
     color: white;
     font-size: 18px;
-    text-align: center;
-    text-indent: 10px;
+    padding-right: 4%;
+    text-align: right;
 }
 
 .left{

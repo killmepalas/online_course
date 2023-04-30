@@ -5,12 +5,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>Добро пожаловать</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/style.css">
+    <title>Лучшие онлайн-курсы</title>
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 
 </head>
 
@@ -18,32 +20,29 @@
 <header id="black">
     <nav>
         <ul>
-            <a href="index.jsp"><img src="../../../resources/img/logo.png" width="400"/></a>
-            <li><a href="/profile">Личный кабинет</a></li>
-            <li><a href="/course/index/0">Каталог курсов</a></li>
-            <li><a href="/course/teach">Преподавание</a></li>
-            <li><a href="/course/my_courses">Моё обучение</a></li>
+            <a href="${contextPath}/index.jsp"><img src="${contextPath}/resources/img/logo.png" width="400"/></a>
+            <li><a href="${contextPath}/profile">Личный кабинет</a></li>
+            <li><a href="${contextPath}/course/category/index">Каталог курсов</a></li>
+            <li><a href="${contextPath}/course/teach">Преподавание</a></li>
+            <li><a href="${contextPath}/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
 <div id="container">
     <main id="main">
-        <p>Добро пожаловать на наш наипрекраснейший сайт с различными увлекательными курсами, способными
-            научить вас чему угодно: от программирования до кулинарии (я бы лучше научилась печь тортики, честно говоря)
-            /не забудь это вырезать/.</p>
-        <p>А ещё хотелось бы обратить ваше внимание на этих чудесных котиков</p>
-        <div class="collage">
-            <div>
-                <img width="289" height="385" src="resources/img/rizhik.jpg"/>
-            </div>
-            <div class="cat">
-                <img width="200" height="175" src="resources/img/sinya.jpg"/>
-                <img width="200" height="200" src="resources/img/musya.jpg"/>
-            </div>
-        </div>
+        <h1>Learnability - ваш проводник в мир знаний.</h1>
+        <p>Найдите интересующий вас курс в нашем <a href="${contextPath}/course/category/index">каталоге курсов</a>.</p>
+        <h3>Не знаете, с чего начать?</h3>
+        <p>Пройдите наш <a href="${contextPath}/prof_test.jsp">тест на профориентацию</a>, а в конце мы подберём подходящие для вас курсы.</p>
+
+        <h3>А может вы хотите попробовать себя в роли преподавателя?</h3>
+        <form method="get" action="${contextPath}/course/teach">
+            <button class="logout" type="submit" value="Удалить">Попробовать преподавание</button>
+        </form>
     </main>
     <footer>
-        <p>Мы ничего не упеваем и ничего не понимаем.</p>
+        <p>Телефон: +6(666)-666-66-66</p>
+        <p>E-mail: thebestonlinecoursesintheworld@the.best</p>
     </footer>
 </div>
 </body>

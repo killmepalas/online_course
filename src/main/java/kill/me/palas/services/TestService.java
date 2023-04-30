@@ -1,26 +1,24 @@
 package kill.me.palas.services;
 
-import kill.me.palas.models.Course;
-import kill.me.palas.models.Question;
-import kill.me.palas.models.Test;
-import kill.me.palas.models.User;
+import kill.me.palas.models.*;
 import kill.me.palas.repositories.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TestService {
     private final TestRepository testRepository;
-    private final CourseService courseService;
+    private final TopicService topicService;
 
     @Autowired
-    public TestService(TestRepository testRepository, CourseService courseService) {
+    public TestService(TestRepository testRepository,TopicService topicService) {
         this.testRepository = testRepository;
-        this.courseService = courseService;
+        this.topicService = topicService;
     }
 
     public List<Test> findAll() {
@@ -33,7 +31,7 @@ public class TestService {
     }
 
     public void save(Test test, int id) {
-        test.setCourse(courseService.findOne(id));
+        test.setTopic(topicService.findOne(id));
         testRepository.save(test);
     }
 
@@ -43,9 +41,9 @@ public class TestService {
     }
 
 
-    public void update(int id, Test updatedTest, Course course) {
+    public void update(int id, Test updatedTest, Topic topic) {
         updatedTest.setId(id);
-        updatedTest.setCourse(course);
+        updatedTest.setTopic(topic);
         testRepository.save(updatedTest);
     }
 
@@ -53,14 +51,13 @@ public class TestService {
         testRepository.deleteById(id);
     }
 
-    public List<Test> findTestByCourse(int id){
-        List<Test> tests = testRepository.findTestByCourse(courseService.findOne(id));
+    public List<Test> findTestByTopic(int id){
+        List<Test> tests = testRepository.findTestByTopic(topicService.findOne(id));
         return tests;
     }
 
-    public Course findCourse(int id){
+    public Topic findTopic(int id){
         Test foundTest = testRepository.findById(id);
-        Course course = foundTest.getCourse();
-        return course;
+        return foundTest.getTopic();
     }
 }

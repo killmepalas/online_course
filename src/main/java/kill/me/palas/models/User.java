@@ -60,8 +60,15 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<CourseGrade> courseGrades;
 
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<TopicGrade> topicGrades;
+
     @Transient
     private int rating;
+
+    @ManyToOne()
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     public User() {
 
@@ -164,6 +171,14 @@ public class User {
         return dateOfBirth;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
@@ -190,5 +205,13 @@ public class User {
 
     public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
+    }
+
+    public List<TopicGrade> getTopicGrades() {
+        return topicGrades;
+    }
+
+    public void setTopicGrades(List<TopicGrade> topicGrades) {
+        this.topicGrades = topicGrades;
     }
 }

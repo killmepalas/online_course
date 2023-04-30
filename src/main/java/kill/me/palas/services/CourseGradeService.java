@@ -70,7 +70,7 @@ public class CourseGradeService {
         for (TestGrade tg: testGrades){
             grades +=tg.getGrade();
         }
-        result = grades/testService.findTestByCourse(course.getId()).size();
+//        result = grades/testService.findTestByTopic(course.getId()).size();
         if (courseGrade == null){
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
@@ -86,18 +86,18 @@ public class CourseGradeService {
     public void recalc(Course course, String method, int test_id){
         for (CourseGrade courseGrade : courseGradeRepository.findByCourse(course)){
             if (method == "create"){
-                courseGrade.setGrade(courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()-1)/testService.findTestByCourse(course.getId()).size());
+//                courseGrade.setGrade(courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()-1)/testService.findTestByCourse(course.getId()).size());
             }
             if (method == "delete"){
-                if (testService.findTestByCourse(course.getId()).size() == 0) courseGrade.setGrade(0);
-                else{
-                    int tg = 0;
-                    User user = courseGrade.getUser();
-                    for (TestGrade testGrade: testGradeService.findByUserAndCourse(user,course)){
-                        if (testGrade.getTest().getId()==test_id) tg = testGrade.getGrade();
-                    }
-                    courseGrade.setGrade((courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()+1)-tg)/testService.findTestByCourse(course.getId()).size());
-                }
+//                if (testService.findTestByCourse(course.getId()).size() == 0) courseGrade.setGrade(0);
+//                else{
+//                    int tg = 0;
+//                    User user = courseGrade.getUser();
+//                    for (TestGrade testGrade: testGradeService.findByUserAndCourse(user,course)){
+//                        if (testGrade.getTest().getId()==test_id) tg = testGrade.getGrade();
+//                    }
+//                    courseGrade.setGrade((courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()+1)-tg)/testService.findTestByCourse(course.getId()).size());
+//                }
             }
             courseGradeRepository.save(courseGrade);
         }

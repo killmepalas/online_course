@@ -5,12 +5,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 
 <head>
     <meta charset="utf-8">
     <title>Ответы на вопрос</title>
-    <link rel="stylesheet" type="text/css" href="../../../resources/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 
 </head>
 
@@ -18,11 +20,11 @@
 <header id="black">
     <nav>
         <ul>
-            <a href="../../../index.jsp"><img src="../../../resources/img/logo.png" width="400"/></a>
-            <li><a href="/profile">Личный кабинет</a></li>
-            <li><a href="/course/index/0">Каталог курсов</a></li>
-            <li><a href="/course/teach">Преподавание</a></li>
-            <li><a href="/course/my_courses">Моё обучение</a></li>
+            <a href="${contextPath}/index.jsp"><img src="${contextPath}/resources/img/logo.png" width="400"/></a>
+            <li><a href="${contextPath}/profile">Личный кабинет</a></li>
+            <li><a href="${contextPath}/course/category/index">Каталог курсов</a></li>
+            <li><a href="${contextPath}/course/teach">Преподавание</a></li>
+            <li><a href="${contextPath}/course/my_courses">Моё обучение</a></li>
         </ul>
     </nav>
 </header>
@@ -48,12 +50,12 @@
                     <td>${answers.indexOf(answer)+1}</td>
                     <td>${answer.text}</td>
                     <td>
-                        <form method="get" action="/answer/update/${answer.id}">
+                        <form method="get" action="${contextPath}/answer/update/${answer.id}">
                             <input type="submit" class="test" value="Редактировать">
                         </form>
                     </td>
                     <td>
-                        <form method="post" action="/answer/delete/${answer.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <form method="post" action="${contextPath}/answer/delete/${answer.id}?${_csrf.parameterName}=${_csrf.token}">
                             <input type="submit" class="test" value="Удалить">
                         </form>
                     </td>
@@ -61,16 +63,17 @@
             </c:forEach>
             </table>
         </c:if>
-            <form method="get" action="/answer/create/${question_id}">
+            <form method="get" action="${contextPath}/answer/create/${question_id}">
                 <button class="teach" type="submit" >Добавить ответ</button>
             </form>
-            <form method="get" action="/question/${test}">
+            <form method="get" action="${contextPath}/question/${test}">
                 <button class="teach" type="submit" >Назад</button>
             </form>
         </section>
     </main>
     <footer>
-        <p>Мы ничего не упеваем и ничего не понимаем.</p>
+        <p>Телефон: +6(666)-666-66-66</p>
+        <p>E-mail: thebestonlinecoursesintheworld@the.best</p>
     </footer>
 </div>
 </body>

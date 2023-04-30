@@ -1,4 +1,4 @@
-package kill.me.palas.models;
+package kill.me.palas.classes;
 
 import java.util.ArrayList;
 import java.util.List;

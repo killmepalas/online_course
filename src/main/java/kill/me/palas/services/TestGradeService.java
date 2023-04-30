@@ -66,7 +66,7 @@ public class TestGradeService {
         List<TestGrade> testGrades = testGradeRepository.findByUser(user);
         List<TestGrade> result = new ArrayList<>();
         for (TestGrade testGrade : testGrades){
-            if (testGrade.getTest().getCourse().getId() == course.getId()) result.add(testGrade);
+//            if (testGrade.getTest().getCourse().getId() == course.getId()) result.add(testGrade);
         }
         return  result;
     }
