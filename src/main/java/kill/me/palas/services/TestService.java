@@ -36,6 +36,7 @@ public class TestService {
 
     public void save(Test test, int id) {
         test.setTopic(topicService.findOne(id));
+        test.setStatus(statusRepository.findById(3));
         testRepository.save(test);
     }
 

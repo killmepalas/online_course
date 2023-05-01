@@ -35,11 +35,14 @@ public class TestController {
 
     private CourseGradeService courseGradeService;
 
+    private TopicService topicService;
+
     @Autowired
     public TestController(TestService testService, TestValidator testValidator,
                           UserServiceImpl userService, CourseService courseService,
                           QuestionService questionService, AnswerService answerService,
-                          TestGradeService testGradeService, CourseGradeService courseGradeService){
+                          TestGradeService testGradeService, CourseGradeService courseGradeService,
+                          TopicService topicService){
         this.testService = testService;
         this.testValidator = testValidator;
         this.userService = userService;
@@ -48,6 +51,7 @@ public class TestController {
         this.answerService = answerService;
         this.testGradeService = testGradeService;
         this.courseGradeService = courseGradeService;
+        this.topicService = topicService;
     }
 
     @GetMapping("/find")
@@ -115,9 +119,13 @@ public class TestController {
 
     @PostMapping("/create/{topic_id}")
     public String create(@ModelAttribute("test") @Valid Test test,
-                         BindingResult bindingResult, @PathVariable("topic_id") int topicId) {
+                         BindingResult bindingResult, @PathVariable("topic_id") int topicId, Model model) {
         if (bindingResult.hasErrors())
+        {
+            model.addAttribute("topic", topicService.findOne(topicId));
             return "test/create";
+        }
+
         testService.save(test, topicId);
 //        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
         return "redirect:/topic/show/" + topicId;
@@ -128,7 +136,7 @@ public class TestController {
         Topic topic = testService.findTopic(test_id);
         testService.delete(test_id);
 //        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(topic.getId()),"delete",test_id);
-        return "redirect:/topic/show" + topic.getId();
+        return "redirect:/topic/show/" + topic.getId();
     }
 
     int mark;
@@ -163,7 +171,7 @@ public class TestController {
                 model.addAttribute("next", next.getId());
                 return "test/execute";
             }
-        } else return "redirect:/test/" + testService.findTopic(test_id).getId();
+        } else return "redirect:/topic/show/" + testService.findTopic(test_id).getId();
     }
 
     @PostMapping("/execute/{test_id}/{next}")

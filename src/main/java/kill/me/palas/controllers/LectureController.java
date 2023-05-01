@@ -6,6 +6,7 @@ import kill.me.palas.models.Topic;
 import kill.me.palas.models.User;
 import kill.me.palas.services.CourseService;
 import kill.me.palas.services.LectureService;
+import kill.me.palas.services.TopicService;
 import kill.me.palas.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,21 +23,25 @@ public class LectureController {
     private final LectureService lectureService;
     private final UserServiceImpl userService;
     private final CourseService courseService;
+    private final TopicService topicService;
 
     @Autowired
     public LectureController(LectureService lectureService, UserServiceImpl userService,
-                             CourseService courseService) {
+                             CourseService courseService, TopicService topicService) {
         this.lectureService = lectureService;
         this.userService = userService;
         this.courseService = courseService;
+        this.topicService = topicService;
     }
 
     @GetMapping("/create/{topic_id}")
-    public String create(@ModelAttribute("lecture") Lecture lecture, @PathVariable("topic_id") int topicId, Model model) {
+    public String create(@PathVariable("topic_id") int topicId, Model model) {
         User curUser = userService.getCurrentAuthUser();
         if (curUser != null) {
-            if (curUser.getId() == lecture.getTopic().getCourse().getTeacher().getId()) {
+            Topic topic = topicService.findOne(topicId);
+            if (curUser.getId() == topic.getCourse().getTeacher().getId()) {
                 model.addAttribute("topic", topicId);
+                model.addAttribute("lecture",new Lecture());
                 return "lecture/create";
             }
             return "error/not_access";
@@ -46,12 +51,16 @@ public class LectureController {
 
     @PostMapping("/create/{topic_id}")
     public String create(@ModelAttribute("lecture") @Valid Lecture lecture,
-                         BindingResult bindingResult, @PathVariable("topic_id") int topicId) {
+                         BindingResult bindingResult, @PathVariable("topic_id") int topicId, Model model) {
         User curUser = userService.getCurrentAuthUser();
         if (curUser != null) {
-            if (curUser.getId() == lecture.getTopic().getCourse().getTeacher().getId()) {
+            Topic topic = topicService.findOne(topicId);
+            if (curUser.getId() == topic.getCourse().getTeacher().getId()) {
                 if (bindingResult.hasErrors())
-                    return "topic/create";
+                {
+                    model.addAttribute("topic",topic.getId());
+                    return "lecture/create";
+                }
                 lectureService.save(lecture, topicId);
 //        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
                 return "redirect:/topic/show/" + topicId;

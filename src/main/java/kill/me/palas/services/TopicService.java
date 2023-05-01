@@ -3,6 +3,7 @@ package kill.me.palas.services;
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Topic;
 import kill.me.palas.repositories.StatusRepository;
+import kill.me.palas.repositories.TopicGradeRepository;
 import kill.me.palas.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,10 @@ public class TopicService {
 
     public List<Topic> findAllByCourseId(int courseId){
         return topicRepository.findAllByCourseId(courseId);
+    }
+
+    public List<Topic> findAllActiveTopicsByCourseId(int courseId){
+        return topicRepository.findAllByCourseIdAndStatusId(courseId,1);
     }
 
     public void changeStatus(int topicId, int statusId){

@@ -53,17 +53,17 @@
                                 <h1>${topic.name}</h1>
                                 <h4>${topic.description}</h4>
                                 <c:if test="${topic.status.id == 1}">
-                                    <h3>Тема опубликована</h3>
+                                    <h3 class="green">Тема опубликована</h3>
                                 </c:if>
                                 <c:if test="${topic.status.id == 3}">
-                                    <h3>Тема в разработке</h3>
+                                    <h3 class="red">Тема в разработке</h3>
                                 </c:if>
                                 <form method="get" action="${contextPath}/topic/show/${topic.id}">
                                     <button class="detailed" type="submit" value="Управление">Управление</button>
                                 </form>
                             </div>
                         </section>
-                        <c:if test="${topics.indexOf(topic) % 3==2}"></div></c:if>
+                        <c:if test="${((topics.indexOf(topic) % 3==2)||(topics.indexOf(topic) == topics.size()-1))}"></div></c:if>
                     </c:forEach>
                 </c:if>
             </section>
@@ -78,7 +78,6 @@
                 </c:if>
                 <c:if test="${!topics.isEmpty()}">
                     <c:forEach items="${topics}" var="topic">
-                        <c:if test="${topic.status.id == 1}">
                             <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
                             <section class="col-3, background" >
                                 <div>
@@ -97,8 +96,7 @@
                                     </form>
                                 </div>
                             </section>
-                            <c:if test="${topics.indexOf(topic) % 3==2}"></div></c:if>
-                        </c:if>
+                            <c:if test="${((topics.indexOf(topic) % 3==2)||(topics.indexOf(topic) == topics.size()-1))}"></div></c:if>
 
                     </c:forEach>
                 </c:if>

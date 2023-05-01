@@ -10,4 +10,5 @@ public interface TopicRepository extends JpaRepository<Topic,Integer> {
     Topic findById(int id);
     List<Topic> findAllByCourse(Course course);
     List<Topic> findAllByCourseId(int courseId);
+    List<Topic> findAllByCourseIdAndStatusId(int courseId, int statusId);
 }

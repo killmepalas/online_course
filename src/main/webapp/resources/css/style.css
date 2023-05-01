@@ -103,7 +103,7 @@ form{
     will-change: transform;
 }
 
-.detailed, .update, .delete, .create-course, .button-teach input[type=submit], .formcource, .logout {
+.detailed, .update, .delete, .create-course, .button-teach input[type=submit], .formcource, .logout, .jsBut{
     appearance: none;
     background-color: transparent;
     border: 2px solid #1A1A1A;
@@ -503,6 +503,41 @@ progress::-moz-progress-bar {
     border-radius: 25px;
     padding: 5px;
     margin: 5px;
+}
+
+.yellowBack{
+    background-color: lightyellow;
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.greenBack{
+    background-color: lightgreen;
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.redBack{
+    background-color: indianred;
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.jsBut{
+    width: 50px;
+    font-size: 10px;
+    padding: 0;
+    background-color: #3B3B3B;
+    color: white;
+}
+
+.description{
+    width: 60%;
+    height: 100px;
+    margin-bottom: 5px;
 }
 
 .row {

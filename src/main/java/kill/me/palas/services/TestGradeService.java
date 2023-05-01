@@ -71,6 +71,14 @@ public class TestGradeService {
         return  result;
     }
 
+    public List<TestGrade> findByUserAndTopic(User user, Topic topic){
+        List<TestGrade> testGrades = testGradeRepository.findByUser(user);
+        List<TestGrade> result = new ArrayList<>();
+        for (TestGrade testGrade : testGrades){
+            if (testGrade.getTest().getTopic().getId() == topic.getId()) result.add(testGrade);
+        }
+        return  result;
+    }
 
     public void update(int id, TestGrade updatedTestGrade) {
         updatedTestGrade.setId(id);

@@ -31,7 +31,7 @@ public class TopicController {
     @Autowired
     public TopicController(UserServiceImpl userService, TopicService topicService, TopicGradeService topicGradeService,
                            CourseService courseService, TestService testService, LectureService lectureService,
-                           TestGradeService testGradeService){
+                           TestGradeService testGradeService) {
         this.topicService = topicService;
         this.userService = userService;
         this.topicGradeService = topicGradeService;
@@ -43,78 +43,79 @@ public class TopicController {
 
 
     @GetMapping("/{id_course}")
-    public String index(Model model, @PathVariable("id_course") int id){
+    public String index(Model model, @PathVariable("id_course") int id) {
         User db_user = userService.getCurrentAuthUser();
-
-        boolean check = false;
-
-        if (db_user != null){
-            for (Course course: db_user.getCourses()){
-                if (course.getId() == id ){
-                    check = true;
-                    model.addAttribute("status","student");
-                    model.addAttribute("grades", topicGradeService.findByUserAndCourse(db_user,course));
-                    break;
+        if (db_user != null) {
+            boolean check = false;
+            if (db_user.getId() == courseService.findTeacher(id).getId()) {
+                model.addAttribute("status", "teacher");
+                model.addAttribute("topics", topicService.findAllByCourseId(id));
+                check = true;
+            } else {
+                for (Course course : db_user.getCourses()) {
+                    if (course.getId() == id) {
+                        check = true;
+                        model.addAttribute("status", "student");
+                        model.addAttribute("grades", topicGradeService.findByUserAndCourse(db_user, course));
+                        model.addAttribute("topics", topicService.findAllActiveTopicsByCourseId(id));
+                        break;
+                    }
                 }
             }
+            if (check) return "topic/index";
+            return "error/not_access";
         }
-
-        if (db_user != null && db_user.getId() == courseService.findTeacher(id).getId()){
-            model.addAttribute("status", "teacher");
-        } else if (db_user == null || check == false) {return "error/not_access";}
-
-
-        List<Topic> topics = topicService.findAllByCourseId(id);
-        model.addAttribute("topics", topics);
-        return "topic/index";
+        return "error/not_auth";
     }
 
     @GetMapping("/show/{id}")
-    public String show (@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model) {
         User db_user = userService.getCurrentAuthUser();
 
         Topic topic = topicService.findOne(id);
         Course tCourse = topic.getCourse();
         boolean check = false;
 
-        if (db_user != null){
-            for (Course course: db_user.getCourses()){
-                if (course.getId() == id ){
+        if (db_user != null) {
+            for (Course course : db_user.getCourses()) {
+                if (course.getId() == id) {
                     check = true;
-                    model.addAttribute("status","student");
-                    model.addAttribute("grades", testGradeService.findByUserAndCourse(db_user,course));
+                    model.addAttribute("status", "student");
+                    model.addAttribute("grades", testGradeService.findByUserAndTopic(db_user, topic));
                     break;
                 }
             }
         }
 
-        if (db_user != null && db_user.getId() == courseService.findTeacher(id).getId()){
+        if (db_user != null && topic.getCourse().getTeacher().getId() == db_user.getId()) {
             model.addAttribute("status", "teacher");
-        } else if (db_user == null || !check) {return "error/not_access";}
+        } else if (db_user == null || !check) {
+            return "error/not_access";
+        }
 
         model.addAttribute("topic", topic);
         model.addAttribute("course_id", tCourse.getId());
-        model.addAttribute("tests",testService.findTestByTopic(id));
-        model.addAttribute("lectures",lectureService.findByTopic(id));
-        model.addAttribute("countActiveTests",testService.findCountActiveTests(topic));
+        model.addAttribute("tests", testService.findTestByTopic(id));
+        model.addAttribute("lectures", lectureService.findByTopic(id));
+        model.addAttribute("countActiveTests", testService.findCountActiveTests(topic));
         return "topic/show";
     }
 
     @PostMapping("/close/{id}")
-    public String close(@PathVariable("id")int id){
-        topicService.changeStatus(id,3);
+    public String close(@PathVariable("id") int id) {
+        topicService.changeStatus(id, 3);
         return "redirect: /topic/show/" + id;
     }
 
     @PostMapping("/open/{id}")
-    public String open(@PathVariable("id")int id){
-        topicService.changeStatus(id,1);
+    public String open(@PathVariable("id") int id) {
+        topicService.changeStatus(id, 1);
         return "redirect: /topic/show/" + id;
     }
 
     @GetMapping("create/{course_id}")
-    public String create(@ModelAttribute("topic") Topic topic,@PathVariable("course_id") int courseId, Model model){
-        model.addAttribute("course",courseId);
+    public String create(@ModelAttribute("topic") Topic topic, @PathVariable("course_id") int courseId, Model model) {
+        model.addAttribute("course", courseId);
         return "topic/create";
     }
 
@@ -128,7 +129,7 @@ public class TopicController {
     }
 
     @GetMapping("/update/{id}")
-    public String update(@PathVariable("id") int id, Model model){
+    public String update(@PathVariable("id") int id, Model model) {
         model.addAttribute("topic", topicService.findOne(id));
         return "topic/update";
     }
@@ -139,12 +140,12 @@ public class TopicController {
         if (bindingResult.hasErrors())
             return "topic/update";
         Course course = topicService.findCourse(id);
-        topicService.update(id, topic,course);
+        topicService.update(id, topic, course);
         return "redirect:/topic/show/" + id;
     }
 
     @PostMapping("delete/{id}")
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") int id) {
         int courseId = topicService.findCourse(id).getId();
         topicService.delete(id);
         return "redirect: /topic/" + courseId;

@@ -53,15 +53,18 @@
 
         <c:if test="${status == 1}">
             <section class="help">
-                <div class="background">
+                <div>
                     <h1>${lecture.name}</h1>
                     <h3>${lecture.description}</h3>
-                    <div>
+                    <div class="background">
                         <p>${lecture.text}</p>
                     </div>
                 </div>
             </section>
         </c:if>
+        <form method="get" action="${contextPath}/topic/show/${lecture.topic.id}">
+            <button class="detailed" type="submit">Назад</button>
+        </form>
     </main>
     <footer>
         <p>Телефон: +6(666)-666-66-66</p>

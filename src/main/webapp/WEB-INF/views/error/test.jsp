@@ -34,7 +34,7 @@
     <main id="course">
         <section class="help">
             <h4>Упс. Кажется преподавателю нужно доделать тест. Заходите позднее</h4>
-            <h3><a href="${contextPath}/test/${course.id}">Вернуться к курсу</a></h3>
+            <h3><a href="${contextPath}/topic/show/${topic.id}">Вернуться к теме</a></h3>
         </section>
     </main>
     <footer>

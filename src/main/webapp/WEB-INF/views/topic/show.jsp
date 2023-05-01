@@ -38,7 +38,8 @@
                     <c:if test="${topic.status.id == 1}">
                         <h3 class="green">Тема открыта для обучающихся</h3>
                         <p>Чтобы отредактировать тему, пожалуйста, закройте её.</p>
-                        <form method="post" action="${contextPath}/topic/close/${topic.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <form method="post"
+                              action="${contextPath}/topic/close/${topic.id}?${_csrf.parameterName}=${_csrf.token}">
                             <button class="detailed" type="submit">Закрыть тему</button>
                         </form>
                     </c:if>
@@ -48,11 +49,15 @@
                             <button class="detailed" type="submit">Редактировать тему</button>
                         </form>
                         <p>Чтобы тема была видна обучающимся, просто откройте её.</p>
-                        <form method="post" action="${contextPath}/topic/open/${topic.id}?${_csrf.parameterName}=${_csrf.token}">
+                        <form method="post"
+                              action="${contextPath}/topic/open/${topic.id}?${_csrf.parameterName}=${_csrf.token}">
                             <button class="detailed" type="submit">Открыть тему</button>
                         </form>
-                        <form method="post" action="${contextPath}/topic/delete/${topic.id}?${_csrf.parameterName}=${_csrf.token}">
-                            <input class="detailed" type="submit" onclick="return confirm('Вы действительно хотите удалить тему?')" value="Удалить тему">
+                        <form method="post"
+                              action="${contextPath}/topic/delete/${topic.id}?${_csrf.parameterName}=${_csrf.token}">
+                            <input class="detailed" type="submit"
+                                   onclick="return confirm('Вы действительно хотите удалить тему?')"
+                                   value="Удалить тему">
                         </form>
                     </c:if>
                 </div>
@@ -60,16 +65,18 @@
                     <h4>У темы пока нет лекций и тестов. Добавьте элементы темы сейчас!</h4>
                 </c:if>
                 <h3>Найдено элементов курса: ${tests.size()+lectures.size()}</h3>
-                <div>
-                    <form method="get" action="${contextPath}/test/create/${topic.id}">
-                        <button class="detailed" type="submit">Создать тест</button>
-                    </form>
-                </div>
-                <div>
-                    <form method="get" action="${contextPath}/lecture/create/${topic.id}">
-                        <button class="detailed" type="submit">Создать лекцию</button>
-                    </form>
-                </div>
+                <c:if test="${topic.status.id == 3}">
+                    <div>
+                        <form method="get" action="${contextPath}/test/create/${topic.id}">
+                            <button class="detailed" type="submit">Создать тест</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form method="get" action="${contextPath}/lecture/create/${topic.id}">
+                            <button class="detailed" type="submit">Создать лекцию</button>
+                        </form>
+                    </div>
+                </c:if>
                 <div>
                     <form method="get" action="${contextPath}/topic/${course_id}">
                         <button class="detailed" type="submit">Вернуться к конструктору курса</button>
@@ -87,7 +94,7 @@
                                 </form>
                             </div>
                         </section>
-                        <c:if test="${lectures.indexOf(lecture) % 3==2}"></div></c:if>
+                        <c:if test="${((lectures.indexOf(lecture) % 3==2)||(lectures.size()-1 == lectures.indexOf(lecture)))}"></div></c:if>
                     </c:forEach>
                 </c:if>
                 <c:if test="${!tests.isEmpty()}">
@@ -108,7 +115,7 @@
                                 </form>
                             </div>
                         </section>
-                        <c:if test="${tests.indexOf(test) % 3==2}"></div></c:if>
+                        <c:if test="${((tests.indexOf(test) % 3==2)||(tests.indexOf(test) == tests.size()-1))}"></div></c:if>
                     </c:forEach>
                 </c:if>
             </section>
@@ -135,7 +142,7 @@
                                 </form>
                             </div>
                         </section>
-                        <c:if test="${lectures.indexOf(lecture) % 3==2}"></div></c:if>
+                        <c:if test="${((lectures.indexOf(lecture) % 3==2)||(lectures.size()-1 == lectures.indexOf(lecture)))}"></div></c:if>
 
                     </c:forEach>
                 </c:if>
@@ -143,19 +150,38 @@
                     <c:forEach items="${tests}" var="test">
                         <c:if test="${test.status.id == 1}">
                             <c:if test="${tests.indexOf(test) % 3==0}"><div class="row"></c:if>
-                            <section class="col-3">
-                                <div>
-                                    <h1>${test.name}</h1>
-                                    <h4>${test.description}</h4>
-                                    <c:forEach items="${grades}" var="grade">
-                                        <c:if test="${grade.test.id == test.id}"><h4>Оценка: ${grade.grade}</h4></c:if>
-                                    </c:forEach>
-                                    <form method="get" action="${contextPath}/test/start/${test.id}/0">
-                                        <button class="detailed" type="submit">Пройти</button>
-                                    </form>
-                                </div>
+                            <c:forEach items="${grades}" var="grade">
+                                <c:if test="${grade.test.id == test.id}">
+                                    <c:choose>
+                                        <c:when test="${grade.grade <=40}">
+                                            <section class="col-3, redBack">
+                                        </c:when>
+                                        <c:when test="${grade.grade <=80}">
+                                            <section class="col-3, yellowBack">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <section class="col-3, greenBack">
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:set var="hasGrade" value="true"/>
+                                </c:if>
+                            </c:forEach>
+                            <c:if test="${hasGrade != 'true'}">
+                                <section class="col-3, background">
+                            </c:if>
+                            <c:set var="hasGrade" value="false"/>
+                            <div>
+                                <h1>${test.name}</h1>
+                                <h4>${test.description}</h4>
+                                <c:forEach items="${grades}" var="grade">
+                                    <c:if test="${grade.test.id == test.id}"><h4>Оценка: ${grade.grade}</h4></c:if>
+                                </c:forEach>
+                                <form method="get" action="${contextPath}/test/start/${test.id}/1">
+                                    <button class="detailed" type="submit">Пройти</button>
+                                </form>
+                            </div>
                             </section>
-                            <c:if test="${tests.indexOf(test) % 3==2}"></div></c:if>
+                            <c:if test="${((tests.indexOf(test) % 3==2)||(tests.indexOf(test) == tests.size()-1))}"></div></c:if>
                         </c:if>
                     </c:forEach>
                 </c:if>
