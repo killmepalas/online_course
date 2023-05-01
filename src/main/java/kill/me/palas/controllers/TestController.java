@@ -109,21 +109,18 @@ public class TestController {
 
     @GetMapping("/create/{id}")
     public String create(@ModelAttribute("test") Test test, @PathVariable("id") int id, Model model) {
-        model.addAttribute("course",id);
+        model.addAttribute("topic",id);
         return "test/create";
     }
 
-    @PostMapping("/create/{course_id}")
+    @PostMapping("/create/{topic_id}")
     public String create(@ModelAttribute("test") @Valid Test test,
-                         BindingResult bindingResult, @PathVariable("course_id") int id_course) {
-        testValidator.validate(test, bindingResult);
+                         BindingResult bindingResult, @PathVariable("topic_id") int topicId) {
         if (bindingResult.hasErrors())
             return "test/create";
-        testService.save(test, id_course);
-        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
-        return "redirect:/test/"
-//                + test.getCourse().getId()
-                ;
+        testService.save(test, topicId);
+//        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
+        return "redirect:/topic/show/" + topicId;
     }
 
     @PostMapping("/delete/{test_id}")

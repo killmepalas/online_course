@@ -107,4 +107,11 @@ public class CourseService {
         }
         return studentsOfCourse;
     }
+
+    public boolean isStudent(User user, Course course){
+        List<Course> courses = courseRepository.findCourseByUsers(user);
+        for (Course c: courses)
+            if (c.getId() == course.getId()) return true;
+        return false;
+    }
 }

@@ -33,6 +33,7 @@
             <h1>
                 Все курсы мира в одном месте
             </h1>
+            <h1><a href="${contextPath}/course/index/0">Все категории</a></h1>
         </div>
 
         <c:forEach items="${categories}" var="category">

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LectureRepository extends JpaRepository<Lecture, Integer> {
     List<Lecture> findAllByTopicId(int topicId);
+    Lecture findById(int id);
 }

@@ -35,7 +35,7 @@
                 <h1 class="form-signin-heading">Добавление темы</h1>
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="name" class="form-control" value="${test.name}"
+                        <form:input type="text" path="name" class="form-control" value="${topic.name}"
                                     placeholder="Название" field="${name}"></form:input>
                         <form:errors path="name"></form:errors>
                     </div>
@@ -43,7 +43,7 @@
 
                 <spring:bind path="description">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="description" class="form-control" value="${test.description}" placeholder="Описание"></form:input>
+                        <form:input type="text" path="description" class="form-control" value="${topic.description}" placeholder="Описание"></form:input>
                         <form:errors path="description"></form:errors>
                     </div>
                 </spring:bind>
