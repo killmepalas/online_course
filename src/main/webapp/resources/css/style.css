@@ -498,6 +498,13 @@ progress::-moz-progress-bar {
     justify-content: center; align-items: center
 }
 
+.background{
+    background-color: lavender;
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
+}
+
 .row {
     display: flex;
     flex-flow: row nowrap;
@@ -514,6 +521,14 @@ progress::-moz-progress-bar {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.green{
+    color: green;
+}
+
+.red{
+    color: red;
 }
 
 table.role{

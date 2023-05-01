@@ -52,12 +52,20 @@ public class TestService {
     }
 
     public List<Test> findTestByTopic(int id){
-        List<Test> tests = testRepository.findTestByTopic(topicService.findOne(id));
-        return tests;
+        return testRepository.findTestByTopic(topicService.findOne(id));
     }
 
     public Topic findTopic(int id){
         Test foundTest = testRepository.findById(id);
         return foundTest.getTopic();
+    }
+
+    public int findCountActiveTests(Topic topic){
+        List<Test> allTests = testRepository.findTestByTopic(topic);
+        List<Test> activeTests = new ArrayList<>();
+        for (Test test: allTests){
+            if (test.getStatus().getId() == 1) activeTests.add(test);
+        }
+        return activeTests.size();
     }
 }
