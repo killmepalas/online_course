@@ -103,7 +103,6 @@ public class TestController {
     @PostMapping("/update/{id}")
     public String update(@ModelAttribute("test") @Valid Test test, BindingResult bindingResult,
                          @PathVariable("id") int id) {
-        testValidator.validate(test, bindingResult);
         if (bindingResult.hasErrors())
             return "test/edit";
         Topic topic = testService.findTopic(id);

@@ -77,10 +77,14 @@ values ('Программирование'),
 
 create table TopicGrade
 (
-    id      int not null primary key auto_increment,
-    grade   int not null,
+    id       int not null primary key auto_increment,
+    grade    int not null,
     topic_id int not null,
-    user_id int not null,
+    user_id  int not null,
     foreign key (topic_id) references Topic (id),
     foreign key (user_id) references User (id)
 );
+
+alter table test
+    add mix   boolean,
+    add count int;
