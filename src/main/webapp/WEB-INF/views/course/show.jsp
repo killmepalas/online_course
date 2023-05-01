@@ -48,7 +48,7 @@
                         <form method="post" action="${contextPath}/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
                             <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите удалить данный курс?')" value="Удалить">
                         </form>
-                        <form method="get" action="${contextPath}/test/${course.id}">
+                        <form method="get" action="${contextPath}/topic/${course.id}">
                             <input class="logout" type="submit" value="Конструктор">
                         </form>
                     </div>

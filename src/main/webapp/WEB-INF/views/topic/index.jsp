@@ -36,23 +36,29 @@
                     <h4>У курса пока нет тем (уроков). Создайте свою первую тему прямо сейчас!</h4>
                 </c:if>
                 <div>
-                    <form method="get" action="/topic/create/${id_course}">
+                    <form method="get" action="${contextPath}/topic/create/${id_course}">
                         <button class="detailed" type="submit">Создать тему</button>
                     </form>
                 </div>
                 <div>
-                    <form method="get" action="/course/${id_course}">
+                    <form method="get" action="${contextPath}/course/${id_course}">
                         <button class="detailed" type="submit">Вернуться к курсу</button>
                     </form>
                 </div>
                 <c:if test="${!topics.isEmpty()}">
                     <c:forEach items="${topics}" var="topic">
                         <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
-                        <section class="col-3">
+                        <section class="col-3, background">
                             <div>
-                                <h4>Название: ${topic.name}</h4>
-                                <h4>Описание: ${topic.description}</h4>
-                                <form method="get" action="/topic/show/${topic.id}">
+                                <h1>${topic.name}</h1>
+                                <h4>${topic.description}</h4>
+                                <c:if test="${topic.status.id == 1}">
+                                    <h3>Тема опубликована</h3>
+                                </c:if>
+                                <c:if test="${topic.status.id == 3}">
+                                    <h3>Тема в разработке</h3>
+                                </c:if>
+                                <form method="get" action="${contextPath}/topic/show/${topic.id}">
                                     <button class="detailed" type="submit" value="Управление">Управление</button>
                                 </form>
                             </div>
@@ -66,31 +72,37 @@
         <jsp:useBean id="now" class="java.util.Date" scope="page"/>
 
         <c:if test="${status == 'student'}">
-            <c:if test="${topics.isEmpty()}">
-                <section class="help">
+            <section class="help">
+                <c:if test="${topics.isEmpty()}">
                     <h4>У курса пока нет тем (уроков). Возвращайтесь позже!</h4>
-                </section>
-            </c:if>
-            <c:if test="${!topics.isEmpty()}">
-                <c:forEach items="${topics}" var="topic">
-                    <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
-                    <section class="col-3">
-                        <div>
-                            <h4>Название: ${topic.name}</h4>
-                            <h4>Описание: ${topic.description}</h4>
-                            <c:forEach items="${grades}" var="grade">
-                                <c:if test="${grade.topic.id == topic.id}">
-                                    <p>
-                                        <progress id="progressbar" value="${grade.grade}" max="100"></progress>
-                                        <span class="progress-value">${grade.grade}%</span>
-                                    </p>
-                                </c:if>
-                            </c:forEach>
-                        </div>
-                    </section>
-                    <c:if test="${topics.indexOf(topic) % 3==2}"></div></c:if>
-                </c:forEach>
-            </c:if>
+                </c:if>
+                <c:if test="${!topics.isEmpty()}">
+                    <c:forEach items="${topics}" var="topic">
+                        <c:if test="${topic.status.id == 1}">
+                            <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
+                            <section class="col-3, background" >
+                                <div>
+                                    <h1>${topic.name}</h1>
+                                    <h4>${topic.description}</h4>
+                                    <c:forEach items="${grades}" var="grade">
+                                        <c:if test="${grade.topic.id == topic.id}">
+                                            <p>
+                                                <progress id="progressbar" value="${grade.grade}" max="100"></progress>
+                                                <span class="progress-value">${grade.grade}%</span>
+                                            </p>
+                                        </c:if>
+                                    </c:forEach>
+                                    <form method="get" action="${contextPath}/topic/show/${topic.id}">
+                                        <button class="detailed" type="submit" >Подробнее</button>
+                                    </form>
+                                </div>
+                            </section>
+                            <c:if test="${topics.indexOf(topic) % 3==2}"></div></c:if>
+                        </c:if>
+
+                    </c:forEach>
+                </c:if>
+            </section>
         </c:if>
     </main>
     <footer>

@@ -109,28 +109,26 @@ public class TestController {
 
     @GetMapping("/create/{id}")
     public String create(@ModelAttribute("test") Test test, @PathVariable("id") int id, Model model) {
-        model.addAttribute("course",id);
+        model.addAttribute("topic",id);
         return "test/create";
     }
 
-    @PostMapping("/create/{course_id}")
+    @PostMapping("/create/{topic_id}")
     public String create(@ModelAttribute("test") @Valid Test test,
-                         BindingResult bindingResult, @PathVariable("course_id") int id_course) {
-        testValidator.validate(test, bindingResult);
+                         BindingResult bindingResult, @PathVariable("topic_id") int topicId) {
         if (bindingResult.hasErrors())
             return "test/create";
-        testService.save(test, id_course);
-        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
-        return "redirect:/test/"
-//                + test.getCourse().getId()
-                ;
+        testService.save(test, topicId);
+//        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
+        return "redirect:/topic/show/" + topicId;
     }
 
-    @PostMapping("/delete/{test_id}/{course_id}")
-    public String delete(@PathVariable int test_id, @PathVariable int course_id) {
+    @PostMapping("/delete/{test_id}")
+    public String delete(@PathVariable int test_id) {
+        Topic topic = testService.findTopic(test_id);
         testService.delete(test_id);
-        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(course_id),"delete",test_id);
-        return "redirect:/test/" + course_id;
+//        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(topic.getId()),"delete",test_id);
+        return "redirect:/topic/show" + topic.getId();
     }
 
     int mark;
@@ -191,4 +189,15 @@ public class TestController {
         return "redirect:/test/start/" + test_id + "/" + next;
     }
 
+    @PostMapping("/close/{id}")
+    public String close(@PathVariable("id")int id){
+        testService.changeStatus(id,3);
+        return "redirect: /test/show/" + id;
+    }
+
+    @PostMapping("/open/{id}")
+    public String open(@PathVariable("id")int id){
+        testService.changeStatus(id,1);
+        return "redirect: /test/show/" + id;
+    }
 }

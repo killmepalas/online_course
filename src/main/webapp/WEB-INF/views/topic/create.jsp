@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Создание теста</title>
+    <title>Создание темы</title>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
 
@@ -31,11 +31,11 @@
 <div id="container">
     <main>
         <section class="help">
-            <form:form method="POST" modelAttribute="test" >
-                <h1 class="form-signin-heading">Создание теста</h1>
+            <form:form method="POST" modelAttribute="topic" >
+                <h1 class="form-signin-heading">Добавление темы</h1>
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="name" class="form-control" value="${test.name}"
+                        <form:input type="text" path="name" class="form-control" value="${topic.name}"
                                     placeholder="Название" field="${name}"></form:input>
                         <form:errors path="name"></form:errors>
                     </div>
@@ -43,16 +43,16 @@
 
                 <spring:bind path="description">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="description" class="form-control" value="${test.description}" placeholder="Описание"></form:input>
+                        <form:input type="text" path="description" class="form-control" value="${topic.description}" placeholder="Описание"></form:input>
                         <form:errors path="description"></form:errors>
                     </div>
                 </spring:bind>
 
-                <form method="post" action="${contextPath}/test/create/${topic}">
+                <form method="post" action="${contextPath}/topic/create/${course}">
                     <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
                 </form>
             </form:form>
-            <form method="get" action="${contextPath}/topic/show/${topic}">
+            <form method="get" action="${contextPath}/topic/${course}">
                 <button class="formcource" type="submit">Назад</button>
             </form>
         </section>
