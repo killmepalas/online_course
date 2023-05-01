@@ -126,11 +126,12 @@ public class TestController {
                 ;
     }
 
-    @PostMapping("/delete/{test_id}/{course_id}")
-    public String delete(@PathVariable int test_id, @PathVariable int course_id) {
+    @PostMapping("/delete/{test_id}")
+    public String delete(@PathVariable int test_id) {
+        Topic topic = testService.findTopic(test_id);
         testService.delete(test_id);
-        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(course_id),"delete",test_id);
-        return "redirect:/test/" + course_id;
+//        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(topic.getId()),"delete",test_id);
+        return "redirect:/topic/show" + topic.getId();
     }
 
     int mark;
@@ -191,4 +192,15 @@ public class TestController {
         return "redirect:/test/start/" + test_id + "/" + next;
     }
 
+    @PostMapping("/close/{id}")
+    public String close(@PathVariable("id")int id){
+        testService.changeStatus(id,3);
+        return "redirect: /test/show/" + id;
+    }
+
+    @PostMapping("/open/{id}")
+    public String open(@PathVariable("id")int id){
+        testService.changeStatus(id,1);
+        return "redirect: /test/show/" + id;
+    }
 }

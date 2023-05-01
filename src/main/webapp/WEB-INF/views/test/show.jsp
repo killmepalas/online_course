@@ -31,37 +31,49 @@
 <div id="container">
     <main id="course">
         <section class="help">
-            <div class="cart">
-                <h1 class="description">${test.name}</h1>
-                <p class="description">${test.description}</p>
+            <div class="background">
+                <h1>Название: ${test.name}</h1>
+                <h3>Описание: ${test.description}</h3>
                 <div>
-                    <form method="get" action="${contextPath}/test/update/${test.id}">
-                        <input class="test" type="submit" value="Редактировать">
-                    </form>
-                </div>
-                <div>
-                    <form method="post" action="${contextPath}/test/delete/${test.id}/${test.course.id}?${_csrf.parameterName}=${_csrf.token}">
-                        <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
-                    </form>
-                </div>
-                <div>
-                    <jsp:useBean id="now" class="java.util.Date" scope="page"/>
                     <c:choose>
-                        <c:when test="${test.start <= now && test.stop >= now}">
-                            <p class="description">Закройте тест, чтобы добавить вопросы.</p>
+                        <c:when test="${test.status.id == 1}">
+                            <p>Закройте тест, чтобы добавить вопросы.</p>
+                            <div>
+                                <form method="post" action="${contextPath}/test/close/${test.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="test" type="submit" value="Закрыть тест">
+                                </form>
+                            </div>
                         </c:when>
                         <c:otherwise>
-                            <form method="get" action="${contextPath}/question/${test.id}">
-                                <input class="test" type="submit" value="Конструктор">
-                            </form>
+                            <div>
+                                <form method="get" action="${contextPath}/test/update/${test.id}">
+                                    <input class="test" type="submit" value="Редактировать">
+                                </form>
+                            </div>
+                            <div>
+                                <form method="get" action="${contextPath}/question/${test.id}">
+                                    <input class="test" type="submit" value="Конструктор">
+                                </form>
+                            </div>
+                            <p>Откройте тест, чтобы он стал доступен пользователям.</p>
+                            <div>
+                                <form method="post" action="${contextPath}/test/open/${test.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="test" type="submit" value="Открыть тест">
+                                </form>
+                            </div>
+                            <div>
+                                <form method="post" action="${contextPath}/test/delete/${test.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="test" type="submit" onclick="return confirm('Вы действительно хотите удалить данный тест?')" value="Удалить">
+                                </form>
+                            </div>
                         </c:otherwise>
                     </c:choose>
                 </div>
-                <div>
-                    <form method="get" action="${contextPath}/test/${test.course.id}">
-                        <input class="test" type="submit" value="Назад">
-                    </form>
-                </div>
+            </div>
+            <div>
+                <form method="get" action="${contextPath}/topic/show/${test.topic.id}">
+                    <input class="detailed" type="submit" value="Назад">
+                </form>
             </div>
         </section>
     </main>

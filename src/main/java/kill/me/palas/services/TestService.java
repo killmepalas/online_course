@@ -1,6 +1,7 @@
 package kill.me.palas.services;
 
 import kill.me.palas.models.*;
+import kill.me.palas.repositories.StatusRepository;
 import kill.me.palas.repositories.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,14 @@ import java.util.Optional;
 public class TestService {
     private final TestRepository testRepository;
     private final TopicService topicService;
+    private final StatusRepository statusRepository;
 
     @Autowired
-    public TestService(TestRepository testRepository,TopicService topicService) {
+    public TestService(TestRepository testRepository,TopicService topicService,
+                       StatusRepository statusRepository) {
         this.testRepository = testRepository;
         this.topicService = topicService;
+        this.statusRepository = statusRepository;
     }
 
     public List<Test> findAll() {
@@ -42,8 +46,10 @@ public class TestService {
 
 
     public void update(int id, Test updatedTest, Topic topic) {
+        Test oldTest = testRepository.findById(id);
         updatedTest.setId(id);
         updatedTest.setTopic(topic);
+        updatedTest.setStatus(oldTest.getStatus());
         testRepository.save(updatedTest);
     }
 
@@ -67,5 +73,11 @@ public class TestService {
             if (test.getStatus().getId() == 1) activeTests.add(test);
         }
         return activeTests.size();
+    }
+
+    public void changeStatus(int testId, int statusId){
+        Test test = testRepository.findById(testId);
+        test.setStatus(statusRepository.findById(statusId));
+        testRepository.save(test);
     }
 }
