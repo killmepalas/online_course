@@ -37,6 +37,8 @@ public class TestService {
     public void save(Test test, int id) {
         test.setTopic(topicService.findOne(id));
         test.setStatus(statusRepository.findById(3));
+        test.setMix(false);
+        test.setCount(5);
         testRepository.save(test);
     }
 
@@ -52,6 +54,13 @@ public class TestService {
         updatedTest.setTopic(topic);
         updatedTest.setStatus(oldTest.getStatus());
         testRepository.save(updatedTest);
+    }
+
+    public void updateMix(int id, Test updatedTest){
+        Test oldTest = testRepository.findById(id);
+        oldTest.setMix(updatedTest.isMix());
+        if (updatedTest.isMix()) oldTest.setCount(updatedTest.getCount());
+        testRepository.save(oldTest);
     }
 
     public void delete(int id) {

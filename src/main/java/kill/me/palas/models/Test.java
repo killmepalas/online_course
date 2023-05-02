@@ -31,7 +31,6 @@ public class Test {
     private boolean mix;
 
     @Column(name = "count")
-    @Min(value = 1,message = "Вопросов должно быть больше 0")
     private int count;
 
     @ManyToOne()

@@ -100,7 +100,7 @@ public class TestController {
         return "test/edit";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/edit/{id}")
     public String update(@ModelAttribute("test") @Valid Test test, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
@@ -109,6 +109,22 @@ public class TestController {
         testService.update(id, test,topic);
         return "redirect:/test/show/" + test.getId();
     }
+
+    @GetMapping("/mixEdit/{id}")
+    public String mixEdit(@PathVariable("id") int id, Model model){
+        model.addAttribute("test", testService.findOne(id));
+        return "test/mixEdit";
+    }
+
+    @PostMapping("/mixEdit/{id}")
+    public String mixEdit(@ModelAttribute("test") Test test, BindingResult bindingResult,@PathVariable int id){
+        testValidator.mix_validate(test,bindingResult, questionService.findQuestionByTest(test.getId()));
+        if (bindingResult.hasErrors()) return "test/mixEdit";
+        testService.updateMix(id, test);
+        return "redirect:/question/"+id;
+    }
+
+
 
     @GetMapping("/create/{id}")
     public String create(@ModelAttribute("test") Test test, @PathVariable("id") int id, Model model) {
@@ -126,7 +142,6 @@ public class TestController {
         }
 
         testService.save(test, topicId);
-//        courseGradeService.recalc(courseService.findOne(id_course),"create",0);
         return "redirect:/topic/show/" + topicId;
     }
 
