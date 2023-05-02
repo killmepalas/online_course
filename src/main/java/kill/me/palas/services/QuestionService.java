@@ -1,5 +1,6 @@
 package kill.me.palas.services;
 
+import kill.me.palas.classes.QuestionCheck;
 import kill.me.palas.models.Question;
 import kill.me.palas.models.Test;
 import kill.me.palas.repositories.QuestionRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -63,7 +65,22 @@ public class QuestionService {
     public Question findQuestionByTestById(int test_id, int question_id){
         Test test = testService.findOne(test_id);
         List<Question> questions = questionRepository.findQuestionByTest(test);
-        Question question = questions.get(question_id);
-        return question;
+        return questions.get(question_id);
+    }
+
+    public Question findUncheckedQuestionOfTest(List<Question> questionChecks, Test test){
+        List<Question> allQuestions = questionRepository.findQuestionByTest(test);
+        Collections.shuffle(allQuestions);
+        for (Question question: allQuestions){
+            boolean flag = true;
+            for (Question q: questionChecks){
+                if (question.getId() == q.getId()) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) return question;
+        }
+        return null;
     }
 }
