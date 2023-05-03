@@ -10,21 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class CourseGradeService {
     private final CourseGradeRepository courseGradeRepository;
-    private final TestGradeService testGradeService;
-    private final TestService testService;
+    private final TopicGradeService topicGradeService;
+    private final TopicService topicService;
     private final UserServiceImpl userService;
 
     @Autowired
-    public CourseGradeService(CourseGradeRepository courseGradeRepository, TestGradeService testGradeService,
-                              TestService testService, UserServiceImpl userService) {
+    public CourseGradeService(CourseGradeRepository courseGradeRepository, TopicGradeService topicGradeService,
+                              TopicService topicService, UserServiceImpl userService) {
         this.courseGradeRepository = courseGradeRepository;
-        this.testGradeService = testGradeService;
-        this.testService = testService;
+        this.topicGradeService = topicGradeService;
+        this.topicService = topicService;
         this.userService = userService;
     }
 
@@ -63,14 +64,14 @@ public class CourseGradeService {
     }
 
     public void add(User user, Course course){
-        List<TestGrade> testGrades = testGradeService.findByUserAndCourse(user,course);
+        List<TopicGrade> topicGrades = topicGradeService.findByUserAndCourse(user,course);
         CourseGrade courseGrade = findByUserAndCourse(user,course);
         int result = 0;
         int grades = 0;
-        for (TestGrade tg: testGrades){
-            grades +=tg.getGrade();
+        for (TopicGrade topicGrade: topicGrades){
+            grades +=topicGrade.getGrade();
         }
-//        result = grades/testService.findTestByTopic(course.getId()).size();
+        result = grades/topicService.findAllByCourse(course).size();
         if (courseGrade == null){
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
@@ -78,16 +79,18 @@ public class CourseGradeService {
             courseGrade.setGrade(result);
             courseGradeRepository.save(courseGrade);
         } else {
-            courseGrade.setGrade(result);
-            courseGradeRepository.save(courseGrade);
+            if(result != courseGrade.getGrade()){
+                courseGrade.setGrade(result);
+                courseGradeRepository.save(courseGrade);
+            }
         }
     }
 
     public void recalc(Course course, String method, int test_id){
         for (CourseGrade courseGrade : courseGradeRepository.findByCourse(course)){
-            if (method == "create"){
+//            if (Objects.equals(method, "create")){
 //                courseGrade.setGrade(courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()-1)/testService.findTestByCourse(course.getId()).size());
-            }
+//            }
             if (method == "delete"){
 //                if (testService.findTestByCourse(course.getId()).size() == 0) courseGrade.setGrade(0);
 //                else{
@@ -112,5 +115,9 @@ public class CourseGradeService {
         int rating = 0;
         if (courseGrades.size() != 0) {rating = grades / courseGrades.size();}
         return rating;
+    }
+
+    public List<CourseGrade> findAllByUser(User user){
+        return courseGradeRepository.findByUser(user);
     }
 }

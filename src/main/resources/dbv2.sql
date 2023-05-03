@@ -88,3 +88,6 @@ create table TopicGrade
 alter table test
     add mix   boolean,
     add count int;
+
+alter table user
+    add rating int;

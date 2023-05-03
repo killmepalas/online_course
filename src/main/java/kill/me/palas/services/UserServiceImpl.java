@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private StatusRepository statusRepository;
 
+    @Autowired
+    private CourseGradeService courseGradeService;
+
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -178,6 +181,14 @@ public class UserServiceImpl implements UserService {
             }
         }
         return students;
+    }
+
+    public void updateRating(User user){
+        List<CourseGrade> courseGrades = courseGradeService.findAllByUser(user);
+        int grades = 0;
+        for (CourseGrade courseGrade: courseGrades) grades += courseGrade.getGrade();
+        user.setRating(grades / courseGrades.size());
+        userRepository.save(user);
     }
 
 }

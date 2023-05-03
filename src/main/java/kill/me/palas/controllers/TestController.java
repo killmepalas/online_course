@@ -39,12 +39,14 @@ public class TestController {
 
     private TopicService topicService;
 
+    private TopicGradeService topicGradeService;
+
     @Autowired
     public TestController(TestService testService, TestValidator testValidator,
                           UserServiceImpl userService, CourseService courseService,
                           QuestionService questionService, AnswerService answerService,
                           TestGradeService testGradeService, CourseGradeService courseGradeService,
-                          TopicService topicService) {
+                          TopicService topicService, TopicGradeService topicGradeService) {
         this.testService = testService;
         this.testValidator = testValidator;
         this.userService = userService;
@@ -54,6 +56,7 @@ public class TestController {
         this.testGradeService = testGradeService;
         this.courseGradeService = courseGradeService;
         this.topicService = topicService;
+        this.topicGradeService = topicGradeService;
     }
 
     @GetMapping("/find")
@@ -131,28 +134,53 @@ public class TestController {
 
     @GetMapping("/create/{id}")
     public String create(@ModelAttribute("test") Test test, @PathVariable("id") int id, Model model) {
-        model.addAttribute("topic", id);
-        return "test/create";
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Topic topic = topicService.findOne(id);
+            if (user.getId() == topic.getCourse().getTeacher().getId()) {
+                model.addAttribute("topic", id);
+                return "test/create";
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     @PostMapping("/create/{topic_id}")
     public String create(@ModelAttribute("test") @Valid Test test,
                          BindingResult bindingResult, @PathVariable("topic_id") int topicId, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("topic", topicService.findOne(topicId));
-            return "test/create";
-        }
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Topic topic = topicService.findOne(topicId);
+            if (user.getId() == topic.getCourse().getTeacher().getId()) {
+                if (bindingResult.hasErrors()) {
+                    model.addAttribute("topic", topicService.findOne(topicId));
+                    return "test/create";
+                }
 
-        testService.save(test, topicId);
-        return "redirect:/topic/show/" + topicId;
+                testService.save(test, topicId);
+                return "redirect:/topic/show/" + topicId;
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     @PostMapping("/delete/{test_id}")
     public String delete(@PathVariable int test_id) {
-        Topic topic = testService.findTopic(test_id);
-        testService.delete(test_id);
-//        if (testService.findAll().size() != 1) courseGradeService.recalc(courseService.findOne(topic.getId()),"delete",test_id);
-        return "redirect:/topic/show/" + topic.getId();
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Topic topic = testService.findTopic(test_id);
+            if (user.getId() == topic.getCourse().getTeacher().getId()) {
+                testService.delete(test_id);
+                topicGradeService.save(user, topic);
+                courseGradeService.add(user, topic.getCourse());
+                userService.updateRating(user);
+                return "redirect:/topic/show/" + topic.getId();
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     int mark;
@@ -162,57 +190,64 @@ public class TestController {
     public String start(@PathVariable int test_id,
                         @PathVariable int question_id, Model model,
                         @ModelAttribute("answer") Answer answer) {
-        Test test = testService.findOne(test_id);
-        List<Question> questions = questionService.findQuestionByTest(test_id);
-        if (questions.size() == 0) {
-            model.addAttribute("topic", testService.findTopic(test_id));
-            return "error/test";
-        }
-        if (test.isMix()) {
-            int count = test.getCount();
-            if (count >= question_id) {
-                Question question = questionService.findUncheckedQuestionOfTest(questionChecks, test);
-                if (question != null) {
-                    questionChecks.add(question);
-                    List<Answer> answers = answerService.findMixedAnswerByQuestion(question.getId());
-                    if (answers == null) return "error/test";
-                    model.addAttribute("question", question);
-                    model.addAttribute("answers", answers);
-                    if (question_id == 1) mark = 0;
-                    int next = question_id + 1;
-                    model.addAttribute("next", next);
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Test test = testService.findOne(test_id);
+            if (courseService.isStudent(user, test.getTopic().getCourse())) {
+                List<Question> questions = questionService.findQuestionByTest(test_id);
+                if (questions.size() == 0) {
+                    model.addAttribute("topic", testService.findTopic(test_id));
+                    return "error/test";
+                }
+                if (test.isMix()) {
+                    int count = test.getCount();
+                    if (count >= question_id) {
+                        Question question = questionService.findUncheckedQuestionOfTest(questionChecks, test);
+                        if (question != null) {
+                            questionChecks.add(question);
+                            List<Answer> answers = answerService.findMixedAnswerByQuestion(question.getId());
+                            if (answers == null) return "error/test";
+                            model.addAttribute("question", question);
+                            model.addAttribute("answers", answers);
+                            if (question_id == 1) mark = 0;
+                            int next = question_id + 1;
+                            model.addAttribute("next", next);
+                            return "test/execute";
+                        }
+                        return "error/test";
+                    }
+                    questionChecks.clear();
+                    return "redirect:/topic/show/" + testService.findTopic(test_id).getId();
+                }
+                if (question_id != 0) {
+                    Question q = new Question();
+                    q.setId(0);
+                    Question question;
+                    if (question_id == 1) {
+                        question = questionService.findQuestionByTestById(test_id, 0);
+                        List<Answer> answers = answerService.findAnswerByQuestion(question.getId());
+                        if (answers == null) return "error/test";
+                        model.addAttribute("question", question);
+                        model.addAttribute("answers", answers);
+                        mark = 0;
+                        Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
+                        model.addAttribute("next", next.getId());
+                    } else {
+                        question = questionService.findOne(question_id);
+                        List<Answer> answers = answerService.findAnswerByQuestion(question_id);
+                        if (answers == null) return "error/test";
+                        Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
+                        model.addAttribute("question", question);
+                        model.addAttribute("answers", answers);
+                        model.addAttribute("next", next.getId());
+                    }
                     return "test/execute";
                 }
-                return "error/test";
+                return "redirect:/topic/show/" + testService.findTopic(test_id).getId();
             }
-            questionChecks.clear();
-            return "redirect:/topic/show/" + testService.findTopic(test_id).getId();
+            return "error/not_access";
         }
-        if (question_id != 0) {
-            Question q = new Question();
-            q.setId(0);
-            Question question;
-            if (question_id == 1) {
-                question = questionService.findQuestionByTestById(test_id, 0);
-                List<Answer> answers = answerService.findAnswerByQuestion(question.getId());
-                if (answers == null) return "error/test";
-                model.addAttribute("question", question);
-                model.addAttribute("answers", answers);
-                mark = 0;
-                Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
-                model.addAttribute("next", next.getId());
-            } else {
-                question = questionService.findOne(question_id);
-                List<Answer> answers = answerService.findAnswerByQuestion(question_id);
-                if (answers == null) return "error/test";
-                Question next = questions.stream().filter((s) -> s.getId() > question.getId()).findFirst().orElse(q);
-                model.addAttribute("question", question);
-                model.addAttribute("answers", answers);
-                model.addAttribute("next", next.getId());
-            }
-            return "test/execute";
-        }
-        return "redirect:/topic/show/" + testService.findTopic(test_id).getId();
+        return "error/not_auth";
     }
 
 
@@ -234,13 +269,17 @@ public class TestController {
                 if (test.isMix()) {
                     if (test.getCount() < next) {
                         int grade = mark * 100 / (test.getCount());
-                        testGradeService.save(user, testService.findOne(test_id), grade);
-//            courseGradeService.add(db_user,testService.findOne(test_id).getCourse());
+                        testGradeService.save(user, test, grade);
+                        topicGradeService.save(user, test.getTopic());
+                        courseGradeService.add(user, test.getTopic().getCourse());
+                        userService.updateRating(user);
                     }
                 } else if (next == 0) {
                     int grade = mark * 100 / (questionService.findQuestionByTest(test_id).size());
-                    testGradeService.save(user, testService.findOne(test_id), grade);
-//            courseGradeService.add(db_user,testService.findOne(test_id).getCourse());
+                    testGradeService.save(user, test, grade);
+                    topicGradeService.save(user, test.getTopic());
+                    courseGradeService.add(user, test.getTopic().getCourse());
+                    userService.updateRating(user);
                 }
                 return "redirect:/test/start/" + test_id + "/" + next;
             }

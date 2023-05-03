@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface TopicGradeRepository extends JpaRepository<TopicGrade,Integer> {
     List<TopicGrade> findAllByUser(User user);
-    List<TopicGrade> findAllByUserAndAndTopic(User user, Topic topic);
+    List<TopicGrade> findAllByUserAndTopic(User user, Topic topic);
+    TopicGrade findByUserAndTopic(User user, Topic topic);
 }
