@@ -1,6 +1,7 @@
 package kill.me.palas.services;
 
 import kill.me.palas.models.*;
+import kill.me.palas.repositories.OverCourseRepository;
 import kill.me.palas.repositories.TestGradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +14,23 @@ import java.util.Optional;
 @Service
 public class TestGradeService {
     private final TestGradeRepository testGradeRepository;
-
-//    private final CourseGradeService courseGradeService;
-
-    private final CourseService courseService;
+    private final TopicService topicService;
+    private final TestService testService;
+    private final TopicGradeService topicGradeService;
+    private final OverCourseService overCourseService;
+    private final CourseGradeService courseGradeService;
 
     @Autowired
-    public TestGradeService(TestGradeRepository testGradeRepository, /*CourseGradeService courseGradeService,*/
-                            CourseService courseService) {
+    public TestGradeService(TestGradeRepository testGradeRepository, TopicService topicService, TestService testService,
+                            TopicGradeService topicGradeService, OverCourseService overCourseService,
+                            CourseGradeService courseGradeService) {
         this.testGradeRepository = testGradeRepository;
-//        this.courseGradeService = courseGradeService;
-        this.courseService = courseService;
+        this.topicService = topicService;
+        this.testService = testService;
+        this.topicGradeService = topicGradeService;
+        this.overCourseService = overCourseService;
+        this.courseGradeService = courseGradeService;
+
     }
 
     public List<TestGrade> findAll() {
@@ -37,47 +44,46 @@ public class TestGradeService {
 
 
     public void save(User user, Test test, int grade) {
-        List<TestGrade> testGrades = testGradeRepository.findAll();
-        boolean un = true;
-        if (!testGrades.isEmpty())
-            for (TestGrade tg : testGrades)
-                if (user.getId() == tg.getUser().getId() && test.getId() == tg.getTest().getId() && grade > tg.getGrade()) {
-                    testGradeRepository.delete(tg);
-                    break;
-                } else if (user.getId() == tg.getUser().getId() && test.getId() == tg.getTest().getId()){
-                    un = false;
-                    break;
-                }
-        if (un){
-            TestGrade testGrade = new TestGrade();
-            testGrade.setUser(user);
-            testGrade.setTest(test);
-            testGrade.setGrade(grade);
-            testGradeRepository.save(testGrade);
+        TestGrade testGrade = testGradeRepository.findByUserAndTest(user, test);
+        if (testGrade != null) {
+            if (grade > testGrade.getGrade()) {
+                testGrade.setGrade(grade);
+                testGradeRepository.save(testGrade);
+            }
+        } else {
+            TestGrade tg = new TestGrade();
+            tg.setUser(user);
+            tg.setTest(test);
+            tg.setGrade(grade);
+            testGradeRepository.save(tg);
+            Course course = test.getTopic().getCourse();
+            if (courseGradeService.findByUserAndCourse(user, course) == null)
+                overCourseService.save(user, test.getTopic().getCourse(), 6);
+            else if (findAllByUserAndCourse(user, course).size() == testService.findAllByCourse(course).size())
+                overCourseService.save(user, test.getTopic().getCourse(), 7);
+
         }
     }
 
-    public List<TestGrade> findByUser(User user){
-        List<TestGrade> testGrades = testGradeRepository.findByUser(user);
-        return testGrades;
+    public List<TestGrade> findByUser(User user) {
+        return testGradeRepository.findByUser(user);
     }
 
-    public List<TestGrade> findByUserAndCourse(User user, Course course){
+    public List<TestGrade> findAllByUserAndCourse(User user, Course course) {
         List<TestGrade> testGrades = testGradeRepository.findByUser(user);
         List<TestGrade> result = new ArrayList<>();
-        for (TestGrade testGrade : testGrades){
-//            if (testGrade.getTest().getCourse().getId() == course.getId()) result.add(testGrade);
-        }
-        return  result;
+        for (TestGrade testGrade : testGrades)
+            if (testGrade.getTest().getTopic().getCourse().getId() == course.getId()) result.add(testGrade);
+        return result;
     }
 
-    public List<TestGrade> findByUserAndTopic(User user, Topic topic){
+    public List<TestGrade> findByUserAndTopic(User user, Topic topic) {
         List<TestGrade> testGrades = testGradeRepository.findByUser(user);
         List<TestGrade> result = new ArrayList<>();
-        for (TestGrade testGrade : testGrades){
+        for (TestGrade testGrade : testGrades) {
             if (testGrade.getTest().getTopic().getId() == topic.getId()) result.add(testGrade);
         }
-        return  result;
+        return result;
     }
 
     public void update(int id, TestGrade updatedTestGrade) {

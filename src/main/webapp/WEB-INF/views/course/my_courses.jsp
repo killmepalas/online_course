@@ -41,19 +41,31 @@
 
         <c:if test="${!course.isEmpty()}">
             <c:forEach items="${course}" var="courselist">
-                    <c:if test="${course.indexOf(courselist) % 3==0}"><div class="row"></c:if>
-                    <section class="col-3">
-                        <div>
-                            <h4>${courselist.name}</h4>
-                            <img src="${courselist.photolink}">
-                            <div id="management">
-                                <form method="get" action="${contextPath}/course/${courselist.id}">
-                                    <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                                </form>
-                            </div>
+                <c:if test="${course.indexOf(courselist) % 3==0}"><div class="row"></c:if>
+                <section class="col-3">
+                    <div>
+                        <h4>${courselist.name}</h4>
+                        <img src="${courselist.photolink}">
+                        <div id="management">
+                            <form method="get" action="${contextPath}/course/${courselist.id}">
+                                <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                            </form>
                         </div>
-                    </section>
-                    <c:if test="${course.indexOf(courselist) % 3==2}"></div></c:if>
+                        <c:forEach items="${overCourses}" var="overCourse">
+                            <c:if test="${overCourse.course.id == courselist.id}">
+                                <c:choose>
+                                    <c:when test="${overCourse.status.id == 6}">
+                                        <h3 class="red">В процессе</h3>
+                                    </c:when>
+                                    <c:when test="${overCourse.status.id == 8}">
+                                        <h3 class="green">Завершён</h3>
+                                    </c:when>
+                                </c:choose>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </section>
+                <c:if test="${course.indexOf(courselist) % 3==2}"></div></c:if>
             </c:forEach>
         </c:if>
     </main>

@@ -19,14 +19,16 @@ public class CourseGradeService {
     private final TopicGradeService topicGradeService;
     private final TopicService topicService;
     private final UserServiceImpl userService;
+    private final OverCourseService overCourseService;
 
     @Autowired
     public CourseGradeService(CourseGradeRepository courseGradeRepository, TopicGradeService topicGradeService,
-                              TopicService topicService, UserServiceImpl userService) {
+                              TopicService topicService, UserServiceImpl userService, OverCourseService overCourseService) {
         this.courseGradeRepository = courseGradeRepository;
         this.topicGradeService = topicGradeService;
         this.topicService = topicService;
         this.userService = userService;
+        this.overCourseService = overCourseService;
     }
 
     public List<CourseGrade> findAll() {
@@ -71,8 +73,8 @@ public class CourseGradeService {
         for (TopicGrade topicGrade: topicGrades){
             grades +=topicGrade.getGrade();
         }
-        result = grades/topicService.findAllByCourse(course).size();
         if (courseGrade == null){
+            result = grades/topicService.findAllByCourse(course).size();
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
             courseGrade.setUser(user);
@@ -80,8 +82,16 @@ public class CourseGradeService {
             courseGradeRepository.save(courseGrade);
         } else {
             if(result != courseGrade.getGrade()){
+                int count = topicService.findAllByCourse(course).size();
+                if (courseGrade.getFinalTest() != 0) {
+                    grades+=courseGrade.getFinalTest();
+                    count+=1;
+                }
+                result = grades/count;
                 courseGrade.setGrade(result);
                 courseGradeRepository.save(courseGrade);
+                if (courseGrade.getFinalTest() >50 && courseGrade.getGrade()>50)
+                    overCourseService.update(overCourseService.findOneByUserAndCourse(user,course),8);
             }
         }
     }
@@ -119,5 +129,26 @@ public class CourseGradeService {
 
     public List<CourseGrade> findAllByUser(User user){
         return courseGradeRepository.findByUser(user);
+    }
+
+    public void updateByCourse(Course course){
+        List<CourseGrade> courseGrades = courseGradeRepository.findByCourse(course);
+        for (CourseGrade courseGrade: courseGrades){
+            if (overCourseService.isUserOverCourse(courseGrade.getUser(),course) != 8){
+                List<TopicGrade> topicGrades = topicGradeService.findByUserAndCourse(courseGrade.getUser(),course);
+                if (!topicGrades.isEmpty()){
+                    int sum = 0;
+                    for (TopicGrade topicGrade: topicGrades) sum += topicGrade.getGrade();
+                    courseGrade.setGrade(sum/topicService.findAllByCourse(course).size());
+                    courseGradeRepository.save(courseGrade);
+                }
+            }
+        }
+    }
+
+    public void saveFinalTesting(Course course, User user, int mark){
+        CourseGrade courseGrade = courseGradeRepository.findByCourseAndUser(course,user);
+        courseGrade.setFinalTest(mark);
+        courseGradeRepository.save(courseGrade);
     }
 }

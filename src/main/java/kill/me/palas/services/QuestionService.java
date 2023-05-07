@@ -3,6 +3,7 @@ package kill.me.palas.services;
 import kill.me.palas.classes.QuestionCheck;
 import kill.me.palas.models.Question;
 import kill.me.palas.models.Test;
+import kill.me.palas.models.Topic;
 import kill.me.palas.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,5 +83,13 @@ public class QuestionService {
             if (flag) return question;
         }
         return null;
+    }
+
+    public Question findRandomQuestionOfTopic(Topic topic){
+        List<Test> tests = testService.findTestByTopic(topic.getId());
+        Collections.shuffle(tests);
+        List<Question> questions = findQuestionByTest(tests.get(0).getId());
+        Collections.shuffle(questions);
+        return questions.get(0);
     }
 }

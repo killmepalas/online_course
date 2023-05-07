@@ -10,4 +10,5 @@ import java.util.List;
 public interface CourseGradeRepository extends JpaRepository<CourseGrade,Integer> {
     List<CourseGrade> findByUser(User user);
     List<CourseGrade> findByCourse(Course course);
+    CourseGrade findByCourseAndUser(Course course, User user);
 }

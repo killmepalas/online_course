@@ -46,6 +46,9 @@ public class Course {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
+    private List<OverCourse> overCourses;
+
     public Course(String name, String description, int price) {
         this.name = name;
         this.description = description;
@@ -133,5 +136,13 @@ public class Course {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<OverCourse> getOverCourses() {
+        return overCourses;
+    }
+
+    public void setOverCourses(List<OverCourse> overCourses) {
+        this.overCourses = overCourses;
     }
 }

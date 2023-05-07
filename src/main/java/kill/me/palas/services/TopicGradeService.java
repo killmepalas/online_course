@@ -15,14 +15,16 @@ public class TopicGradeService {
     private final TopicService topicService;
     private final TestGradeService testGradeService;
     private final TestService testService;
+    private final OverCourseService overCourseService;
 
     @Autowired
     public TopicGradeService(TopicGradeRepository topicGradeRepository, TopicService topicService,
-                             TestGradeService testGradeService, TestService testService){
+                             TestGradeService testGradeService, TestService testService, OverCourseService overCourseService){
         this.topicGradeRepository = topicGradeRepository;
         this.topicService = topicService;
         this.testGradeService = testGradeService;
         this.testService = testService;
+        this.overCourseService = overCourseService;
     }
 
     public List<TopicGrade> findByUser(User user){
@@ -59,4 +61,20 @@ public class TopicGradeService {
             }
         }
     }
+
+    public void updateByTopic(Topic topic){
+        List<TopicGrade> topicGrades = topicGradeRepository.findAllByTopic(topic);
+        for (TopicGrade topicGrade: topicGrades){
+            if (overCourseService.isUserOverCourse(topicGrade.getUser(),topic.getCourse()) != 8){
+                List<TestGrade> testGrades = testGradeService.findByUserAndTopic(topicGrade.getUser(),topic);
+                if (!testGrades.isEmpty()){
+                    int sum = 0;
+                    for (TestGrade testGrade: testGrades) sum += testGrade.getGrade();
+                    topicGrade.setGrade(sum/testService.findTestByTopic(topic.getId()).size());
+                    topicGradeRepository.save(topicGrade);
+                }
+            }
+        }
+    }
+
 }

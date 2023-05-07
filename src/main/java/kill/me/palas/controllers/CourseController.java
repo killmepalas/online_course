@@ -19,28 +19,24 @@ import java.util.Set;
 @Controller
 @RequestMapping("/course")
 public class CourseController{
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
-    private TestService testService;
+    private final CourseGradeService courseGradeService;
 
-    private SecurityServiceImpl securityService;
+    private final CategoryService categoryService;
 
-    private CourseGradeService courseGradeService;
-
-    private CategoryService categoryService;
+    private final OverCourseService overCourseService;
 
     @Autowired
-    public CourseController(UserServiceImpl userService, CourseService courseService, TestService testService,
-                            SecurityServiceImpl securityService, CourseGradeService courseGradeService,
-                            CategoryService categoryService){
+    public CourseController(UserServiceImpl userService, CourseService courseService, CourseGradeService courseGradeService,
+                            CategoryService categoryService, OverCourseService overCourseService){
         this.userService = userService;
         this.courseService = courseService;
-        this.testService = testService;
-        this.securityService = securityService;
         this.courseGradeService = courseGradeService;
         this.categoryService = categoryService;
+        this.overCourseService = overCourseService;
     }
 
     @GetMapping("/category/index")
@@ -70,7 +66,7 @@ public class CourseController{
                 if (role.getId() == 3) model.addAttribute("status","admin");
 
         }
-        model.addAttribute("course", courseService.getPage(num));
+        model.addAttribute("course", courseService.getActivePage(num));
         if (courseService.findAll().size()<=num*9+9)
             model.addAttribute("end","true");
         return "course/index";
@@ -87,6 +83,7 @@ public class CourseController{
         model.addAttribute("course", c);
         model.addAttribute("sCount", courseService.findStudentsOnCourse(id).size());
         model.addAttribute("grade", courseGradeService.findByUserAndCourse(db_user,c));
+        model.addAttribute("overCourse",overCourseService.isUserOverCourse(db_user,c));
 
         if (db_user != null) {
             for (Course course : db_user.getCourses()) {
@@ -123,6 +120,7 @@ public class CourseController{
         kill.me.palas.models.User db_user = userService.findByUsername(username);
         if (db_user !=null){
             model.addAttribute("course",courseService.findByUserId(db_user.getId()));
+            model.addAttribute("overCourses",overCourseService.findAllByUser(db_user));
             return "course/my_courses";
         }
         else return "error/not_auth";
@@ -159,16 +157,31 @@ public class CourseController{
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id, Model model) {
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        User db_user = userService.findByUsername(loggedInUser.getName());
-        if (courseService.findTeacher(id).getId() == db_user.getId())
-        {
-            courseService.delete(id);
-            return "redirect:/course/teach";
+    public String delete(@PathVariable("id") int id) {
+        User db_user = userService.getCurrentAuthUser();
+        if (db_user != null){
+            if (courseService.findTeacher(id).getId() == db_user.getId())
+            {
+                courseService.delete(id);
+                return "redirect:/course/teach";
+            }
+            return "error/not_access";
         }
-        courseService.delete(id);
-        return "redirect:/course/index/0";
+        return "error/not_auth";
+    }
+
+    @PostMapping("/block/{id}")
+    public String block(@PathVariable int id){
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            if (userService.isAdmin(user)){
+                courseService.changeStatus(id,2);
+                return "redirect: /course/index/0";
+            }
+
+            else return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     @GetMapping("/create")
@@ -197,5 +210,33 @@ public class CourseController{
         kill.me.palas.models.User db_user = userService.findByUsername(loggedInUser.getName());
         courseService.add(db_user,course);
         return "redirect:/course/" + id;
+    }
+
+    @PostMapping("/close/{id}")
+    public String close(@PathVariable int id){
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            Course course = courseService.findOne(id);
+            if (courseService.isTeacher(user,course)){
+                courseService.changeStatus(course.getId(),3);
+                return "redirect: /course/show/" + id;
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
+    }
+
+    @PostMapping("/publication/{id}")
+    public String publication(@PathVariable int id){
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            Course course = courseService.findOne(id);
+            if (courseService.isTeacher(user,course)){
+                courseService.changeStatus(course.getId(),1);
+                return "redirect: /course/show/" + id;
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 }

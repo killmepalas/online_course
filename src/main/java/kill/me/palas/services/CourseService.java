@@ -2,8 +2,10 @@ package kill.me.palas.services;
 
 import kill.me.palas.models.Course;
 import kill.me.palas.models.CourseGrade;
+import kill.me.palas.models.OverCourse;
 import kill.me.palas.models.User;
 import kill.me.palas.repositories.CourseRepository;
+import kill.me.palas.repositories.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,15 @@ import java.util.Optional;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final UserServiceImpl userService;
+    private final StatusRepository statusRepository;
+
+
     @Autowired
-    public CourseService(CourseRepository courseRepository, UserServiceImpl userService) {
+    public CourseService(CourseRepository courseRepository, UserServiceImpl userService,
+                         StatusRepository statusRepository) {
         this.courseRepository = courseRepository;
         this.userService = userService;
+        this.statusRepository = statusRepository;
     }
 
     public List<Course> findAll() {
@@ -28,14 +35,11 @@ public class CourseService {
     }
 
     public Course findOne(int id) {
-        Course foundCourse = courseRepository.findById(id);
-        return foundCourse;
+        return courseRepository.findById(id);
     }
 
     public User findTeacher(int id){
-        Course foundCourse = courseRepository.findById(id);
-        User teacher = foundCourse.getTeacher();
-        return teacher;
+        return courseRepository.findById(id).getTeacher();
     }
 
     public List<Course> findByName(String name){
@@ -60,14 +64,11 @@ public class CourseService {
     }
 
     public List<Course> findByUserId(int id){
-        User user = userService.findOne(id);
-        List<Course> courses = courseRepository.findCourseByUsers(user);
-        return courses;
+        return courseRepository.findCourseByUser(userService.findOne(id));
     }
 
     public List<Course> findTeacherCourses(User teacher){
-        List<Course> courses = courseRepository.findCourseByTeacher(teacher);
-        return courses;
+        return courseRepository.findCourseByTeacher(teacher);
     }
 
     public void save(Course course, User teacher) {
@@ -86,12 +87,15 @@ public class CourseService {
     }
 
     public List<Course> getPage(int num){
-        List<Course> courses = courseRepository.findAll().stream().skip(num*9).limit(9).toList();
-        return courses;
+        return courseRepository.findAll().stream().skip(num* 9L).limit(9).toList();
+    }
+
+    public List<Course> getActivePage(int num){
+        return courseRepository.findAllByStatusId(1).stream().skip(num* 9L).limit(9).toList();
     }
 
     public void add(User user,Course course){
-        List<Course> courses = courseRepository.findCourseByUsers(user);
+        List<Course> courses = courseRepository.findCourseByUser(user);
         courses.add(course);
         user.setCourses(courses);
         userService.save(user);
@@ -108,10 +112,20 @@ public class CourseService {
         return studentsOfCourse;
     }
 
+    public boolean isTeacher(User user, Course course){
+        return user.getId() == course.getTeacher().getId();
+    }
+
     public boolean isStudent(User user, Course course){
-        List<Course> courses = courseRepository.findCourseByUsers(user);
+        List<Course> courses = courseRepository.findCourseByUser(user);
         for (Course c: courses)
             if (c.getId() == course.getId()) return true;
         return false;
+    }
+
+    public void changeStatus(int courseId, int statusId){
+        Course course = courseRepository.findById(courseId);
+        course.setStatus(statusRepository.findById(statusId));
+        courseRepository.save(course);
     }
 }

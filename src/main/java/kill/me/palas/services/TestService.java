@@ -16,13 +16,15 @@ public class TestService {
     private final TestRepository testRepository;
     private final TopicService topicService;
     private final StatusRepository statusRepository;
+    private final TopicGradeService topicGradeService;
 
     @Autowired
     public TestService(TestRepository testRepository,TopicService topicService,
-                       StatusRepository statusRepository) {
+                       StatusRepository statusRepository, TopicGradeService topicGradeService) {
         this.testRepository = testRepository;
         this.topicService = topicService;
         this.statusRepository = statusRepository;
+        this.topicGradeService = topicGradeService;
     }
 
     public List<Test> findAll() {
@@ -30,8 +32,7 @@ public class TestService {
     }
 
     public Test findOne(int id) {
-        Test foundTest = testRepository.findById(id);
-        return foundTest;
+        return testRepository.findById(id);
     }
 
     public void save(Test test, int id) {
@@ -40,11 +41,11 @@ public class TestService {
         test.setMix(false);
         test.setCount(5);
         testRepository.save(test);
+        topicGradeService.updateByTopic(test.getTopic());
     }
 
     public List<Test> findByName(String name){
-        List<Test> tests = testRepository.findTestByName(name);
-        return tests;
+        return testRepository.findTestByName(name);
     }
 
 
@@ -64,6 +65,7 @@ public class TestService {
     }
 
     public void delete(int id) {
+        topicGradeService.updateByTopic(testRepository.findById(id).getTopic());
         testRepository.deleteById(id);
     }
 
@@ -74,6 +76,14 @@ public class TestService {
     public Topic findTopic(int id){
         Test foundTest = testRepository.findById(id);
         return foundTest.getTopic();
+    }
+
+    public List<Test> findAllByCourse(Course course){
+        List<Topic> topics = topicService.findAllByCourse(course);
+        List<Test> tests = new ArrayList<>();
+        for (Topic topic: topics)
+            tests.addAll(findTestByTopic(topic.getId()));
+        return tests;
     }
 
     public int findCountActiveTests(Topic topic){

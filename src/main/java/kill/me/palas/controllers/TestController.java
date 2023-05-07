@@ -21,25 +21,25 @@ import java.util.Optional;
 @RequestMapping("/test")
 public class TestController {
 
-    private TestService testService;
+    private final TestService testService;
 
-    private TestValidator testValidator;
+    private final TestValidator testValidator;
 
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
-    private AnswerService answerService;
+    private final AnswerService answerService;
 
-    private TestGradeService testGradeService;
+    private final TestGradeService testGradeService;
 
-    private CourseGradeService courseGradeService;
+    private final CourseGradeService courseGradeService;
 
-    private TopicService topicService;
+    private final TopicService topicService;
 
-    private TopicGradeService topicGradeService;
+    private final TopicGradeService topicGradeService;
 
     @Autowired
     public TestController(TestService testService, TestValidator testValidator,
@@ -85,7 +85,7 @@ public class TestController {
 
         if (db_user != null && db_user.getId() == courseService.findTeacher(id).getId()) {
             model.addAttribute("status", "teacher");
-        } else if (db_user == null || check == false) {
+        } else if (db_user == null || !check) {
             return "error/not_access";
         }
 
@@ -185,6 +185,7 @@ public class TestController {
 
     int mark;
     List<Question> questionChecks = new ArrayList<>();
+    List<Topic> topicChecks = new ArrayList<>();
 
     @GetMapping("/start/{test_id}/{question_id}")
     public String start(@PathVariable int test_id,
@@ -299,5 +300,66 @@ public class TestController {
     public String open(@PathVariable("id") int id) {
         testService.changeStatus(id, 1);
         return "redirect: /test/show/" + id;
+    }
+
+    @GetMapping("/final_testing/{course_id}/{question_id}")
+    public String finalTesting(@PathVariable int course_id, Model model, @PathVariable int question_id,
+                               @ModelAttribute("answer") Answer answer) {
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Course course = courseService.findOne(course_id);
+            if (courseService.isStudent(user, course)) {
+                if (question_id <= topicService.findAllActiveTopicsByCourseId(course_id).size()) {
+                    Topic topic = topicService.findUncheckedTopicOfCourse(topicChecks, course);
+                    Question question = questionService.findRandomQuestionOfTopic(topic);
+                    if (question != null) {
+                        topicChecks.add(topic);
+                        List<Answer> answers = answerService.findMixedAnswerByQuestion(question.getId());
+                        if (answers == null) return "error/test";
+                        model.addAttribute("question", question);
+                        model.addAttribute("answers", answers);
+                        if (question_id == 1) mark = 0;
+                        int next = question_id + 1;
+                        model.addAttribute("next", next);
+                        return "test/execute";
+                    }
+                    return "error/test";
+                }
+                questionChecks.clear();
+                return "redirect:/test/" + course_id;
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
+    }
+
+
+    @PostMapping("/execute/{course_id}/{next}")
+    public String finalExecute(@ModelAttribute("answer") Answer answer, BindingResult bindingResult,
+                               @PathVariable int next,
+                               @PathVariable int course_id) {
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Course course = courseService.findOne(course_id);
+            if (courseService.isStudent(user, course)) {
+                testValidator.answers_validate(answer, bindingResult);
+                if (bindingResult.hasErrors())
+                    return "test/execute";
+                int id_answer = answer.getId();
+                if (answerService.findOne(id_answer).getIs_right()) {
+                    mark += 1;
+                }
+                if (10 < next) {
+                    int grade = mark * 100 / 10;
+                    courseGradeService.saveFinalTesting(course,user,mark);
+                    courseGradeService.add(user, course);
+                    userService.updateRating(user);
+                }
+                return "redirect:/test/final_testing/" + course_id + "/" + next;
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
+
     }
 }

@@ -51,6 +51,22 @@
                         <form method="get" action="${contextPath}/topic/${course.id}">
                             <input class="logout" type="submit" value="Конструктор">
                         </form>
+                        <c:choose>
+                            <c:when test="${course.status.id == 1}">
+                                <form method="post" action="${contextPath}/course/close/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите закрыть данный курс?')" value="Закрыть курс">
+                                </form>
+                            </c:when>
+                            <c:when test="${course.status.id == 3}">
+                                <form method="post" action="${contextPath}/course/publication/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите опубликовать данный курс?')" value="Публикация">
+                                </form>
+                            </c:when>
+                            <c:when test="${course.status.id == 2}">
+                                <h3 class="red">Курс заблокирован за нарушение правил пользования платформой</h3>
+                                <h3 class="red">По всем вопросам обращайтесь сюда: thebestonlinecoursesintheworld@the.best</h3>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </c:when>
 
@@ -66,6 +82,9 @@
                                     <progress id="progressbar" value="${grade.grade}" max="100"></progress>
                                     <span class="progress-value">${grade.grade}%</span>
                                 </p>
+                                <c:if test="${overCourse == 8}">
+                                    <h3 class="green">Вы окончили данный курс</h3>
+                                </c:if>
                             </c:when>
                             <c:otherwise>
                                 <p>Вы пока не начали проходить этот курс</p>

@@ -11,4 +11,5 @@ public interface TopicGradeRepository extends JpaRepository<TopicGrade,Integer> 
     List<TopicGrade> findAllByUser(User user);
     List<TopicGrade> findAllByUserAndTopic(User user, Topic topic);
     TopicGrade findByUserAndTopic(User user, Topic topic);
+    List<TopicGrade> findAllByTopic(Topic topic);
 }

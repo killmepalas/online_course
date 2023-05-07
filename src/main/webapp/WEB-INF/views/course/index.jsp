@@ -56,9 +56,9 @@
                         </form>
                     </div>
                     <c:if test="${status == 'admin'}">
-                        <form method="post" action="${contextPath}/course/delete/${courselist.id}">
+                        <form method="post" action="${contextPath}/course/block/${courselist.id}">
                             <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">
-                                Удалить
+                                Заблокировать
                             </button>
                         </form>
                     </c:if>
@@ -76,9 +76,9 @@
                             </form>
                         </div>
                         <c:if test="${status == 'admin'}">
-                            <form method="post" action="${contextPath}/course/delete/${courselist.id}">
+                            <form method="post" action="${contextPath}/course/block/${courselist.id}">
                                 <button class="detailed" type="submit" name="${_csrf.parameterName}"
-                                        value="${_csrf.token}">Удалить
+                                        value="${_csrf.token}">Заблокировать
                                 </button>
                             </form>
                         </c:if>
@@ -96,9 +96,9 @@
                         </form>
                     </div>
                     <c:if test="${status == 'admin'}">
-                        <form method="post" action="${contextPath}/course/delete/${courselist.id}">
+                        <form method="post" action="${contextPath}/course/block/${courselist.id}">
                             <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">
-                                Удалить
+                                Заблокировать
                             </button>
                         </form>
                     </c:if>

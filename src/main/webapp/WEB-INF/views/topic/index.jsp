@@ -97,8 +97,12 @@
                                 </div>
                             </section>
                             <c:if test="${((topics.indexOf(topic) % 3==2)||(topics.indexOf(topic) == topics.size()-1))}"></div></c:if>
-
                     </c:forEach>
+                    <c:if test="${final_testing}">
+                        <form method="get" action="${contextPath}/test/final_testing/${course.id}/1">
+                            <button class="detailed" type="submit" >Итоговое тестирование</button>
+                        </form>
+                    </c:if>
                 </c:if>
             </section>
         </c:if>

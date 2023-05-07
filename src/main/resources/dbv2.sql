@@ -91,3 +91,31 @@ alter table test
 
 alter table user
     add rating int;
+
+create table over_course
+(
+    id        int     not null primary key auto_increment,
+    user_id   int     not null,
+    course_id int     not null,
+    overing   boolean not null,
+    foreign key (user_id) references User (id),
+    foreign key (course_id) references Course (id)
+);
+
+alter table over_course
+    add UNIQUE (user_id, course_id);
+
+alter table over_course
+    drop overing;
+
+alter table over_course
+    add status_id int,
+    add foreign key (status_id) references status (id);
+
+insert into status(id,name)
+values (6, 'in process'),
+       (7, 'final testing'),
+       (8,'over');
+
+alter table coursegrade
+add final_test int;

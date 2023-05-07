@@ -63,6 +63,9 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<TopicGrade> topicGrades;
 
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<OverCourse> overCourses;
+
     @Column(name = "rating")
     private int rating;
 
@@ -213,5 +216,13 @@ public class User {
 
     public void setTopicGrades(List<TopicGrade> topicGrades) {
         this.topicGrades = topicGrades;
+    }
+
+    public List<OverCourse> getOverCourses() {
+        return overCourses;
+    }
+
+    public void setOverCourses(List<OverCourse> overCourses) {
+        this.overCourses = overCourses;
     }
 }
