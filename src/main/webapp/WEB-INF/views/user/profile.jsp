@@ -34,6 +34,7 @@
             <div class="show">
                 <h2>${user.username}</h2>
                 <h4>${user.lastname} ${user.name} ${user.midname}</h4>
+                <h4>${user.email}</h4>
                 <h4>${user.dateOfBirth}</h4>
                 <c:if test="${rating != null}">
                 <h4>Рейтинг:</h4>

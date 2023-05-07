@@ -73,6 +73,9 @@ public class User {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @Column(name = "email")
+    private String email;
+
     public User() {
 
     }
@@ -224,5 +227,13 @@ public class User {
 
     public void setOverCourses(List<OverCourse> overCourses) {
         this.overCourses = overCourses;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

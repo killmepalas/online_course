@@ -28,11 +28,13 @@ public class TopicController {
     private final LectureService lectureService;
     private final TestGradeService testGradeService;
     private final OverCourseService overCourseService;
+    private final CourseGradeService courseGradeService;
 
     @Autowired
     public TopicController(UserServiceImpl userService, TopicService topicService, TopicGradeService topicGradeService,
                            CourseService courseService, TestService testService, LectureService lectureService,
-                           TestGradeService testGradeService, OverCourseService overCourseService) {
+                           TestGradeService testGradeService, OverCourseService overCourseService,
+                           CourseGradeService courseGradeService) {
         this.topicService = topicService;
         this.userService = userService;
         this.topicGradeService = topicGradeService;
@@ -41,6 +43,7 @@ public class TopicController {
         this.lectureService = lectureService;
         this.testGradeService = testGradeService;
         this.overCourseService = overCourseService;
+        this.courseGradeService = courseGradeService;
     }
 
 
@@ -60,9 +63,10 @@ public class TopicController {
                         model.addAttribute("status", "student");
                         model.addAttribute("grades", topicGradeService.findByUserAndCourse(db_user, course));
                         model.addAttribute("topics", topicService.findAllActiveTopicsByCourseId(id));
-                        if (overCourseService.isUserOverCourse(db_user,course) == 7){
+                        if (overCourseService.isUserOverCourse(db_user,course) != 6){
                             model.addAttribute("final_testing",true);
                             model.addAttribute("course",course);
+                            model.addAttribute("courseGrade",courseGradeService.findByUserAndCourse(db_user,course));
                         }
 
                         break;

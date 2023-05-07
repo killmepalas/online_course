@@ -90,7 +90,7 @@ public class CourseGradeService {
                 result = grades/count;
                 courseGrade.setGrade(result);
                 courseGradeRepository.save(courseGrade);
-                if (courseGrade.getFinalTest() >50 && courseGrade.getGrade()>50)
+                if (courseGrade.getFinalTest() >=50 && courseGrade.getGrade()>=50)
                     overCourseService.update(overCourseService.findOneByUserAndCourse(user,course),8);
             }
         }

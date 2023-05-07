@@ -60,7 +60,7 @@ public class CourseService {
     }
 
     public List<Course> findPageByCategory(int categoryId, int num){
-        return courseRepository.findByCategoryId(categoryId).stream().skip(num * 9).limit(9).toList();
+        return courseRepository.findByCategoryId(categoryId).stream().skip(num * 9L).limit(9).toList();
     }
 
     public List<Course> findByUserId(int id){

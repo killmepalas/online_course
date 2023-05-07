@@ -119,3 +119,6 @@ values (6, 'in process'),
 
 alter table coursegrade
 add final_test int;
+
+alter table user
+add email varchar(255);
