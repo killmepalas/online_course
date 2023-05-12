@@ -1,9 +1,6 @@
 package kill.me.palas.validators;
 
-import kill.me.palas.models.Answer;
-import kill.me.palas.models.Question;
-import kill.me.palas.models.Test;
-import kill.me.palas.models.User;
+import kill.me.palas.models.*;
 import kill.me.palas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +35,12 @@ public class TestValidator implements Validator {
 
         public void answers_validate(Object o, Errors errors){
             Answer answer = (Answer) o;
-            if(answer.getId() == 0) errors.rejectValue("answer", "Answer.Not.Null");
+            if(answer == null) errors.rejectValue("answer", "Answer.Not.Null");
         }
+
+    public void car_answers_validate(Object o, Errors errors){
+        CareerAnswer answer = (CareerAnswer) o;
+        if(answer == null) errors.rejectValue("answer", "Answer.Not.Null");
+    }
     }
 

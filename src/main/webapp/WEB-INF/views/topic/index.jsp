@@ -30,6 +30,11 @@
 </header>
 <div class="container">
     <main id="course">
+        <div>
+            <form method="get" action="${contextPath}/course/${id_course}">
+                <button class="detailed" type="submit">Вернуться к курсу</button>
+            </form>
+        </div>
         <c:if test="${status == 'teacher'}">
             <section class="help">
                 <c:if test="${topics.isEmpty()}">
@@ -40,11 +45,7 @@
                         <button class="detailed" type="submit">Создать тему</button>
                     </form>
                 </div>
-                <div>
-                    <form method="get" action="${contextPath}/course/${id_course}">
-                        <button class="detailed" type="submit">Вернуться к курсу</button>
-                    </form>
-                </div>
+
                 <c:if test="${!topics.isEmpty()}">
                     <c:forEach items="${topics}" var="topic">
                         <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
@@ -115,7 +116,7 @@
 
                             </c:when>
                             <c:otherwise>
-                                <h3 class="red">Ваша оценка: ${courseGrade.finalTest}</h3>
+                                <h3 class="red">Ваша оценка за итоговый тест: ${courseGrade.finalTest}</h3>
                                 <h3>Этого слишком мало для завершения курса!</h3>
                             </c:otherwise>
                         </c:choose>

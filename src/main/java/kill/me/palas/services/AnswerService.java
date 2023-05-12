@@ -57,8 +57,11 @@ public class AnswerService {
 
     public List<Answer> findMixedAnswerByQuestion(int test_id){
         List<Answer> answers = answerRepository.findAnswerByQuestion(questionService.findOne(test_id));
-        Collections.shuffle(answers);
-        return answers;
+        if (!answers.isEmpty()){
+            Collections.shuffle(answers);
+            return answers;
+        }
+        return null;
     }
 
 }

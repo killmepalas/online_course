@@ -48,7 +48,7 @@
                     </div>
                 </spring:bind>
 
-                <form method="post" action="${contextPath}/test/edit/${test.id}">
+                <form method="post" action="${contextPath}/test/update/${test.id}">
                     <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Обновить</button>
                 </form>
             </form:form>

@@ -12,5 +12,5 @@ public interface OverCourseRepository extends JpaRepository<OverCourse, Integer>
     List<OverCourse> findByUser(User user);
     List<OverCourse> findByCourse(Course course);
     OverCourse findByUserAndCourse(User user, Course course);
-    List<OverCourse> findAllByCourseAndOver(Course course, boolean over);
+    List<OverCourse> findAllByCourseAndStatusId(Course course, int status);
 }

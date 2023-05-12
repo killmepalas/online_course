@@ -32,6 +32,16 @@
         <section class="help">
             <form:form method="POST" modelAttribute="course" >
                 <h1 class="form-signin-heading">Создание курса</h1>
+
+                <spring:bind path="textCategory">
+                    <div id="select" class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:label
+                                path="textCategory">К какой категории относится размещаемый курс?</form:label><br>
+                        <form:select path="textCategory" items="${categories}">
+                        </form:select>
+                    </div>
+                </spring:bind>
+
                 <spring:bind path="name">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <form:input type="text" path="name" class="form-control" value="${course.name}"

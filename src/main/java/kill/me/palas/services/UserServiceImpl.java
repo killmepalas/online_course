@@ -60,10 +60,22 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean isAdmin(User user){
+        return checkRole(3,user);
+    }
+
+    public boolean isTeacher(User user){
+        return checkRole(2,user);
+    }
+
+    public boolean isStudent(User user){
+        return checkRole(1,user);
+    }
+
+    public boolean checkRole(int roleId, User user){
         Set<Role> roles = user.getRoles();
         boolean isAdmin = false;
         for (Role role: roles)
-            if (role.getId() == 3) {
+            if (role.getId() == roleId) {
                 isAdmin = true;
                 break;
             }
@@ -206,8 +218,10 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        user.setRating(grades / overCourses.size());
-        userRepository.save(user);
+        if (overCourses.size() !=0){
+            user.setRating(grades / overCourses.size());
+            userRepository.save(user);
+        }
     }
 
 }

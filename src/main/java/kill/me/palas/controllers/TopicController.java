@@ -63,11 +63,12 @@ public class TopicController {
                         model.addAttribute("status", "student");
                         model.addAttribute("grades", topicGradeService.findByUserAndCourse(db_user, course));
                         model.addAttribute("topics", topicService.findAllActiveTopicsByCourseId(id));
-                        if (overCourseService.isUserOverCourse(db_user,course) != 6){
-                            model.addAttribute("final_testing",true);
-                            model.addAttribute("course",course);
-                            model.addAttribute("courseGrade",courseGradeService.findByUserAndCourse(db_user,course));
-                        }
+                        if (overCourseService.findOneByUserAndCourse(db_user, course) != null)
+                            if (overCourseService.isUserOverCourse(db_user, course) != 6) {
+                                model.addAttribute("final_testing", true);
+                                model.addAttribute("course", course);
+                                model.addAttribute("courseGrade", courseGradeService.findByUserAndCourse(db_user, course));
+                            }
 
                         break;
                     }
@@ -89,7 +90,7 @@ public class TopicController {
 
         if (db_user != null) {
             for (Course course : db_user.getCourses()) {
-                if (course.getId() == id) {
+                if (course.getId() == tCourse.getId()) {
                     check = true;
                     model.addAttribute("status", "student");
                     model.addAttribute("grades", testGradeService.findByUserAndTopic(db_user, topic));

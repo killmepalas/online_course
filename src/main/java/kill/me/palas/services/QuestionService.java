@@ -28,8 +28,7 @@ public class QuestionService {
     }
 
     public Question findOne(int id) {
-        Question foundQuestion = questionRepository.findById(id);
-        return foundQuestion;
+        return questionRepository.findById(id);
     }
 
     public void save(Question question, int id) {
@@ -44,13 +43,11 @@ public class QuestionService {
     }
 
     public List<Question> findQuestionByTest(int test_id){
-        List<Question> questions = questionRepository.findQuestionByTest(testService.findOne(test_id));
-        return questions;
+        return questionRepository.findQuestionByTest(testService.findOne(test_id));
     }
 
     public List<Question> findByText(String text){
-        List<Question> questions = questionRepository.findQuestionByText(text);
-        return questions;
+        return questionRepository.findQuestionByText(text);
     }
 
     public void delete(int id) {
@@ -59,8 +56,7 @@ public class QuestionService {
 
     public Test findTest(int id){
         Question foundQuestion = questionRepository.findById(id);
-        Test test = foundQuestion.getTest();
-        return test;
+        return foundQuestion.getTest();
     }
 
     public Question findQuestionByTestById(int test_id, int question_id){
@@ -91,5 +87,14 @@ public class QuestionService {
         List<Question> questions = findQuestionByTest(tests.get(0).getId());
         Collections.shuffle(questions);
         return questions.get(0);
+    }
+
+    public Question findRandomQuestionOfTest(Test test){
+        List<Question> questions = questionRepository.findQuestionByTest(test);
+        if (!questions.isEmpty()){
+            Collections.shuffle(questions);
+            return questions.get(0);
+        }
+        return null;
     }
 }

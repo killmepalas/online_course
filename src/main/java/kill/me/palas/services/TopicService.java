@@ -7,6 +7,7 @@ import kill.me.palas.repositories.StatusRepository;
 import kill.me.palas.repositories.TopicGradeRepository;
 import kill.me.palas.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class TopicService {
 
     @Autowired
     public TopicService(TopicRepository topicRepository, StatusRepository statusRepository,
-                        CourseGradeService courseGradeService){
+                        @Lazy CourseGradeService courseGradeService){
         this.topicRepository = topicRepository;
         this.statusRepository = statusRepository;
         this.courseGradeService = courseGradeService;

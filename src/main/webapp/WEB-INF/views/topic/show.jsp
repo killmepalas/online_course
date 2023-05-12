@@ -83,40 +83,46 @@
                     </form>
                 </div>
                 <c:if test="${!lectures.isEmpty()}">
-                    <c:forEach items="${lectures}" var="lecture">
-                        <c:if test="${lectures.indexOf(lecture) % 3==0}"><div class="row"></c:if>
-                        <section class="col-3">
-                            <div>
-                                <h1>${lecture.name}</h1>
-                                <h4>${lecture.description}</h4>
-                                <form method="get" action="${contextPath}/lecture/show/${lecture.id}">
-                                    <button class="detailed" type="submit" value="Управление">Управление</button>
-                                </form>
-                            </div>
-                        </section>
-                        <c:if test="${((lectures.indexOf(lecture) % 3==2)||(lectures.size()-1 == lectures.indexOf(lecture)))}"></div></c:if>
-                    </c:forEach>
+                    <div class="background">
+                        <h3>Лекции</h3>
+                        <c:forEach items="${lectures}" var="lecture">
+                            <c:if test="${lectures.indexOf(lecture) % 3==0}"><div class="row"></c:if>
+                            <section class="col-3">
+                                <div>
+                                    <h1>${lecture.name}</h1>
+                                    <h4>${lecture.description}</h4>
+                                    <form method="get" action="${contextPath}/lecture/show/${lecture.id}">
+                                        <button class="detailed" type="submit" value="Управление">Управление</button>
+                                    </form>
+                                </div>
+                            </section>
+                            <c:if test="${((lectures.indexOf(lecture) % 3==2)||(lectures.size()-1 == lectures.indexOf(lecture)))}"></div></c:if>
+                        </c:forEach>
+                    </div>
                 </c:if>
                 <c:if test="${!tests.isEmpty()}">
-                    <c:forEach items="${tests}" var="test">
-                        <c:if test="${tests.indexOf(test) % 3==0}"><div class="row"></c:if>
-                        <section class="col-3">
-                            <div>
-                                <h1>${test.name}</h1>
-                                <h4>${test.description}</h4>
-                                <c:if test="${test.status.id == 1}">
-                                    <h3 class="green">Тест опубликован</h3>
-                                </c:if>
-                                <c:if test="${test.status.id == 3}">
-                                    <h3 class="red">Тест в разработке</h3>
-                                </c:if>
-                                <form method="get" action="${contextPath}/test/show/${test.id}">
-                                    <button class="detailed" type="submit" value="Управление">Управление</button>
-                                </form>
-                            </div>
-                        </section>
-                        <c:if test="${((tests.indexOf(test) % 3==2)||(tests.indexOf(test) == tests.size()-1))}"></div></c:if>
-                    </c:forEach>
+                    <div class="background">
+                        <h3>Тесты</h3>
+                        <c:forEach items="${tests}" var="test">
+                            <c:if test="${tests.indexOf(test) % 3==0}"><div class="row"></c:if>
+                            <section class="col-3">
+                                <div>
+                                    <h1>${test.name}</h1>
+                                    <h4>${test.description}</h4>
+                                    <c:if test="${test.status.id == 1}">
+                                        <h3 class="green">Тест опубликован</h3>
+                                    </c:if>
+                                    <c:if test="${test.status.id == 3}">
+                                        <h3 class="red">Тест в разработке</h3>
+                                    </c:if>
+                                    <form method="get" action="${contextPath}/test/show/${test.id}">
+                                        <button class="detailed" type="submit" value="Управление">Управление</button>
+                                    </form>
+                                </div>
+                            </section>
+                            <c:if test="${((tests.indexOf(test) % 3==2)||(tests.indexOf(test) == tests.size()-1))}"></div></c:if>
+                        </c:forEach>
+                    </div>
                 </c:if>
             </section>
         </c:if>
@@ -128,6 +134,13 @@
                 <c:if test="${((tests.isEmpty())&&(lectures.isEmpty()))}">
                     <h4>У темы пока нет лекций и тестов. Возвращайтесь позже!</h4>
                 </c:if>
+
+                <div>
+                    <form method="get" action="${contextPath}/topic/${course_id}">
+                        <button class="detailed" type="submit">Вернуться к содержанию курса</button>
+                    </form>
+                </div>
+
                 <h1>Найдено элементов курса: ${countActiveTests+lectures.size()}</h1>
                 <c:if test="${!lectures.isEmpty()}">
                     <c:forEach items="${lectures}" var="lecture">

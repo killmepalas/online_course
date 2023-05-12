@@ -11,12 +11,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Лучшие онлайн-курсы</title>
+    <title>Конструктор курса</title>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
-
 </head>
 
 <body>
+
 <header id="black">
     <nav>
         <ul>
@@ -29,16 +29,20 @@
     </nav>
 </header>
 <div id="container">
-    <main id="main">
-        <h1>Learnability - ваш проводник в мир знаний.</h1>
-        <p>Найдите интересующий вас курс в нашем <a href="${contextPath}/course/category/index">каталоге курсов</a>.</p>
-        <h3>Не знаете, с чего начать?</h3>
-        <p>Пройдите наш <a href="${contextPath}/career_test/index">тест на профориентацию</a>, а в конце мы подберём подходящие для вас курсы.</p>
+    <main id="course">
+        <section class="help">
+            <div>
+                <h3>${next-1}/${size}</h3>
+                <p><h1>${question.text}</h1></p>
+                <form:form modelAttribute="answer" action="${contextPath}/career_test/execute/${next}/?${_csrf.parameterName}=${_csrf.token}" method="POST">
 
-        <h3>А может вы хотите попробовать себя в роли преподавателя?</h3>
-        <form method="get" action="${contextPath}/course/teach">
-            <button class="logout" type="submit" value="Удалить">Попробовать преподавание</button>
-        </form>
+                    <c:forEach items="${answers}" var="ans">
+                        <form:radiobutton path="id" value="${ans.id}"/>${ans.text}<br/>
+                    </c:forEach>
+                    <button class="teach" type="submit">Следующий вопрос</button>
+                </form:form>
+            </div>
+        </section>
     </main>
     <footer>
         <p>Телефон: +6(666)-666-66-66</p>
@@ -48,4 +52,3 @@
 </body>
 
 </html>
-

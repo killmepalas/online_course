@@ -46,11 +46,17 @@
                     <div>
                         <h4>${courselist.name}</h4>
                         <img src="${courselist.photolink}">
-                        <div id="management">
-                            <form method="get" action="${contextPath}/course/${courselist.id}">
-                                <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                            </form>
-                        </div>
+                        <c:choose>
+                            <c:when test="${courselist.status.id == 3}"><h3>Курс находится в разработке</h3></c:when>
+                            <c:otherwise>
+                                <div id="management">
+                                    <form method="get" action="${contextPath}/course/${courselist.id}">
+                                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
+                                    </form>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
                         <c:forEach items="${overCourses}" var="overCourse">
                             <c:if test="${overCourse.course.id == courselist.id}">
                                 <c:choose>

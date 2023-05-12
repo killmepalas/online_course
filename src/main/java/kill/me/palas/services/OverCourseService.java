@@ -50,8 +50,8 @@ public class OverCourseService {
         overCourseRepository.delete(overCourse);
     }
 
-    public List<User> findAllUsersByOver(Course course, boolean over){
-        List<OverCourse> overCourses = overCourseRepository.findAllByCourseAndOver(course,over);
+    public List<User> findAllUsersByOver(Course course, int status){
+        List<OverCourse> overCourses = overCourseRepository.findAllByCourseAndStatusId(course,status);
         List<User> users = new ArrayList<>();
         for (OverCourse overCourse: overCourses){
             users.add(overCourse.getUser());

@@ -56,52 +56,52 @@ public class CourseGradeService {
         courseGradeRepository.deleteById(id);
     }
 
-    public CourseGrade findByUserAndCourse(User user, Course course){
+    public CourseGrade findByUserAndCourse(User user, Course course) {
         List<CourseGrade> courseGrades = courseGradeRepository.findByUser(user);
         CourseGrade result = null;
-        for (CourseGrade courseGrade : courseGrades){
+        for (CourseGrade courseGrade : courseGrades) {
             if (courseGrade.getCourse().getId() == course.getId()) result = courseGrade;
         }
-        return  result;
+        return result;
     }
 
-    public void add(User user, Course course){
-        List<TopicGrade> topicGrades = topicGradeService.findByUserAndCourse(user,course);
-        CourseGrade courseGrade = findByUserAndCourse(user,course);
+    public void add(User user, Course course) {
+        List<TopicGrade> topicGrades = topicGradeService.findByUserAndCourse(user, course);
+        CourseGrade courseGrade = findByUserAndCourse(user, course);
         int result = 0;
         int grades = 0;
-        for (TopicGrade topicGrade: topicGrades){
-            grades +=topicGrade.getGrade();
+        for (TopicGrade topicGrade : topicGrades) {
+            grades += topicGrade.getGrade();
         }
-        if (courseGrade == null){
-            result = grades/topicService.findAllByCourse(course).size();
+        if (courseGrade == null) {
+            result = grades / topicService.findAllByCourse(course).size();
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
             courseGrade.setUser(user);
             courseGrade.setGrade(result);
             courseGradeRepository.save(courseGrade);
         } else {
-            if(result != courseGrade.getGrade()){
+            if (result != courseGrade.getGrade()) {
                 int count = topicService.findAllByCourse(course).size();
                 if (courseGrade.getFinalTest() != 0) {
-                    grades+=courseGrade.getFinalTest();
-                    count+=1;
+                    grades += courseGrade.getFinalTest();
+                    count += 1;
                 }
-                result = grades/count;
+                result = grades / count;
                 courseGrade.setGrade(result);
                 courseGradeRepository.save(courseGrade);
-                if (courseGrade.getFinalTest() >=50 && courseGrade.getGrade()>=50)
-                    overCourseService.update(overCourseService.findOneByUserAndCourse(user,course),8);
+                if (courseGrade.getFinalTest() >= 50 && courseGrade.getGrade() >= 50)
+                    overCourseService.update(overCourseService.findOneByUserAndCourse(user, course), 8);
             }
         }
     }
 
-    public void recalc(Course course, String method, int test_id){
-        for (CourseGrade courseGrade : courseGradeRepository.findByCourse(course)){
+    public void recalc(Course course, String method, int test_id) {
+        for (CourseGrade courseGrade : courseGradeRepository.findByCourse(course)) {
 //            if (Objects.equals(method, "create")){
 //                courseGrade.setGrade(courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()-1)/testService.findTestByCourse(course.getId()).size());
 //            }
-            if (method == "delete"){
+            if (method == "delete") {
 //                if (testService.findTestByCourse(course.getId()).size() == 0) courseGrade.setGrade(0);
 //                else{
 //                    int tg = 0;
@@ -116,38 +116,42 @@ public class CourseGradeService {
         }
     }
 
-    public int getRating(User user){
+    public int getRating(User user) {
         int grades = 0;
         List<CourseGrade> courseGrades = courseGradeRepository.findByUser(user);
-        for (CourseGrade cg: courseGrades){
-            grades +=cg.getGrade();
+        List<OverCourse> overCourses = overCourseService.findAllByUser(user);
+        for (OverCourse overCourse : overCourses) {
+            for (CourseGrade courseGrade : courseGrades) {
+                if (courseGrade.getCourse().getId() == overCourse.getCourse().getId())
+                    grades += courseGrade.getGrade();
+            }
         }
-        int rating = 0;
-        if (courseGrades.size() != 0) {rating = grades / courseGrades.size();}
-        return rating;
+        if (!overCourses.isEmpty())
+            return grades / overCourses.size();
+        return 0;
     }
 
-    public List<CourseGrade> findAllByUser(User user){
+    public List<CourseGrade> findAllByUser(User user) {
         return courseGradeRepository.findByUser(user);
     }
 
-    public void updateByCourse(Course course){
+    public void updateByCourse(Course course) {
         List<CourseGrade> courseGrades = courseGradeRepository.findByCourse(course);
-        for (CourseGrade courseGrade: courseGrades){
-            if (overCourseService.isUserOverCourse(courseGrade.getUser(),course) != 8){
-                List<TopicGrade> topicGrades = topicGradeService.findByUserAndCourse(courseGrade.getUser(),course);
-                if (!topicGrades.isEmpty()){
+        for (CourseGrade courseGrade : courseGrades) {
+            if (overCourseService.isUserOverCourse(courseGrade.getUser(), course) != 8) {
+                List<TopicGrade> topicGrades = topicGradeService.findByUserAndCourse(courseGrade.getUser(), course);
+                if (!topicGrades.isEmpty()) {
                     int sum = 0;
-                    for (TopicGrade topicGrade: topicGrades) sum += topicGrade.getGrade();
-                    courseGrade.setGrade(sum/topicService.findAllByCourse(course).size());
+                    for (TopicGrade topicGrade : topicGrades) sum += topicGrade.getGrade();
+                    courseGrade.setGrade(sum / topicService.findAllByCourse(course).size());
                     courseGradeRepository.save(courseGrade);
                 }
             }
         }
     }
 
-    public void saveFinalTesting(Course course, User user, int mark){
-        CourseGrade courseGrade = courseGradeRepository.findByCourseAndUser(course,user);
+    public void saveFinalTesting(Course course, User user, int mark) {
+        CourseGrade courseGrade = courseGradeRepository.findByCourseAndUser(course, user);
         courseGrade.setFinalTest(mark);
         courseGradeRepository.save(courseGrade);
     }

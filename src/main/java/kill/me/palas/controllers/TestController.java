@@ -107,7 +107,7 @@ public class TestController {
         return "test/edit";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/update/{id}")
     public String update(@ModelAttribute("test") @Valid Test test, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
@@ -186,6 +186,7 @@ public class TestController {
     int mark;
     List<Question> questionChecks = new ArrayList<>();
     List<Topic> topicChecks = new ArrayList<>();
+    List<Test> testChecks = new ArrayList<>();
 
     @GetMapping("/start/{test_id}/{question_id}")
     public String start(@PathVariable int test_id,
@@ -196,12 +197,13 @@ public class TestController {
             Test test = testService.findOne(test_id);
             if (courseService.isStudent(user, test.getTopic().getCourse())) {
                 List<Question> questions = questionService.findQuestionByTest(test_id);
+                model.addAttribute("topic", testService.findTopic(test_id));
                 if (questions.size() == 0) {
-                    model.addAttribute("topic", testService.findTopic(test_id));
                     return "error/test";
                 }
                 if (test.isMix()) {
                     int count = test.getCount();
+                    if (question_id == 1) questionChecks.clear();
                     if (count >= question_id) {
                         Question question = questionService.findUncheckedQuestionOfTest(questionChecks, test);
                         if (question != null) {
@@ -263,10 +265,11 @@ public class TestController {
                 testValidator.answers_validate(answer, bindingResult);
                 if (bindingResult.hasErrors())
                     return "test/execute";
+                if (answer == null) return "test/execute";
                 int id_answer = answer.getId();
-                if (answerService.findOne(id_answer).getIs_right()) {
+                if (answerService.findOne(id_answer) == null) return "test/final_execute";
+                if (answerService.findOne(id_answer).getIs_right())
                     mark += 1;
-                }
                 if (test.isMix()) {
                     if (test.getCount() < next) {
                         int grade = mark * 100 / (test.getCount());
@@ -309,11 +312,12 @@ public class TestController {
         if (user != null) {
             Course course = courseService.findOne(course_id);
             if (courseService.isStudent(user, course)) {
-                if (question_id <= topicService.findAllActiveTopicsByCourseId(course_id).size()) {
-                    Topic topic = topicService.findUncheckedTopicOfCourse(topicChecks, course);
-                    Question question = questionService.findRandomQuestionOfTopic(topic);
+                if (question_id == 1) testChecks.clear();
+                if (question_id <= testService.findAllActiveByCourse(course).size()) {
+                    Test test = testService.findUncheckedTestOfCourse(testChecks, course);
+                    Question question = questionService.findRandomQuestionOfTest(test);
                     if (question != null) {
-                        topicChecks.add(topic);
+                        testChecks.add(test);
                         List<Answer> answers = answerService.findMixedAnswerByQuestion(question.getId());
                         if (answers == null) return "error/test";
                         model.addAttribute("question", question);
@@ -321,12 +325,12 @@ public class TestController {
                         if (question_id == 1) mark = 0;
                         int next = question_id + 1;
                         model.addAttribute("next", next);
-                        return "test/execute";
+                        return "test/final_execute";
                     }
                     return "error/test";
                 }
-                questionChecks.clear();
-                return "redirect:/test/" + course_id;
+                topicChecks.clear();
+                return "redirect:/topic/" + course_id;
             }
             return "error/not_access";
         }
@@ -334,7 +338,7 @@ public class TestController {
     }
 
 
-    @PostMapping("/execute/{course_id}/{next}")
+    @PostMapping("/final_execute/{course_id}/{next}")
     public String finalExecute(@ModelAttribute("answer") Answer answer, BindingResult bindingResult,
                                @PathVariable int next,
                                @PathVariable int course_id) {
@@ -344,14 +348,14 @@ public class TestController {
             if (courseService.isStudent(user, course)) {
                 testValidator.answers_validate(answer, bindingResult);
                 if (bindingResult.hasErrors())
-                    return "test/execute";
+                    return "test/final_execute";
                 int id_answer = answer.getId();
-                if (answerService.findOne(id_answer).getIs_right()) {
+                if (answerService.findOne(id_answer) == null) return "test/final_execute";
+                if (answerService.findOne(id_answer).getIs_right())
                     mark += 1;
-                }
-                if (10 < next) {
-                    int grade = mark * 100 / 10;
-                    courseGradeService.saveFinalTesting(course,user,mark);
+                if (testService.findAllActiveByCourse(course).size() < next) {
+                    int grade = mark * 100 / testService.findAllActiveByCourse(course).size();
+                    courseGradeService.saveFinalTesting(course, user, grade);
                     courseGradeService.add(user, course);
                     userService.updateRating(user);
                 }

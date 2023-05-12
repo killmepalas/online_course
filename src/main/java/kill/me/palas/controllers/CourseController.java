@@ -67,14 +67,13 @@ public class CourseController{
 
         }
         model.addAttribute("course", courseService.getActivePage(num));
-        if (courseService.findAll().size()<=num*9+9)
+        if (courseService.findActiveAll().size()<=num*9+9)
             model.addAttribute("end","true");
         return "course/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         kill.me.palas.models.User db_user = userService.findByUsername(username);
@@ -83,6 +82,7 @@ public class CourseController{
         model.addAttribute("course", c);
         model.addAttribute("sCount", courseService.findStudentsOnCourse(id).size());
         model.addAttribute("grade", courseGradeService.findByUserAndCourse(db_user,c));
+        if (overCourseService.findOneByUserAndCourse(db_user,c) != null)
         model.addAttribute("overCourse",overCourseService.isUserOverCourse(db_user,c));
 
         if (db_user != null) {
@@ -185,31 +185,51 @@ public class CourseController{
     }
 
     @GetMapping("/create")
-    public String create(@ModelAttribute("course") Course course) {
-        return "course/create";
+    public String create(@ModelAttribute("course") Course course, Model model) {
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            if (userService.isTeacher(user)){
+                model.addAttribute("categories",categoryService.findAllNames());
+                return "course/create";
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("course") @Valid Course course,
-                         BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "course/create";
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
-        kill.me.palas.models.User db_user = userService.findByUsername(username);
-        courseService.save(course, db_user);
-        String role = "ROLE_TEACHER";
-        userService.setRoles(db_user,role);
-        return "redirect:/course/teach";
+                         BindingResult bindingResult, Model model) {
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            if (userService.isTeacher(user)){
+                if (bindingResult.hasErrors())
+                {
+                    model.addAttribute("categories",categoryService.findAllNames());
+                    return "course/create";
+                }
+                courseService.save(course, user);
+                String role = "ROLE_TEACHER";
+                userService.setRoles(user,role);
+                return "redirect:/course/teach";
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     @PostMapping("/add/{id}")
     public String add(@PathVariable int id){
-        Course course = courseService.findOne(id);
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        kill.me.palas.models.User db_user = userService.findByUsername(loggedInUser.getName());
-        courseService.add(db_user,course);
-        return "redirect:/course/" + id;
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            if (userService.isStudent(user)){
+                Course course = courseService.findOne(id);
+                courseService.add(user,course);
+                return "redirect:/course/" + id;
+            }
+            return "error/not_access";
+        }
+        return "error/not_auth";
     }
 
     @PostMapping("/close/{id}")
@@ -219,7 +239,7 @@ public class CourseController{
             Course course = courseService.findOne(id);
             if (courseService.isTeacher(user,course)){
                 courseService.changeStatus(course.getId(),3);
-                return "redirect: /course/show/" + id;
+                return "redirect: /course/" + id;
             }
             return "error/not_access";
         }
@@ -233,7 +253,7 @@ public class CourseController{
             Course course = courseService.findOne(id);
             if (courseService.isTeacher(user,course)){
                 courseService.changeStatus(course.getId(),1);
-                return "redirect: /course/show/" + id;
+                return "redirect: /course/" + id;
             }
             return "error/not_access";
         }

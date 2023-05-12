@@ -5,9 +5,11 @@ import kill.me.palas.repositories.StatusRepository;
 import kill.me.palas.repositories.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class TestService {
 
     @Autowired
     public TestService(TestRepository testRepository,TopicService topicService,
-                       StatusRepository statusRepository, TopicGradeService topicGradeService) {
+                       StatusRepository statusRepository, @Lazy TopicGradeService topicGradeService) {
         this.testRepository = testRepository;
         this.topicService = topicService;
         this.statusRepository = statusRepository;
@@ -86,6 +88,14 @@ public class TestService {
         return tests;
     }
 
+    public List<Test> findAllActiveByCourse(Course course){
+        List<Topic> topics = topicService.findAllByCourse(course);
+        List<Test> tests = new ArrayList<>();
+        for (Topic topic: topics)
+            tests.addAll(testRepository.findAllByTopicAndStatusId(topic,1));
+        return tests;
+    }
+
     public int findCountActiveTests(Topic topic){
         List<Test> allTests = testRepository.findTestByTopic(topic);
         List<Test> activeTests = new ArrayList<>();
@@ -99,5 +109,23 @@ public class TestService {
         Test test = testRepository.findById(testId);
         test.setStatus(statusRepository.findById(statusId));
         testRepository.save(test);
+    }
+
+    public Test findUncheckedTestOfCourse(List<Test> testChecks,Course course){
+        List<Topic> allTopics = topicService.findAllActiveTopicsByCourseId(course.getId());
+        Collections.shuffle(allTopics);
+        for (Topic topic: allTopics){
+            for (Test test: testRepository.findAllByTopicAndStatusId(topic,1)){
+                boolean flag = true;
+                for (Test t: testChecks){
+                    if (test.getId() == t.getId()) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) return test;
+            }
+        }
+        return null;
     }
 }
