@@ -78,6 +78,13 @@
                     <h4>У курса пока нет тем (уроков). Возвращайтесь позже!</h4>
                 </c:if>
                 <c:if test="${!topics.isEmpty()}">
+                    <c:if test="${grade != null}">
+                        <p>Шкала прогресса курса:</p>
+                        <p>
+                            <progress id="progressbar" value="${grade.grade}" max="100"></progress>
+                            <span class="progress-value">${grade.grade}%</span>
+                        </p>
+                    </c:if>
                     <c:forEach items="${topics}" var="topic">
                             <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
                             <section class="col-3, background" >

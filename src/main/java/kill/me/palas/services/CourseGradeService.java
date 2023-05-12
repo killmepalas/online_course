@@ -91,7 +91,7 @@ public class CourseGradeService {
                 if (courseGrade.getFinalTest() >= 50 && courseGrade.getGrade() >= 50 && overCourseService.isUserOverCourse(user,course) != 8){
                     overCourseService.update(overCourseService.findOneByUserAndCourse(user, course), 8);
                     mailSender = new MailSender();
-                    mailSender.Send(user.getEmail(), course.getName(), user.getLastname() + user.getName() + user.getMidname());
+                    mailSender.Send(user.getEmail(), course.getName(), user.getLastname() + " " + user.getName() + " " + user.getMidname());
                 }
             }
         }
