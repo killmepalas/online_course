@@ -67,10 +67,10 @@ public class CareerTestController {
                                 @PathVariable int num) {
         testValidator.car_answers_validate(answer, bindingResult);
         if (bindingResult.hasErrors())
-            return "career_test/execute";
+            return "error/execute_test";
         int id_answer = answer.getId();
         if (careerAnswerService.findOne(id_answer) == null) {
-            return "career_test/execute";
+            return "error/execute_test";
         }
         int categoryId = careerAnswerService.findOne(id_answer).getCategory().getId();
         for (CategoryCheck categoryCheck : categoryChecks)

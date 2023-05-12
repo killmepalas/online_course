@@ -265,9 +265,9 @@ public class TestController {
                 testValidator.answers_validate(answer, bindingResult);
                 if (bindingResult.hasErrors())
                     return "test/execute";
-                if (answer == null) return "test/execute";
+                if (answer == null) return "error/execute_test";
                 int id_answer = answer.getId();
-                if (answerService.findOne(id_answer) == null) return "test/final_execute";
+                if (answerService.findOne(id_answer) == null) return "error/execute_test";
                 if (answerService.findOne(id_answer).getIs_right())
                     mark += 1;
                 if (test.isMix()) {
@@ -348,9 +348,9 @@ public class TestController {
             if (courseService.isStudent(user, course)) {
                 testValidator.answers_validate(answer, bindingResult);
                 if (bindingResult.hasErrors())
-                    return "test/final_execute";
+                    return "error/execute_test";
                 int id_answer = answer.getId();
-                if (answerService.findOne(id_answer) == null) return "test/final_execute";
+                if (answerService.findOne(id_answer) == null) return "error/execute_test";
                 if (answerService.findOne(id_answer).getIs_right())
                     mark += 1;
                 if (testService.findAllActiveByCourse(course).size() < next) {
