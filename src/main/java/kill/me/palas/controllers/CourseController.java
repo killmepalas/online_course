@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -102,25 +103,39 @@ public class CourseController{
 
     @GetMapping("/find")
     public String find(@RequestParam(value = "courses") String name, Model model){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (userService.findByUsername(username) != null){
-            Set<Role> roles = userService.findByUsername(username).getRoles();
-            for (Role role: roles)
-                if (role.getId() == 3) model.addAttribute("status","admin");
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            if (userService.isAdmin(user))
+                 model.addAttribute("status","admin");
 
         }
-        model.addAttribute("course", courseService.findByName(name));
+        model.addAttribute("course", courseService.findActiveByName(name,0));
+        return "course/find";
+    }
+
+    @GetMapping("/find/category/{categoryId}")
+    public String findByCategory(@RequestParam(value = "courses") String name, @PathVariable int categoryId, Model model){
+        User user = userService.getCurrentAuthUser();
+        if (user != null){
+            if (userService.isAdmin(user))
+                model.addAttribute("status","admin");
+
+        }
+        model.addAttribute("course", courseService.findActiveByName(name,categoryId));
         return "course/find";
     }
 
     @GetMapping("/my_courses")
     public String myCourses( Model model){
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
-        kill.me.palas.models.User db_user = userService.findByUsername(username);
-        if (db_user !=null){
-            model.addAttribute("course",courseService.findByUserId(db_user.getId()));
-            model.addAttribute("overCourses",overCourseService.findAllByUser(db_user));
+        User user = userService.getCurrentAuthUser();
+        if (user !=null){
+            List<Course> active = new ArrayList<>();
+            active.addAll(courseService.findAllByUserAndOver(user,6));
+            active.addAll(courseService.findAllByUserAndOver(user,7));
+            model.addAttribute("active",active);
+            model.addAttribute("over", courseService.findAllByUserAndOver(user, 8));
+            model.addAttribute("not_begin", courseService.findAllByUserAndOver(user, 0));
+            if (courseService.findByUserId(user.getId()).isEmpty()) model.addAttribute("is_empty",true);
             return "course/my_courses";
         }
         else return "error/not_auth";

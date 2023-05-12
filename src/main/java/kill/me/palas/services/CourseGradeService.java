@@ -1,5 +1,6 @@
 package kill.me.palas.services;
 
+import kill.me.palas.config.MailSender;
 import kill.me.palas.models.*;
 import kill.me.palas.repositories.CourseGradeRepository;
 import kill.me.palas.repositories.TestGradeRepository;
@@ -20,6 +21,7 @@ public class CourseGradeService {
     private final TopicService topicService;
     private final UserServiceImpl userService;
     private final OverCourseService overCourseService;
+    private MailSender mailSender;
 
     @Autowired
     public CourseGradeService(CourseGradeRepository courseGradeRepository, TopicGradeService topicGradeService,
@@ -82,37 +84,16 @@ public class CourseGradeService {
             courseGradeRepository.save(courseGrade);
         } else {
             if (result != courseGrade.getGrade()) {
-                int count = topicService.findAllByCourse(course).size();
-                if (courseGrade.getFinalTest() != 0) {
-                    grades += courseGrade.getFinalTest();
-                    count += 1;
-                }
+                int count = topicService.findAllActiveTopicsByCourseId(course.getId()).size();
                 result = grades / count;
                 courseGrade.setGrade(result);
                 courseGradeRepository.save(courseGrade);
-                if (courseGrade.getFinalTest() >= 50 && courseGrade.getGrade() >= 50)
+                if (courseGrade.getFinalTest() >= 50 && courseGrade.getGrade() >= 50 && overCourseService.isUserOverCourse(user,course) != 8){
                     overCourseService.update(overCourseService.findOneByUserAndCourse(user, course), 8);
+                    mailSender = new MailSender();
+                    mailSender.Send(user.getEmail(), course.getName(), user.getLastname() + user.getName() + user.getMidname());
+                }
             }
-        }
-    }
-
-    public void recalc(Course course, String method, int test_id) {
-        for (CourseGrade courseGrade : courseGradeRepository.findByCourse(course)) {
-//            if (Objects.equals(method, "create")){
-//                courseGrade.setGrade(courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()-1)/testService.findTestByCourse(course.getId()).size());
-//            }
-            if (method == "delete") {
-//                if (testService.findTestByCourse(course.getId()).size() == 0) courseGrade.setGrade(0);
-//                else{
-//                    int tg = 0;
-//                    User user = courseGrade.getUser();
-//                    for (TestGrade testGrade: testGradeService.findByUserAndCourse(user,course)){
-//                        if (testGrade.getTest().getId()==test_id) tg = testGrade.getGrade();
-//                    }
-//                    courseGrade.setGrade((courseGrade.getGrade()*(testService.findTestByCourse(course.getId()).size()+1)-tg)/testService.findTestByCourse(course.getId()).size());
-//                }
-            }
-            courseGradeRepository.save(courseGrade);
         }
     }
 

@@ -107,7 +107,7 @@
                                 <c:choose>
                                     <c:when test="${courseGrade.grade >= 50}">
                                         <h3 class="green">Вы набрали ${courseGrade.grade} баллов за курс и успешно его завершили!</h3>
-                                        <h3>Сертификат будет отправлен вашу почту от thebestonlinecoursesintheworld@the.best</h3>
+                                        <h3>Проверьте почту, наша команда уже выслала Вам письмо с поздравлениями.</h3>
                                     </c:when>
                                     <c:otherwise>
                                         <h3 class="red">Вы набрали всего лишь ${courseGrade.grade} баллов за курс.</h3>

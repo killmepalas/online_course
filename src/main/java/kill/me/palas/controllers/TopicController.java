@@ -82,35 +82,29 @@ public class TopicController {
 
     @GetMapping("/show/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        User db_user = userService.getCurrentAuthUser();
+        User user = userService.getCurrentAuthUser();
+        if (user != null) {
+            Topic topic = topicService.findOne(id);
+            Course tCourse = topic.getCourse();
+            if (courseService.isStudent(user, tCourse) || courseService.isTeacher(user, tCourse)) {
+                if (courseService.isTeacher(user, tCourse)) {
+                    model.addAttribute("status", "teacher");
+                    model.addAttribute("tests", testService.findTestByTopic(id));
 
-        Topic topic = topicService.findOne(id);
-        Course tCourse = topic.getCourse();
-        boolean check = false;
-
-        if (db_user != null) {
-            for (Course course : db_user.getCourses()) {
-                if (course.getId() == tCourse.getId()) {
-                    check = true;
+                } else if (courseService.isStudent(user, tCourse)) {
                     model.addAttribute("status", "student");
-                    model.addAttribute("grades", testGradeService.findByUserAndTopic(db_user, topic));
-                    break;
+                    model.addAttribute("grades", testGradeService.findByUserAndTopic(user, topic));
+                    model.addAttribute("tests", testService.findAllActiveByTopic(topic));
                 }
+                model.addAttribute("topic", topic);
+                model.addAttribute("course_id", tCourse.getId());
+                model.addAttribute("lectures", lectureService.findByTopic(id));
+                model.addAttribute("countActiveTests", testService.findCountActiveTests(topic));
+                return "topic/show";
             }
-        }
-
-        if (db_user != null && topic.getCourse().getTeacher().getId() == db_user.getId()) {
-            model.addAttribute("status", "teacher");
-        } else if (db_user == null || !check) {
             return "error/not_access";
         }
-
-        model.addAttribute("topic", topic);
-        model.addAttribute("course_id", tCourse.getId());
-        model.addAttribute("tests", testService.findTestByTopic(id));
-        model.addAttribute("lectures", lectureService.findByTopic(id));
-        model.addAttribute("countActiveTests", testService.findCountActiveTests(topic));
-        return "topic/show";
+        return "error/not_auth";
     }
 
     @PostMapping("/close/{id}")

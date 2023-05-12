@@ -59,7 +59,7 @@ public class TestGradeService {
             Course course = test.getTopic().getCourse();
             if (courseGradeService.findByUserAndCourse(user, course) == null)
                 overCourseService.save(user, test.getTopic().getCourse(), 6);
-            else if (findAllByUserAndCourse(user, course).size() == testService.findAllByCourse(course).size())
+            else if (findAllByUserAndCourse(user, course).size() == testService.findAllActiveByCourse(course).size())
                 overCourseService.update(overCourseService.findOneByUserAndCourse(user,course), 7);
 
         }

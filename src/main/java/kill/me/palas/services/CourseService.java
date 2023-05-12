@@ -18,15 +18,17 @@ public class CourseService {
     private final UserServiceImpl userService;
     private final StatusRepository statusRepository;
     private final CategoryService categoryService;
+    private final OverCourseService overCourseService;
 
 
     @Autowired
     public CourseService(CourseRepository courseRepository, UserServiceImpl userService,
-                         StatusRepository statusRepository, CategoryService categoryService) {
+                         StatusRepository statusRepository, CategoryService categoryService, OverCourseService overCourseService) {
         this.courseRepository = courseRepository;
         this.userService = userService;
         this.statusRepository = statusRepository;
         this.categoryService = categoryService;
+        this.overCourseService = overCourseService;
     }
 
     public List<Course> findAll() {
@@ -58,6 +60,21 @@ public class CourseService {
         return foundCourses;
     }
 
+    public List<Course> findActiveByName(String name, int categoryId){
+        List<Course> courses;
+        if (categoryId != 0)  courses = courseRepository.findAllByCategoryIdAndStatusId(categoryId,1);
+        else courses = courseRepository.findAllByStatusId(1);
+        List<Course> foundCourses = new ArrayList<>();
+        for (Course course: courses){
+            String courseName = course.getName().toLowerCase(Locale.ROOT).replaceAll("\\s+","");
+            name = name.toLowerCase(Locale.ROOT).replaceAll("\\s+","");
+            if (courseName.contains(name)){
+                foundCourses.add(course);
+            }
+        }
+        return foundCourses;
+    }
+
     public List<Course> findRandomByCategory(int categoryId){
         List<Course> courses = courseRepository.findAllByCategoryIdAndStatusId(categoryId,1);
         Collections.shuffle(courses);
@@ -69,7 +86,7 @@ public class CourseService {
     }
 
     public List<Course> findPageByCategory(int categoryId, int num){
-        return courseRepository.findAllByCategoryIdAndStatusId(categoryId,1).stream().skip(num * 9L).limit(9).toList();
+        return courseRepository.findAllByCategoryIdAndStatusId(categoryId,1).stream().skip(num * 9).limit(9).toList();
     }
 
     public List<Course> findByUserId(int id){
@@ -78,6 +95,20 @@ public class CourseService {
 
     public List<Course> findAllActiveByUser(User user){
         return courseRepository.findAllByUsersAndStatusId(user, 1);
+    }
+
+    public List<Course> findAllByUserAndOver(User user, int over){
+        List<Course> allCourses = findAllActiveByUser(user);
+        List<Course> result = new ArrayList<>();
+        for (Course course: allCourses){
+            OverCourse overCourse = overCourseService.findOneByUserAndCourse(user,course);
+            if (overCourse == null){
+                if (over == 0)
+                    result.add(course);
+            } else if (overCourse.getStatus().getId() == over)
+                result.add(course);
+        }
+        return result;
     }
 
     public List<Course> findTeacherCourses(User teacher){

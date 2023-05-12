@@ -48,7 +48,7 @@ public class TopicGradeService {
         int grades = 0;
         int result = 0;
         for (TestGrade testGrade : testGrades) grades += testGrade.getGrade();
-        result = grades / testService.findTestByTopic(topic.getId()).size();
+        result = grades / testService.findCountActiveTests(topic);
         if (topicGrade == null) {
             topicGrade = new TopicGrade();
             topicGrade.setTopic(topic);

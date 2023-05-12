@@ -75,6 +75,10 @@ public class TestService {
         return testRepository.findTestByTopic(topicService.findOne(id));
     }
 
+    public List<Test> findAllActiveByTopic(Topic topic){
+        return testRepository.findAllByTopicAndStatusId(topic,1);
+    }
+
     public Topic findTopic(int id){
         Test foundTest = testRepository.findById(id);
         return foundTest.getTopic();

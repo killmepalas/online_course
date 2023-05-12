@@ -39,9 +39,19 @@
         <br><br><br><br><br><br>
         </c:if>
         <c:if test="${!course.isEmpty()}">
-        <form action="${pageContext.request.contextPath}/course/find/" path="name">
+        <c:choose>
+        <c:when test="${category_id != null}">
+        <form action="${pageContext.request.contextPath}/course/find/category/${category.id}" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
+        </c:when>
+        <c:otherwise>
+        <form action="${pageContext.request.contextPath}/course/find" path="name">
+            <input type="text" placeholder="Search" name="courses" class="search">
+        </form>
+        </c:otherwise>
+        </c:choose>
+
         <c:forEach items="${course}" var="courselist">
         <c:choose>
         <c:when test="${course.indexOf(courselist) % 3==0}">
@@ -129,6 +139,7 @@
         </c:if>
     </section>
 </div>
+<h3><a href="${contextPath}/course/category/index">Назад к категориям</a></h3>
 </c:if>
 </main>
 <footer>

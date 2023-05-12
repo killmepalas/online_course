@@ -32,54 +32,108 @@
 </header>
 <div class="container">
     <main id="course">
-        <c:if test="${course.isEmpty()}">
-            <section class="help">
-                <h4>У вас пока нет курсов. <a href="${contextPath}/course/category/index">Начните обучение прямо
-                    сейчас</a></h4>
-            </section>
-        </c:if>
-
-        <c:if test="${!course.isEmpty()}">
-            <c:forEach items="${course}" var="courselist">
-                <c:if test="${course.indexOf(courselist) % 3==0}"><div class="row"></c:if>
-                <section class="col-3">
-                    <div>
-                        <h4>${courselist.name}</h4>
-                        <img src="${courselist.photolink}">
-                        <c:choose>
-                            <c:when test="${courselist.status.id == 3}"><h3>Курс находится в разработке</h3></c:when>
-                            <c:otherwise>
-                                <div id="management">
-                                    <form method="get" action="${contextPath}/course/${courselist.id}">
-                                        <button class="detailed" type="submit" value="Подробнее">Подробнее</button>
-                                    </form>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <c:forEach items="${overCourses}" var="overCourse">
-                            <c:if test="${overCourse.course.id == courselist.id}">
-                                <c:choose>
-                                    <c:when test="${overCourse.status.id == 6}">
-                                        <h3 class="red">В процессе</h3>
-                                    </c:when>
-                                    <c:when test="${overCourse.status.id == 8}">
-                                        <h3 class="green">Завершён</h3>
-                                    </c:when>
-                                </c:choose>
-                            </c:if>
-                        </c:forEach>
-                    </div>
+        <section class="help">
+            <div class="navbar">
+                <a id="1" onclick="changeBar(0)">В процессе ${active.size()}</a>
+                <a id="2" onclick="changeBar(1)">Завершённые ${over.size()}</a>
+                <a id="3" onclick="changeBar(2)">Не начатые ${not_begin.size()}</a>
+            </div>
+            <c:if test="${is_empty}">
+                <section class="help">
+                    <h4>У вас пока нет курсов. <a href="${contextPath}/course/category/index">Начните обучение прямо
+                        сейчас</a></h4>
                 </section>
-                <c:if test="${course.indexOf(courselist) % 3==2}"></div></c:if>
-            </c:forEach>
-        </c:if>
+            </c:if>
+            <c:if test="${!is_empty}">
+                <div id="active">
+                    <c:forEach items="${active}" var="course">
+                        <c:if test="${active.indexOf(course) % 3==0}"><div class="row"></c:if>
+                        <section class="col-3">
+                            <div>
+                                <h4>${course.name}</h4>
+                                <img src="${course.photolink}">
+                                <c:choose>
+                                    <c:when test="${course.status.id == 3}"><h3>Курс находится в
+                                        разработке</h3></c:when>
+                                    <c:otherwise>
+                                        <div id="management">
+                                            <form method="get" action="${contextPath}/course/${course.id}">
+                                                <button class="detailed" type="submit" value="Подробнее">Подробнее
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </section>
+                        <c:if test="${active.indexOf(course) % 3==2 ||active.indexOf(course) == active.size()-1}"></div></c:if>
+                    </c:forEach>
+                </div>
+
+                <div id="over">
+                    <c:forEach items="${over}" var="course">
+                        <c:if test="${over.indexOf(course) % 3==0}"><div class="row"></c:if>
+                        <section class="col-3">
+                            <div>
+                                <h4>${course.name}</h4>
+                                <img src="${course.photolink}">
+                                <c:choose>
+                                    <c:when test="${course.status.id == 3}"><h3>Курс находится в
+                                        разработке</h3></c:when>
+                                    <c:otherwise>
+                                        <div id="management">
+                                            <form method="get" action="${contextPath}/course/${course.id}">
+                                                <button class="detailed" type="submit" value="Подробнее">Подробнее
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </section>
+                        <c:if test="${over.indexOf(course) % 3==2 ||over.indexOf(course) == over.size()-1}"></div></c:if>
+                    </c:forEach>
+                </div>
+
+                <div id="not_begin">
+                    <c:forEach items="${not_begin}" var="course">
+                        <c:if test="${not_begin.indexOf(course) % 3==0}"><div class="row"></c:if>
+                        <section class="col-3">
+                            <div>
+                                <h4>${course.name}</h4>
+                                <img src="${course.photolink}">
+                                <c:choose>
+                                    <c:when test="${course.status.id == 3}"><h3>Курс находится в
+                                        разработке</h3></c:when>
+                                    <c:otherwise>
+                                        <div id="management">
+                                            <form method="get" action="${contextPath}/course/${course.id}">
+                                                <button class="detailed" type="submit" value="Подробнее">Подробнее
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </section>
+                        <c:if test="${not_begin.indexOf(course) % 3==2 ||not_begin.indexOf(course) == not_begin.size()-1}"></div></c:if>
+                    </c:forEach>
+                </div>
+            </c:if>
+
+
+        </section>
     </main>
-    <footer>
-        <p>Телефон: +6(666)-666-66-66</p>
-        <p>E-mail: thebestonlinecoursesintheworld@the.best</p>
-    </footer>
+
 </div>
+<footer>
+    <p>Телефон: +6(666)-666-66-66</p>
+    <p>E-mail: thebestonlinecoursesintheworld@the.best</p>
+</footer>
+<script src="${pageContext.request.contextPath}/resources/js/indexCourse.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
+
 
 </html>
