@@ -27,6 +27,12 @@ public class Test {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "mix")
+    private boolean mix;
+
+    @Column(name = "count")
+    private int count;
+
     @ManyToOne()
     @JoinColumn(name = "topic_id")
     private Topic topic;
@@ -103,5 +109,21 @@ public class Test {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public boolean isMix() {
+        return mix;
+    }
+
+    public void setMix(boolean mix) {
+        this.mix = mix;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

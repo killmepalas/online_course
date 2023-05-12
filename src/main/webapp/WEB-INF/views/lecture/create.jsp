@@ -48,14 +48,17 @@
                     </div>
                 </spring:bind>
 
+                <button onclick="beginParagraph()" type="button" class="jsBut">Начало абзаца</button>
+                <button onclick="endParagraph()"  type="button" class="jsBut">Конец абзаца</button>
+
                 <spring:bind path="text">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="text" path="text" class="form-control" value="${lecture.text}" placeholder="Текст лекции"></form:input>
+                        <form:textarea type="text" id="text" path="text" class="description" value="${lecture.text}" placeholder="Текст лекции"></form:textarea>
                         <form:errors path="text"></form:errors>
                     </div>
                 </spring:bind>
 
-                <form method="post" action="${contextPath}/test/create/${topic}">
+                <form method="post" action="${contextPath}/lecture/create/${topic}">
                     <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Создать</button>
                 </form>
             </form:form>
@@ -71,4 +74,5 @@
 </div>
 </body>
 
+<script src="${pageContext.request.contextPath}/resources/js/lecture.js"></script>
 </html>

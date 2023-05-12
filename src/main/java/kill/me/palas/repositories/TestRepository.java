@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface TestRepository extends JpaRepository<Test,Integer> {
     List<Test> findTestByTopic(Topic topic);
+    List<Test> findAllByTopicAndStatusId(Topic topic, int status);
     List<Test> findTestByName(String name);
     Test findById(int id);
 }

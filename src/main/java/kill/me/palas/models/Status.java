@@ -26,6 +26,9 @@ public class Status {
     @OneToMany(mappedBy = "status")
     private List<Topic> topics;
 
+    @OneToMany(mappedBy = "status")
+    private List<OverCourse> overCourses;
+
     public int getId() {
         return id;
     }
@@ -72,6 +75,14 @@ public class Status {
 
     public void setTopics(List<Topic> topics) {
         this.topics = topics;
+    }
+
+    public List<OverCourse> getOverCourses() {
+        return overCourses;
+    }
+
+    public void setOverCourses(List<OverCourse> overCourses) {
+        this.overCourses = overCourses;
     }
 
     public Status() {

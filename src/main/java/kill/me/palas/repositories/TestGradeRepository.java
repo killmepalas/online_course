@@ -10,4 +10,5 @@ import java.util.List;
 public interface TestGradeRepository extends JpaRepository<TestGrade,Integer> {
     List<TestGrade> findByUser(User user);
     List<TestGrade> findByTest(Test test);
+    TestGrade findByUserAndTest(User user, Test test);
 }

@@ -30,6 +30,11 @@
 </header>
 <div class="container">
     <main id="course">
+        <div>
+            <form method="get" action="${contextPath}/course/${id_course}">
+                <button class="detailed" type="submit">Вернуться к курсу</button>
+            </form>
+        </div>
         <c:if test="${status == 'teacher'}">
             <section class="help">
                 <c:if test="${topics.isEmpty()}">
@@ -40,11 +45,7 @@
                         <button class="detailed" type="submit">Создать тему</button>
                     </form>
                 </div>
-                <div>
-                    <form method="get" action="${contextPath}/course/${id_course}">
-                        <button class="detailed" type="submit">Вернуться к курсу</button>
-                    </form>
-                </div>
+
                 <c:if test="${!topics.isEmpty()}">
                     <c:forEach items="${topics}" var="topic">
                         <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
@@ -53,17 +54,17 @@
                                 <h1>${topic.name}</h1>
                                 <h4>${topic.description}</h4>
                                 <c:if test="${topic.status.id == 1}">
-                                    <h3>Тема опубликована</h3>
+                                    <h3 class="green">Тема опубликована</h3>
                                 </c:if>
                                 <c:if test="${topic.status.id == 3}">
-                                    <h3>Тема в разработке</h3>
+                                    <h3 class="red">Тема в разработке</h3>
                                 </c:if>
                                 <form method="get" action="${contextPath}/topic/show/${topic.id}">
                                     <button class="detailed" type="submit" value="Управление">Управление</button>
                                 </form>
                             </div>
                         </section>
-                        <c:if test="${topics.indexOf(topic) % 3==2}"></div></c:if>
+                        <c:if test="${((topics.indexOf(topic) % 3==2)||(topics.indexOf(topic) == topics.size()-1))}"></div></c:if>
                     </c:forEach>
                 </c:if>
             </section>
@@ -78,7 +79,6 @@
                 </c:if>
                 <c:if test="${!topics.isEmpty()}">
                     <c:forEach items="${topics}" var="topic">
-                        <c:if test="${topic.status.id == 1}">
                             <c:if test="${topics.indexOf(topic) % 3==0}"><div class="row"></c:if>
                             <section class="col-3, background" >
                                 <div>
@@ -97,10 +97,34 @@
                                     </form>
                                 </div>
                             </section>
-                            <c:if test="${topics.indexOf(topic) % 3==2}"></div></c:if>
-                        </c:if>
-
+                            <c:if test="${((topics.indexOf(topic) % 3==2)||(topics.indexOf(topic) == topics.size()-1))}"></div></c:if>
                     </c:forEach>
+                    <c:if test="${final_testing}">
+                        <h3>Для завершения курса нужно набрать не менее 50 баллов за курс и за итоговое тестирование.</h3>
+                        <c:choose>
+                            <c:when test="${courseGrade.finalTest >=50}">
+                                <h3 class="green">Ваша оценка: ${courseGrade.finalTest}</h3>
+                                <c:choose>
+                                    <c:when test="${courseGrade.grade >= 50}">
+                                        <h3 class="green">Вы набрали ${courseGrade.grade} баллов за курс и успешно его завершили!</h3>
+                                        <h3>Проверьте почту, наша команда уже выслала Вам письмо с поздравлениями.</h3>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h3 class="red">Вы набрали всего лишь ${courseGrade.grade} баллов за курс.</h3>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </c:when>
+                            <c:otherwise>
+                                <h3 class="red">Ваша оценка за итоговый тест: ${courseGrade.finalTest}</h3>
+                                <h3>Этого слишком мало для завершения курса!</h3>
+                            </c:otherwise>
+                        </c:choose>
+                        <form method="get" action="${contextPath}/test/final_testing/${course.id}/1">
+                            <button class="detailed" type="submit" >Итоговое тестирование</button>
+                        </form>
+
+                    </c:if>
                 </c:if>
             </section>
         </c:if>

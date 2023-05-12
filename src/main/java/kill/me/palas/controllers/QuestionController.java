@@ -3,6 +3,7 @@ package kill.me.palas.controllers;
 import kill.me.palas.models.Question;
 import kill.me.palas.models.Test;
 import kill.me.palas.services.QuestionService;
+import kill.me.palas.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,12 @@ import java.util.List;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final TestService testService;
 
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, TestService testService) {
         this.questionService = questionService;
+        this.testService = testService;
     }
 
     @GetMapping("/find")
@@ -33,7 +36,7 @@ public class QuestionController {
     public String index(Model model, @PathVariable("test_id") int id){
         List<Question> questions = questionService.findQuestionByTest(id);
         model.addAttribute("questions", questions);
-        model.addAttribute("test", id);
+        model.addAttribute("test", testService.findOne(id));
         return "question/index";
     }
 

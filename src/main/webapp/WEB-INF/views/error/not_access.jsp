@@ -33,7 +33,7 @@
 <div id="container">
     <main id="auth">
         <section class="help">
-            <h4>Доступ на этот курс закрыт. Вы можете <a href="${pageContext.request.contextPath}/course/add/${id_course}">приобрести</a> его.</h4>
+            <h4>Доступ на этот курс для Вас закрыт.</h4>
         </section>
     </main>
     <footer>

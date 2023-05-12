@@ -11,9 +11,8 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Тест на профориентацию</title>
+    <title>Лучшие онлайн-курсы</title>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
-
 </head>
 
 <body>
@@ -29,11 +28,15 @@
     </nav>
 </header>
 <div id="container">
-    <main id="main">
-        <p>Learnability - ваш проводник в мир знаний.</p>
-        <p>Найдите интересующий вас курс в нашем <a href="${contextPath}/category/index">каталоге курсов</a>.</p>
-        <p>Не знаете, с чего начать?</p>
-        <p>Пройдите наш <a href="${contextPath}/prof_test.jsp">тест на профориентацию</a>, в конце мы подберём подходящие для вас курсы.</p>
+    <main id="course">
+        <section class="help">
+        <h1>Пройдите тест и найдите свою профессию мечты</h1>
+
+        <h3>Всего ${size} вопросов и вы узнаете своё предназначение!</h3>
+        <form method="get" action="${contextPath}/career_test/start/1">
+            <button class="detailed" type="submit" value="Удалить">Пройти тест</button>
+        </form>
+        </section>
     </main>
     <footer>
         <p>Телефон: +6(666)-666-66-66</p>

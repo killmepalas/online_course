@@ -63,12 +63,18 @@ public class User {
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<TopicGrade> topicGrades;
 
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<OverCourse> overCourses;
+
     @Transient
     private int rating;
 
     @ManyToOne()
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @Column(name = "email")
+    private String email;
 
     public User() {
 
@@ -213,5 +219,21 @@ public class User {
 
     public void setTopicGrades(List<TopicGrade> topicGrades) {
         this.topicGrades = topicGrades;
+    }
+
+    public List<OverCourse> getOverCourses() {
+        return overCourses;
+    }
+
+    public void setOverCourses(List<OverCourse> overCourses) {
+        this.overCourses = overCourses;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

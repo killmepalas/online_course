@@ -33,6 +33,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private StatusRepository statusRepository;
 
+    @Autowired
+    private CourseGradeService courseGradeService;
+
+    @Autowired
+    private OverCourseService overCourseService;
+
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -42,7 +48,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public void block(int userId){
+    public void block(int userId) {
         User user = userRepository.findById(userId);
         user.setStatus(statusRepository.findById(2));
         userRepository.save(user);
@@ -51,6 +57,29 @@ public class UserServiceImpl implements UserService {
     public User getCurrentAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findByUsername(auth.getName());
+    }
+
+    public boolean isAdmin(User user){
+        return checkRole(3,user);
+    }
+
+    public boolean isTeacher(User user){
+        return checkRole(2,user);
+    }
+
+    public boolean isStudent(User user){
+        return checkRole(1,user);
+    }
+
+    public boolean checkRole(int roleId, User user){
+        Set<Role> roles = user.getRoles();
+        boolean isAdmin = false;
+        for (Role role: roles)
+            if (role.getId() == roleId) {
+                isAdmin = true;
+                break;
+            }
+        return isAdmin;
     }
 
     public void modifyRoles(CheckRoles checkRoles, int mode) {
@@ -69,15 +98,13 @@ public class UserServiceImpl implements UserService {
 
         for (List<Integer> userVar : users) {
             int role;
-            if ((!admin)&&(userVar.equals(admins))) {
+            if ((!admin) && (userVar.equals(admins))) {
                 role = 3;
                 admin = true;
-            }
-            else if ((!teacher)&&(userVar.equals(teachers))) {
+            } else if ((!teacher) && (userVar.equals(teachers))) {
                 role = 2;
                 teacher = true;
-            }
-            else {
+            } else {
                 role = 1;
                 student = true;
             }
@@ -169,15 +196,32 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    public List<User> findAllStudents(){
+    public List<User> findAllStudents() {
         List<User> users = userRepository.findAll();
         List<User> students = new ArrayList<>();
-        for (User user: users){
-            for (Role role: user.getRoles()){
+        for (User user : users) {
+            for (Role role : user.getRoles()) {
                 if (role.getId() == 1) students.add(user);
             }
         }
         return students;
+    }
+
+    public void updateRating(User user) {
+        List<CourseGrade> courseGrades = courseGradeService.findAllByUser(user);
+        List<OverCourse> overCourses = overCourseService.findAllByUser(user);
+        int grades = 0;
+        for (OverCourse overCourse : overCourses) {
+            for (CourseGrade courseGrade : courseGrades) {
+                if (courseGrade.getCourse().getId() == overCourse.getCourse().getId())
+                    grades += courseGrade.getGrade();
+            }
+        }
+
+        if (overCourses.size() !=0){
+            user.setRating(grades / overCourses.size());
+            userRepository.save(user);
+        }
     }
 
 }

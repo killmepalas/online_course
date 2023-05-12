@@ -46,6 +46,12 @@ public class Course {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany(mappedBy="course", cascade = CascadeType.ALL)
+    private List<OverCourse> overCourses;
+
+    @Transient
+    private String textCategory;
+
     public Course(String name, String description, int price) {
         this.name = name;
         this.description = description;
@@ -133,5 +139,21 @@ public class Course {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<OverCourse> getOverCourses() {
+        return overCourses;
+    }
+
+    public void setOverCourses(List<OverCourse> overCourses) {
+        this.overCourses = overCourses;
+    }
+
+    public String getTextCategory() {
+        return textCategory;
+    }
+
+    public void setTextCategory(String textCategory) {
+        this.textCategory = textCategory;
     }
 }

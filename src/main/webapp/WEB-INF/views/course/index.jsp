@@ -39,9 +39,19 @@
         <br><br><br><br><br><br>
         </c:if>
         <c:if test="${!course.isEmpty()}">
-        <form action="${pageContext.request.contextPath}/course/find/" path="name">
+        <c:choose>
+        <c:when test="${category_id != null}">
+        <form action="${pageContext.request.contextPath}/course/find/category/${category.id}" path="name">
             <input type="text" placeholder="Search" name="courses" class="search">
         </form>
+        </c:when>
+        <c:otherwise>
+        <form action="${pageContext.request.contextPath}/course/find" path="name">
+            <input type="text" placeholder="Search" name="courses" class="search">
+        </form>
+        </c:otherwise>
+        </c:choose>
+
         <c:forEach items="${course}" var="courselist">
         <c:choose>
         <c:when test="${course.indexOf(courselist) % 3==0}">
@@ -56,9 +66,9 @@
                         </form>
                     </div>
                     <c:if test="${status == 'admin'}">
-                        <form method="post" action="${contextPath}/course/delete/${courselist.id}">
+                        <form method="post" action="${contextPath}/course/block/${courselist.id}">
                             <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">
-                                Удалить
+                                Заблокировать
                             </button>
                         </form>
                     </c:if>
@@ -76,9 +86,9 @@
                             </form>
                         </div>
                         <c:if test="${status == 'admin'}">
-                            <form method="post" action="${contextPath}/course/delete/${courselist.id}">
+                            <form method="post" action="${contextPath}/course/block/${courselist.id}">
                                 <button class="detailed" type="submit" name="${_csrf.parameterName}"
-                                        value="${_csrf.token}">Удалить
+                                        value="${_csrf.token}">Заблокировать
                                 </button>
                             </form>
                         </c:if>
@@ -96,9 +106,9 @@
                         </form>
                     </div>
                     <c:if test="${status == 'admin'}">
-                        <form method="post" action="${contextPath}/course/delete/${courselist.id}">
+                        <form method="post" action="${contextPath}/course/block/${courselist.id}">
                             <button class="detailed" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">
-                                Удалить
+                                Заблокировать
                             </button>
                         </form>
                     </c:if>
@@ -129,6 +139,7 @@
         </c:if>
     </section>
 </div>
+<h3><a href="${contextPath}/course/category/index">Назад к категориям</a></h3>
 </c:if>
 </main>
 <footer>

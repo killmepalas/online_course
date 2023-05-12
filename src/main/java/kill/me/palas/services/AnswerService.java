@@ -6,6 +6,7 @@ import kill.me.palas.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -52,6 +53,15 @@ public class AnswerService {
         Answer foundAnswer = answerRepository.findById(id);
         Question question = foundAnswer.getQuestion();
         return question;
+    }
+
+    public List<Answer> findMixedAnswerByQuestion(int test_id){
+        List<Answer> answers = answerRepository.findAnswerByQuestion(questionService.findOne(test_id));
+        if (!answers.isEmpty()){
+            Collections.shuffle(answers);
+            return answers;
+        }
+        return null;
     }
 
 }

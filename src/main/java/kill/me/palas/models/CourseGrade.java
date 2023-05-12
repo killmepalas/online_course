@@ -20,6 +20,9 @@ public class CourseGrade {
     @ManyToOne()
     private User user;
 
+    @Column(name = "final_test")
+    private int finalTest;
+
     public CourseGrade(){
 
     }
@@ -58,5 +61,13 @@ public class CourseGrade {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getFinalTest() {
+        return finalTest;
+    }
+
+    public void setFinalTest(int finalTest) {
+        this.finalTest = finalTest;
     }
 }
