@@ -37,6 +37,7 @@
 
                     <c:forEach items="${answers}" var="ans">
                         <form:radiobutton path="id" value="${ans.id}"/>${ans.text}<br/>
+                        <form:errors path="id"></form:errors>
                     </c:forEach>
                     <button class="teach" type="submit">Следующий вопрос</button>
                 </form:form>

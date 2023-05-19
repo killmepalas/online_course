@@ -1,0 +1,29 @@
+syntax = "proto3";
+package kill.me.palas.grpc;
+
+enum ElementType{
+  topic = 0;
+  test = 1;
+  lecture = 2;
+}
+
+enum ActionType{
+  create = 0;
+  update = 1;
+  delete = 2;
+}
+
+message UpdateRequest{
+  string course = 1;
+  string element = 2;
+  ElementType elementType = 3;
+  ActionType actionType = 4;
+}
+
+message UpdateResponse{
+  string text = 1;
+}
+
+service UpdateService{
+  rpc update(UpdateRequest) returns (UpdateResponse);
+}

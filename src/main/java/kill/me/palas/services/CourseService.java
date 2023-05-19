@@ -6,6 +6,7 @@ import kill.me.palas.models.OverCourse;
 import kill.me.palas.models.User;
 import kill.me.palas.repositories.CourseRepository;
 import kill.me.palas.repositories.StatusRepository;
+import kill.me.palas.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,16 +20,19 @@ public class CourseService {
     private final StatusRepository statusRepository;
     private final CategoryService categoryService;
     private final OverCourseService overCourseService;
+    private final UserRepository userRepository;
 
 
     @Autowired
     public CourseService(CourseRepository courseRepository, UserServiceImpl userService,
-                         StatusRepository statusRepository, CategoryService categoryService, OverCourseService overCourseService) {
+                         StatusRepository statusRepository, CategoryService categoryService,
+                         OverCourseService overCourseService, UserRepository userRepository) {
         this.courseRepository = courseRepository;
         this.userService = userService;
         this.statusRepository = statusRepository;
         this.categoryService = categoryService;
         this.overCourseService = overCourseService;
+        this.userRepository = userRepository;
     }
 
     public List<Course> findAll() {
@@ -127,6 +131,7 @@ public class CourseService {
         updatedCourse.setId(id);
         updatedCourse.setTeacher(teacher);
         updatedCourse.setStatus(course.getStatus());
+        updatedCourse.setCategory(categoryService.findByName(updatedCourse.getTextCategory()));
         courseRepository.save(updatedCourse);
     }
 
@@ -146,7 +151,7 @@ public class CourseService {
         List<Course> courses = courseRepository.findCourseByUsers(user);
         courses.add(course);
         user.setCourses(courses);
-        userService.save(user);
+        userRepository.save(user);
     }
 
     public List<User> findStudentsOnCourse(int id){

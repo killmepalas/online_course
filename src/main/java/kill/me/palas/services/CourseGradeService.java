@@ -76,7 +76,7 @@ public class CourseGradeService {
             grades += topicGrade.getGrade();
         }
         if (courseGrade == null) {
-            result = grades / topicService.findAllByCourse(course).size();
+            result = grades / topicService.findAllActiveTopicsByCourseId(course.getId()).size();
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
             courseGrade.setUser(user);

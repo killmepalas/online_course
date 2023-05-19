@@ -44,9 +44,8 @@ public class AnswerService {
         answerRepository.deleteById(id);
     }
 
-    public List<Answer> findAnswerByQuestion(int test_id){
-        List<Answer> answers = answerRepository.findAnswerByQuestion(questionService.findOne(test_id));
-        return answers;
+    public List<Answer> findAnswerByQuestion(int question_id){
+        return answerRepository.findAnswerByQuestion(questionService.findOne(question_id));
     }
 
     public Question findQuestion(int id){

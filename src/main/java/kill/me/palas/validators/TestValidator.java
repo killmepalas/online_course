@@ -35,12 +35,12 @@ public class TestValidator implements Validator {
 
         public void answers_validate(Object o, Errors errors){
             Answer answer = (Answer) o;
-            if(answer == null) errors.rejectValue("answer", "Answer.Not.Null");
+            if(answer == null) errors.rejectValue("id", "Answer.Not.Null");
         }
 
     public void car_answers_validate(Object o, Errors errors){
         CareerAnswer answer = (CareerAnswer) o;
-        if(answer == null) errors.rejectValue("answer", "Answer.Not.Null");
+        if(answer == null) errors.rejectValue("id", "Answer.Not.Null");
     }
     }
 
