@@ -61,6 +61,7 @@ public class TopicController {
                     if (course.getId() == id) {
                         check = true;
                         model.addAttribute("status", "student");
+                        model.addAttribute("grade",courseGradeService.findByUserAndCourse(db_user,course));
                         model.addAttribute("grades", topicGradeService.findByUserAndCourse(db_user, course));
                         model.addAttribute("topics", topicService.findAllActiveTopicsByCourseId(id));
                         if (overCourseService.findOneByUserAndCourse(db_user, course) != null)

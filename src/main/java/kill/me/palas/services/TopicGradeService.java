@@ -44,9 +44,9 @@ public class TopicGradeService {
 
     public void save(User user, Topic topic) {
         TopicGrade topicGrade = topicGradeRepository.findByUserAndTopic(user, topic);
-        List<TestGrade> testGrades = testGradeService.findByUserAndTopic(user, topic);
+        List<TestGrade> testGrades = testGradeService.findActiveByUserAndTopic(user, topic);
         int grades = 0;
-        int result = 0;
+        int result;
         for (TestGrade testGrade : testGrades) grades += testGrade.getGrade();
         result = grades / testService.findCountActiveTests(topic);
         if (topicGrade == null) {

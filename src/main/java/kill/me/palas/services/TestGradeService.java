@@ -86,6 +86,15 @@ public class TestGradeService {
         return result;
     }
 
+    public List<TestGrade> findActiveByUserAndTopic(User user, Topic topic) {
+        List<TestGrade> testGrades = testGradeRepository.findByUser(user);
+        List<TestGrade> result = new ArrayList<>();
+        for (TestGrade testGrade : testGrades) {
+            if (testGrade.getTest().getTopic().getId() == topic.getId() && testGrade.getTest().getStatus().getId() == 1) result.add(testGrade);
+        }
+        return result;
+    }
+
     public void update(int id, TestGrade updatedTestGrade) {
         updatedTestGrade.setId(id);
         testGradeRepository.save(updatedTestGrade);

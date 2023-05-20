@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static kill.me.palas.server.Client.notification;
+
 @Service
 public class TestService {
     private final TestRepository testRepository;
@@ -44,6 +46,7 @@ public class TestService {
         test.setCount(5);
         testRepository.save(test);
         topicGradeService.updateByTopic(test.getTopic());
+        updateNotification(test,0);
     }
 
     public List<Test> findByName(String name){
@@ -57,6 +60,7 @@ public class TestService {
         updatedTest.setTopic(topic);
         updatedTest.setStatus(oldTest.getStatus());
         testRepository.save(updatedTest);
+        updateNotification(updatedTest,1);
     }
 
     public void updateMix(int id, Test updatedTest){
@@ -67,6 +71,7 @@ public class TestService {
     }
 
     public void delete(int id) {
+        updateNotification(testRepository.findById(id),2);
         topicGradeService.updateByTopic(testRepository.findById(id).getTopic());
         testRepository.deleteById(id);
     }
@@ -131,5 +136,9 @@ public class TestService {
             }
         }
         return null;
+    }
+
+    public void updateNotification(Test test, int action){
+        notification(test.getTopic().getCourse(), 1,action,test.getName());
     }
 }

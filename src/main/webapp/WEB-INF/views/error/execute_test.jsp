@@ -1,4 +1,6 @@
-<%@ page  contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -11,7 +13,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Конструктор курса</title>
+    <title>Ой-ой</title>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
 
@@ -31,17 +33,7 @@
 <div id="container">
     <main id="course">
         <section class="help">
-            <div>
-                <p><h1>${question.text}</h1></p>
-                <form:form modelAttribute="answer" action="${contextPath}/test/execute/${test_id}/${next}/?${_csrf.parameterName}=${_csrf.token}" method="POST">
-
-                    <c:forEach items="${answers}" var="ans">
-                        <form:radiobutton path="id" value="${ans.id}"/>${ans.text}<br/>
-                        <form:errors path="id"></form:errors>
-                    </c:forEach>
-                    <button class="teach" type="submit">Следующий вопрос</button>
-                </form:form>
-            </div>
+            <h4>Вернитесь назад и выберите один из ответов!</h4>
         </section>
     </main>
     <footer>

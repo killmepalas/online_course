@@ -2,6 +2,7 @@ package kill.me.palas.services;
 
 import kill.me.palas.models.Course;
 import kill.me.palas.models.Question;
+import kill.me.palas.models.Test;
 import kill.me.palas.models.Topic;
 import kill.me.palas.repositories.StatusRepository;
 import kill.me.palas.repositories.TopicGradeRepository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+
+import static kill.me.palas.server.Client.notification;
 
 @Service
 public class TopicService {
@@ -55,6 +58,7 @@ public class TopicService {
         topic.setStatus(statusRepository.findById(3));
         topicRepository.save(topic);
         courseGradeService.updateByCourse(topic.getCourse());
+        updateNotification(topic,0);
     }
 
     public Course findCourse(int id){
@@ -67,9 +71,11 @@ public class TopicService {
         newTopic.setCourse(oldTopic.getCourse());
         newTopic.setId(oldTopic.getId());
         topicRepository.save(newTopic);
+        updateNotification(newTopic,1);
     }
 
     public void delete(int id){
+        updateNotification(topicRepository.findById(id),2);
         courseGradeService.updateByCourse(topicRepository.findById(id).getCourse());
         topicRepository.deleteById(id);
     }
@@ -88,5 +94,9 @@ public class TopicService {
             if (flag) return topic;
         }
         return null;
+    }
+
+    public void updateNotification(Topic topic, int action){
+        notification(topic.getCourse(), 0,action,topic.getName());
     }
 }
