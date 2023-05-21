@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "coursegrade")
+@Table(name = "CourseGrade")
 public class CourseGrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

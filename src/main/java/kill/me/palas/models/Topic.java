@@ -34,6 +34,9 @@ public class Topic {
     private List<Test> tests;
 
     @OneToMany(mappedBy="topic", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy="topic", cascade = CascadeType.ALL)
     private List<Lecture> lectures;
 
     @OneToMany(mappedBy="topic", cascade = CascadeType.ALL)
@@ -101,6 +104,14 @@ public class Topic {
 
     public void setTopicGrades(List<TopicGrade> topicGrades) {
         this.topicGrades = topicGrades;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public Topic() {

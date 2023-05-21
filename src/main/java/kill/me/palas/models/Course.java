@@ -25,6 +25,9 @@ public class Course {
     @Column(name="photo")
     private String photolink;
 
+    @Column(name="chat")
+    private String chat;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="teacher_id")
     private User teacher;
@@ -155,5 +158,13 @@ public class Course {
 
     public void setTextCategory(String textCategory) {
         this.textCategory = textCategory;
+    }
+
+    public String getChat() {
+        return chat;
+    }
+
+    public void setChat(String chat) {
+        this.chat = chat;
     }
 }

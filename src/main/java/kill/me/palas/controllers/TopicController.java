@@ -1,9 +1,6 @@
 package kill.me.palas.controllers;
 
-import kill.me.palas.models.Course;
-import kill.me.palas.models.Test;
-import kill.me.palas.models.Topic;
-import kill.me.palas.models.User;
+import kill.me.palas.models.*;
 import kill.me.palas.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -30,11 +27,13 @@ public class TopicController {
     private final OverCourseService overCourseService;
     private final CourseGradeService courseGradeService;
 
+    private final CommentService commentService;
+
     @Autowired
     public TopicController(UserServiceImpl userService, TopicService topicService, TopicGradeService topicGradeService,
                            CourseService courseService, TestService testService, LectureService lectureService,
                            TestGradeService testGradeService, OverCourseService overCourseService,
-                           CourseGradeService courseGradeService) {
+                           CourseGradeService courseGradeService, CommentService commentService) {
         this.topicService = topicService;
         this.userService = userService;
         this.topicGradeService = topicGradeService;
@@ -44,6 +43,7 @@ public class TopicController {
         this.testGradeService = testGradeService;
         this.overCourseService = overCourseService;
         this.courseGradeService = courseGradeService;
+        this.commentService = commentService;
     }
 
 
@@ -99,6 +99,8 @@ public class TopicController {
                 }
                 model.addAttribute("topic", topic);
                 model.addAttribute("course_id", tCourse.getId());
+                model.addAttribute("comment",new Comment());
+                model.addAttribute("comments",commentService.findAllByTopic(topic));
                 model.addAttribute("lectures", lectureService.findByTopic(id));
                 model.addAttribute("countActiveTests", testService.findCountActiveTests(topic));
                 return "topic/show";

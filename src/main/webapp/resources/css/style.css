@@ -773,3 +773,25 @@ select {
     background-color: rgb(83, 121, 141);
     color: white;
 }
+
+.user{
+    font-weight: 700;
+    margin: 0;
+}
+
+.teacher{
+    font-weight: 700;
+    margin: 0;
+    color: #761c19;
+}
+
+.date{
+    font-size: 5px;
+    margin: 0;
+}
+
+.comment{
+    background: white;
+    border-radius: 10px;
+    margin: 10px 100px;
+}

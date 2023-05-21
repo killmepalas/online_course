@@ -1,4 +1,4 @@
-create table user_course
+create table User_course
 (
     user_id   int not null,
     course_id int not null,
@@ -7,56 +7,51 @@ create table user_course
     unique (user_id, course_id)
 );
 
-insert into user_course
-values (1, 1),
-       (1, 3),
-       (2, 2);
-
-create table status
+create table Status
 (
     id   int          not null primary key auto_increment,
     name varchar(255) not null
 );
 
-alter table user
+alter table User
     add status_id int,
-    add foreign key (status_id) references status (id);
+    add foreign key (status_id) references Status (id);
 
-insert into status (id, name)
+insert into Status (id, name)
 values (1, 'active'),
        (2, 'block'),
        (3, 'wait');
 
-create table category
+create table Category
 (
     id   int          not null primary key auto_increment,
     name varchar(255) not null
 );
 
-alter table course
+alter table Course
     add category_id int,
-    add foreign key (category_id) references category (id),
+    add foreign key (category_id) references Category (id),
     add status_id   int,
-    add foreign key (status_id) references status (id);
+    add foreign key (status_id) references Status (id);
 
-create table topic
+create table Topic
 (
     id          int          not null primary key auto_increment,
     name        varchar(255) not null,
     description varchar(255) not null,
     course_id   int          not null,
     status_id   int          not null,
-    foreign key (course_id) references course (id),
-    foreign key (status_id) references status (id)
+    foreign key (course_id) references Course (id),
+    foreign key (status_id) references Status (id)
 );
 
-alter table test
+alter table Test
     add topic_id int,
-    add foreign key (topic_id) references topic (id);
+    add foreign key (topic_id) references Topic (id);
 
-alter table test
+alter table Test
     add status_id int,
-    add foreign key (status_id) references status (id);
+    add foreign key (status_id) references Status (id);
 
 create table lecture
 (
@@ -65,7 +60,7 @@ create table lecture
     description varchar(255) not null,
     text        varchar(255) not null,
     topic_id    int          not null,
-    foreign key (topic_id) references topic (id)
+    foreign key (topic_id) references Topic (id)
 );
 
 create table TopicGrade
@@ -78,14 +73,18 @@ create table TopicGrade
     foreign key (user_id) references User (id)
 );
 
-alter table test
-    add mix   boolean,
+alter table Test
+    add mix boolean,
     add count int;
 
-alter table user
-    add rating int;
 
-create table over_course
+alter table Test
+drop column start;
+
+alter table Test
+    drop column stop;
+
+create table Over_course
 (
     id        int     not null primary key auto_increment,
     user_id   int     not null,
@@ -95,47 +94,48 @@ create table over_course
     foreign key (course_id) references Course (id)
 );
 
-alter table over_course
+alter table Over_course
     add UNIQUE (user_id, course_id);
 
-alter table over_course
-    drop overing;
+alter table Over_course
+drop
+overing;
 
-alter table over_course
+alter table Over_course
     add status_id int,
-    add foreign key (status_id) references status (id);
+    add foreign key (status_id) references Status (id);
 
-insert into status(id, name)
+insert into Status(id, name)
 values (6, 'in process'),
        (7, 'final testing'),
        (8, 'over');
 
-alter table coursegrade
+alter table CourseGrade
     add final_test int not null;
 
-alter table user
+alter table User
     add email varchar(255);
 
-create table career_guidance_test_question
+create table Career_guidance_test_question
 (
     id   int          not null primary key auto_increment,
     text varchar(255) not null
 );
 
-create table career_guidance_test_answer
+create table Career_guidance_test_answer
 (
     id          int          not null primary key auto_increment,
     question_id int          not null,
     text        varchar(255) not null,
     category_id int          not null,
-    foreign key (category_id) references category (id),
-    foreign key (question_id) references career_guidance_test_question (id)
+    foreign key (category_id) references Category (id),
+    foreign key (question_id) references Career_guidance_test_question (id)
 );
 
-alter table category
+alter table Category
     add column description varchar(255) not null;
 
-insert into category(name, description)
+insert into Category(name, description)
 values ('Frontend-разработка',
         'Это создание клиентской части сайта. Front-end разработчик занимается версткой шаблона сайта и созданием пользовательского интерфейса. '),
        ('Аналитика',
@@ -151,7 +151,7 @@ values ('Frontend-разработка',
        ('Backend-разработка',
         'Это создание серверной части в веб-приложениях. То есть backend разработчики имеют дело со всем, что относится к базам данных, архитектуре, программной логике — в общем, со всем, что обычный пользователь не видит.');
 
-insert into career_guidance_test_question(text)
+insert into Career_guidance_test_question(text)
 values ('Выберите утверждение, которое вам ближе'),
        ('Больше всего вам нравится работать'),
        ('А как у вас с математикой?'),
@@ -163,7 +163,7 @@ values ('Выберите утверждение, которое вам ближ
        ('В рамках совместного проекта вам больше нравится'),
        ('Выбирая фильм, вы скорее обратите внимание на');
 
-insert into career_guidance_test_answer(question_id, text, category_id)
+insert into Career_guidance_test_answer(question_id, text, category_id)
 values (1, 'Создавать плавные переходы и интересные анимации в мобильном приложении', 4),
        (1, 'Придумывать новые и нетривиальные способы поиска ошибок', 6),
        (1, 'Программировать сайты так, чтобы на любых устройствах они отображались корректно', 1),
@@ -234,3 +234,18 @@ values (1, 'Создавать плавные переходы и интерес
        (10, 'Сюжет', 2),
        (10, 'Рейтинги и отзывы', 3),
        (10, 'Качество изображения и звука', 5);
+
+drop table Attempt;
+
+alter table Course
+add column chat varchar(255);
+
+create table Comment(
+    id int not null primary key auto_increment,
+    text varchar(255) not null,
+    topic_id int not null,
+    date datetime not null,
+    user_id int not null,
+    foreign key (user_id) references User(id),
+    foreign key (topic_id) references Topic(id)
+);

@@ -11,6 +11,7 @@ import java.util.List;
 
 import static kill.me.palas.server.Client.notification;
 
+
 @Service
 public class LectureService {
 
@@ -54,6 +55,6 @@ public class LectureService {
     }
 
     public void updateNotification(Lecture lecture, int action){
-        notification(lecture.getTopic().getCourse(), 2,action,lecture.getName());
+        notification(lecture.getTopic().getCourse().getId(),lecture.getTopic().getCourse(), 2,action,lecture.getName());
     }
 }

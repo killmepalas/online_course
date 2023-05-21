@@ -3,7 +3,7 @@ package kill.me.palas.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "over_course")
+@Table(name = "Over_course")
 public class OverCourse {
 
     @Id

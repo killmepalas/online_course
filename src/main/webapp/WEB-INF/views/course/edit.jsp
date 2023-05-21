@@ -65,6 +65,13 @@
                         <form:errors path="photolink"></form:errors>
                     </div>
                 </spring:bind>
+
+                <spring:bind path="chat">
+                    <div class="form-group">
+                        <form:input type="text" path="chat" class="form-control" value="${course.chat}" placeholder="Ссылка на чат"></form:input>
+                        <form:errors path="chat"></form:errors>
+                    </div><br>
+                </spring:bind>
                 <br>
                 <div class="form-group">
                     <form method="post" action="${contextPath}/course/update/${course.id}">

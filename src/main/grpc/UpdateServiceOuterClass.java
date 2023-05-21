@@ -269,6 +269,11 @@ public final class UpdateServiceOuterClass {
      * <code>.kill.me.palas.grpc.ActionType actionType = 4;</code>
      */
     ActionType getActionType();
+
+    /**
+     * <code>int64 courseId = 5;</code>
+     */
+    long getCourseId();
   }
   /**
    * Protobuf type {@code kill.me.palas.grpc.UpdateRequest}
@@ -341,6 +346,11 @@ public final class UpdateServiceOuterClass {
               int rawValue = input.readEnum();
 
               actionType_ = rawValue;
+              break;
+            }
+            case 40: {
+
+              courseId_ = input.readInt64();
               break;
             }
             default: {
@@ -477,6 +487,15 @@ public final class UpdateServiceOuterClass {
       return result == null ? ActionType.UNRECOGNIZED : result;
     }
 
+    public static final int COURSEID_FIELD_NUMBER = 5;
+    private long courseId_;
+    /**
+     * <code>int64 courseId = 5;</code>
+     */
+    public long getCourseId() {
+      return courseId_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @Override
     public final boolean isInitialized() {
@@ -503,6 +522,9 @@ public final class UpdateServiceOuterClass {
       if (actionType_ != ActionType.create.getNumber()) {
         output.writeEnum(4, actionType_);
       }
+      if (courseId_ != 0L) {
+        output.writeInt64(5, courseId_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -526,6 +548,10 @@ public final class UpdateServiceOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(4, actionType_);
       }
+      if (courseId_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(5, courseId_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -547,6 +573,8 @@ public final class UpdateServiceOuterClass {
           .equals(other.getElement())) return false;
       if (elementType_ != other.elementType_) return false;
       if (actionType_ != other.actionType_) return false;
+      if (getCourseId()
+          != other.getCourseId()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -566,6 +594,9 @@ public final class UpdateServiceOuterClass {
       hash = (53 * hash) + elementType_;
       hash = (37 * hash) + ACTIONTYPE_FIELD_NUMBER;
       hash = (53 * hash) + actionType_;
+      hash = (37 * hash) + COURSEID_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCourseId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -707,6 +738,8 @@ public final class UpdateServiceOuterClass {
 
         actionType_ = 0;
 
+        courseId_ = 0L;
+
         return this;
       }
 
@@ -725,7 +758,7 @@ public final class UpdateServiceOuterClass {
       public UpdateRequest build() {
         UpdateRequest result = buildPartial();
         if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+          throw Builder.newUninitializedMessageException(result);
         }
         return result;
       }
@@ -737,6 +770,7 @@ public final class UpdateServiceOuterClass {
         result.element_ = element_;
         result.elementType_ = elementType_;
         result.actionType_ = actionType_;
+        result.courseId_ = courseId_;
         onBuilt();
         return result;
       }
@@ -798,6 +832,9 @@ public final class UpdateServiceOuterClass {
         }
         if (other.actionType_ != 0) {
           setActionTypeValue(other.getActionTypeValue());
+        }
+        if (other.getCourseId() != 0L) {
+          setCourseId(other.getCourseId());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -890,7 +927,7 @@ public final class UpdateServiceOuterClass {
         if (value == null) {
     throw new NullPointerException();
   }
-  checkByteStringIsUtf8(value);
+  AbstractMessageLite.checkByteStringIsUtf8(value);
         
         course_ = value;
         onChanged();
@@ -959,7 +996,7 @@ public final class UpdateServiceOuterClass {
         if (value == null) {
     throw new NullPointerException();
   }
-  checkByteStringIsUtf8(value);
+  AbstractMessageLite.checkByteStringIsUtf8(value);
         
         element_ = value;
         onChanged();
@@ -1052,6 +1089,32 @@ public final class UpdateServiceOuterClass {
       public Builder clearActionType() {
         
         actionType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long courseId_ ;
+      /**
+       * <code>int64 courseId = 5;</code>
+       */
+      public long getCourseId() {
+        return courseId_;
+      }
+      /**
+       * <code>int64 courseId = 5;</code>
+       */
+      public Builder setCourseId(long value) {
+        
+        courseId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 courseId = 5;</code>
+       */
+      public Builder clearCourseId() {
+        
+        courseId_ = 0L;
         onChanged();
         return this;
       }
@@ -1452,7 +1515,7 @@ public final class UpdateServiceOuterClass {
       public UpdateResponse build() {
         UpdateResponse result = buildPartial();
         if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
+          throw Builder.newUninitializedMessageException(result);
         }
         return result;
       }
@@ -1604,7 +1667,7 @@ public final class UpdateServiceOuterClass {
         if (value == null) {
     throw new NullPointerException();
   }
-  checkByteStringIsUtf8(value);
+  AbstractMessageLite.checkByteStringIsUtf8(value);
         
         text_ = value;
         onChanged();
@@ -1683,16 +1746,17 @@ public final class UpdateServiceOuterClass {
   static {
     String[] descriptorData = {
       "\n\023UpdateService.proto\022\022kill.me.palas.grp" +
-      "c\"\232\001\n\rUpdateRequest\022\016\n\006course\030\001 \001(\t\022\017\n\007e" +
+      "c\"\254\001\n\rUpdateRequest\022\016\n\006course\030\001 \001(\t\022\017\n\007e" +
       "lement\030\002 \001(\t\0224\n\013elementType\030\003 \001(\0162\037.kill" +
       ".me.palas.grpc.ElementType\0222\n\nactionType" +
-      "\030\004 \001(\0162\036.kill.me.palas.grpc.ActionType\"\036" +
-      "\n\016UpdateResponse\022\014\n\004text\030\001 \001(\t*/\n\013Elemen" +
-      "tType\022\t\n\005topic\020\000\022\010\n\004test\020\001\022\013\n\007lecture\020\002*" +
-      "0\n\nActionType\022\n\n\006create\020\000\022\n\n\006update\020\001\022\n\n" +
-      "\006delete\020\0022`\n\rUpdateService\022O\n\006update\022!.k" +
-      "ill.me.palas.grpc.UpdateRequest\032\".kill.m" +
-      "e.palas.grpc.UpdateResponseb\006proto3"
+      "\030\004 \001(\0162\036.kill.me.palas.grpc.ActionType\022\020" +
+      "\n\010courseId\030\005 \001(\003\"\036\n\016UpdateResponse\022\014\n\004te" +
+      "xt\030\001 \001(\t*/\n\013ElementType\022\t\n\005topic\020\000\022\010\n\004te" +
+      "st\020\001\022\013\n\007lecture\020\002*0\n\nActionType\022\n\n\006creat" +
+      "e\020\000\022\n\n\006update\020\001\022\n\n\006delete\020\0022`\n\rUpdateSer" +
+      "vice\022O\n\006Update\022!.kill.me.palas.grpc.Upda" +
+      "teRequest\032\".kill.me.palas.grpc.UpdateRes" +
+      "ponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1703,7 +1767,7 @@ public final class UpdateServiceOuterClass {
     internal_static_kill_me_palas_grpc_UpdateRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_kill_me_palas_grpc_UpdateRequest_descriptor,
-        new String[] { "Course", "Element", "ElementType", "ActionType", });
+        new String[] { "Course", "Element", "ElementType", "ActionType", "CourseId", });
     internal_static_kill_me_palas_grpc_UpdateResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_kill_me_palas_grpc_UpdateResponse_fieldAccessorTable = new
