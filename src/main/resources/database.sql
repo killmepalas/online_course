@@ -22,8 +22,8 @@ create table User_role
 (
     users_id int not null,
     roles_id int not null,
-    foreign key (users_id) references user (id),
-    foreign key (roles_id) references role (id),
+    foreign key (users_id) references User (id),
+    foreign key (roles_id) references Role (id),
     UNIQUE (users_id, roles_id)
 );
 
@@ -35,7 +35,7 @@ create table Course
     price       int          default 0,
     photo       varchar(255) default 'пока пусто',
     teacher_id  int not null,
-    foreign key (teacher_id) references user (id)
+    foreign key (teacher_id) references User (id)
 );
 
 create table Test
@@ -97,7 +97,8 @@ create table CourseGrade
 
 insert into User(username, password)
 values ('killmepalas', 'qwerty'),
-       ('proselyte', '$2a$11$uSXS6rLJ91WjgOHhEGDx..VGs7MkKZV68Lv5r1uwFu7HgtRn3dcXG');
+       ('admin', 'qwerty'),
+       ('teacher','qwerty');
 
 insert into Role(name)
 values ('student'),
@@ -106,6 +107,7 @@ values ('student'),
 
 insert into User_role
 values (1, 1),
-       (1, 2),
-       (1, 3),
-       (2, 1);
+       (2,1),
+       (2, 3),
+       (3,1),
+       (3,2);

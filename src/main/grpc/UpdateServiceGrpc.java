@@ -31,7 +31,7 @@ public final class UpdateServiceGrpc {
       kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse> getUpdateMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "update",
+      fullMethodName = SERVICE_NAME + '/' + "Update",
       requestType = kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest.class,
       responseType = kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
@@ -44,13 +44,13 @@ public final class UpdateServiceGrpc {
           UpdateServiceGrpc.getUpdateMethod = getUpdateMethod =
               io.grpc.MethodDescriptor.<kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest, kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "update"))
+              .setFullMethodName(MethodDescriptor.generateFullMethodName(SERVICE_NAME, "Update"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new UpdateServiceMethodDescriptorSupplier("update"))
+              .setSchemaDescriptor(new UpdateServiceMethodDescriptorSupplier("Update"))
               .build();
         }
       }
@@ -89,14 +89,14 @@ public final class UpdateServiceGrpc {
      */
     public void update(kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest request,
         io.grpc.stub.StreamObserver<kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getUpdateMethod(), responseObserver);
+      ServerCalls.asyncUnimplementedUnaryCall(getUpdateMethod(), responseObserver);
     }
 
     @Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getUpdateMethod(),
-            asyncUnaryCall(
+            ServerCalls.asyncUnaryCall(
               new MethodHandlers<
                 kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest,
                 kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse>(
@@ -127,7 +127,7 @@ public final class UpdateServiceGrpc {
      */
     public void update(kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest request,
         io.grpc.stub.StreamObserver<kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse> responseObserver) {
-      asyncUnaryCall(
+      ClientCalls.asyncUnaryCall(
           getChannel().newCall(getUpdateMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -153,7 +153,7 @@ public final class UpdateServiceGrpc {
     /**
      */
     public kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse update(kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest request) {
-      return blockingUnaryCall(
+      return ClientCalls.blockingUnaryCall(
           getChannel(), getUpdateMethod(), getCallOptions(), request);
     }
   }
@@ -180,7 +180,7 @@ public final class UpdateServiceGrpc {
      */
     public com.google.common.util.concurrent.ListenableFuture<kill.me.palas.grpc.UpdateServiceOuterClass.UpdateResponse> update(
         kill.me.palas.grpc.UpdateServiceOuterClass.UpdateRequest request) {
-      return futureUnaryCall(
+      return ClientCalls.futureUnaryCall(
           getChannel().newCall(getUpdateMethod(), getCallOptions()), request);
     }
   }

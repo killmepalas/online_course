@@ -18,6 +18,7 @@ message UpdateRequest{
   string element = 2;
   ElementType elementType = 3;
   ActionType actionType = 4;
+  int64 courseId = 5;
 }
 
 message UpdateResponse{
@@ -25,5 +26,5 @@ message UpdateResponse{
 }
 
 service UpdateService{
-  rpc update(UpdateRequest) returns (UpdateResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
 }

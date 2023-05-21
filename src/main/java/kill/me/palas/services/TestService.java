@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static kill.me.palas.server.Client.notification;
 
+
 @Service
 public class TestService {
     private final TestRepository testRepository;
@@ -139,6 +140,6 @@ public class TestService {
     }
 
     public void updateNotification(Test test, int action){
-        notification(test.getTopic().getCourse(), 1,action,test.getName());
+       notification(test.getTopic().getCourse().getId(),test.getTopic().getCourse(), 1,action,test.getName());
     }
 }

@@ -1,4 +1,4 @@
-<%@ page  contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -42,29 +42,42 @@
             <c:choose>
                 <c:when test="${teach_course == 'teacher'}">
                     <div class="profile">
+                        <c:if test="${course.chat != null}">
+                            <p>Чат курса в telegram: <a href="${course.chat}">присоединиться</a></p>
+                        </c:if>
                         <form method="get" action="${contextPath}/course/update/${course.id}">
                             <input class="logout" type="submit" value="Редактировать">
                         </form>
-                        <form method="post" action="${contextPath}/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
-                            <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите удалить данный курс?')" value="Удалить">
+                        <form method="post"
+                              action="${contextPath}/course/delete/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                            <input class="logout" type="submit"
+                                   onclick="return confirm('Вы действительно хотите удалить данный курс?')"
+                                   value="Удалить">
                         </form>
                         <form method="get" action="${contextPath}/topic/${course.id}">
                             <input class="logout" type="submit" value="Конструктор">
                         </form>
                         <c:choose>
                             <c:when test="${course.status.id == 1}">
-                                <form method="post" action="${contextPath}/course/close/${course.id}?${_csrf.parameterName}=${_csrf.token}">
-                                    <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите закрыть данный курс?')" value="Закрыть курс">
+                                <form method="post"
+                                      action="${contextPath}/course/close/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="logout" type="submit"
+                                           onclick="return confirm('Вы действительно хотите закрыть данный курс?')"
+                                           value="Закрыть курс">
                                 </form>
                             </c:when>
                             <c:when test="${course.status.id == 3}">
-                                <form method="post" action="${contextPath}/course/publication/${course.id}?${_csrf.parameterName}=${_csrf.token}">
-                                    <input class="logout" type="submit" onclick="return confirm('Вы действительно хотите опубликовать данный курс?')" value="Публикация">
+                                <form method="post"
+                                      action="${contextPath}/course/publication/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                                    <input class="logout" type="submit"
+                                           onclick="return confirm('Вы действительно хотите опубликовать данный курс?')"
+                                           value="Публикация">
                                 </form>
                             </c:when>
                             <c:when test="${course.status.id == 2}">
                                 <h3 class="red">Курс заблокирован за нарушение правил пользования платформой</h3>
-                                <h3 class="red">По всем вопросам обращайтесь сюда: thebestonlinecoursesintheworld@the.best</h3>
+                                <h3 class="red">По всем вопросам обращайтесь сюда:
+                                    thebestonlinecoursesintheworld@the.best</h3>
                             </c:when>
                         </c:choose>
                     </div>
@@ -72,6 +85,10 @@
 
                 <c:when test="${teach_course == 'added'}">
                     <div class="profile">
+                        <c:if test="${course.chat != null}">
+                            <p>Чат курса в telegram: <a href="${course.chat}">присоединиться</a></p>
+                        </c:if>
+
                         <form method="get" action="${contextPath}/topic/${course.id}">
                             <input class="logout" type="submit" value="Обучение">
                         </form>
@@ -95,16 +112,17 @@
 
                 <c:when test="${teach_course == 'not_auth'}">
                     <div class="profile">
-                       <p>Хотите начать обучение?</p>
-                       <p><a href="${contextPath}/login">Войдите</a></p>
+                        <p>Хотите начать обучение?</p>
+                        <p><a href="${contextPath}/login">Войдите</a></p>
                     </div>
                 </c:when>
 
                 <c:otherwise>
                     <div class="profile">
                         <div class="not-teach">
-                            <form method="post" action="${contextPath}/course/add/${course.id}?${_csrf.parameterName}=${_csrf.token}">
-                                    <input  type="submit" value="Добавить в Моё обучение">
+                            <form method="post"
+                                  action="${contextPath}/course/add/${course.id}?${_csrf.parameterName}=${_csrf.token}">
+                                <input type="submit" value="Добавить в Моё обучение">
                             </form>
                         </div>
                     </div>

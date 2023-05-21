@@ -45,12 +45,12 @@ public class User {
     private String photolink;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="user_role", joinColumns = @JoinColumn(name="users_id"),
+    @JoinTable(name= "User_role", joinColumns = @JoinColumn(name="users_id"),
     inverseJoinColumns = @JoinColumn(name="roles_id"))
     private Set<Role> roles;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name="user_course", joinColumns = @JoinColumn(name="user_id"),
+    @JoinTable(name= "User_course", joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="course_id"))
     private List<Course> courses;
 
@@ -65,6 +65,9 @@ public class User {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     private List<OverCourse> overCourses;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @Transient
     private int rating;
@@ -183,6 +186,14 @@ public class User {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {

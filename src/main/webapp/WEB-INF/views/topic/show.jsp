@@ -200,6 +200,29 @@
                 </c:if>
             </section>
         </c:if>
+
+        <div>
+            <h1>Комментарии</h1>
+            <c:forEach items="${comments}" var="comment">
+                <div class="table">
+                    <c:choose>
+                        <c:when test="${comment.user.username == topic.course.teacher.username}">
+                            <p class="teacher">${comment.user.username} (Преподаватель)</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p class="user">${comment.user.username}</p>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <p class="date">${comment.date.time}</p>
+                    <p class="comment">${comment.text}</p>
+                </div>
+            </c:forEach>
+            <form  method="post" action="${pageContext.request.contextPath}/comment/add/${topic.id}" path="text">
+                <input type="text" placeholder="Оставить комментарий..." name="comment" class="search">
+                <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Отправить</button>
+            </form>
+        </div>
     </main>
     <footer>
         <p>Телефон: +6(666)-666-66-66</p>

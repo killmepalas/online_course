@@ -3,7 +3,7 @@ package kill.me.palas.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "career_guidance_test_answer")
+@Table(name = "Career_guidance_test_answer")
 public class CareerAnswer {
 
     @Id

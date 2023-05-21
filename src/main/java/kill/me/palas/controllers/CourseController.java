@@ -82,7 +82,7 @@ public class CourseController {
                     break;
                 }
             }
-            if (courseService.isTeacher(user,c )) {
+            if (courseService.isTeacher(user, c)) {
                 model.addAttribute("teach_course", "teacher");
             }
         } else model.addAttribute("teach_course", "not_auth");
@@ -200,11 +200,8 @@ public class CourseController {
     public String create(@ModelAttribute("course") Course course, Model model) {
         User user = userService.getCurrentAuthUser();
         if (user != null) {
-            if (userService.isTeacher(user)) {
-                model.addAttribute("categories", categoryService.findAllNames());
-                return "course/create";
-            }
-            return "error/not_access";
+            model.addAttribute("categories", categoryService.findAllNames());
+            return "course/create";
         }
         return "error/not_auth";
     }
@@ -214,7 +211,6 @@ public class CourseController {
                          BindingResult bindingResult, Model model) {
         User user = userService.getCurrentAuthUser();
         if (user != null) {
-            if (userService.isTeacher(user)) {
                 if (bindingResult.hasErrors()) {
                     model.addAttribute("categories", categoryService.findAllNames());
                     return "course/create";
@@ -223,8 +219,6 @@ public class CourseController {
                 String role = "ROLE_TEACHER";
                 userService.setRoles(user, role);
                 return "redirect:/course/teach";
-            }
-            return "error/not_access";
         }
         return "error/not_auth";
     }
