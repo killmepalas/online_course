@@ -21,7 +21,7 @@ public class Lecture {
     private String description;
 
     @Size(min = 10, message = "Текст лекции не может быть таким коротким")
-    @Column(name = "text")
+    @Column(columnDefinition = "text")
     private String text;
 
     @ManyToOne()

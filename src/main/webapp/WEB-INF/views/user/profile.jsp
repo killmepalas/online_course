@@ -45,7 +45,14 @@
                 </c:if>
             </div>
 
-            <img src="${user.photolink}" alt="фотку поставь">
+            <c:choose>
+                <c:when test="${user.photolink != null}">
+                    <img src="${user.photolink}" alt="Мы потеряли ваше фото"/>
+                </c:when>
+                <c:otherwise>
+                    <img src="${contextPath}/resources/img/avatar.png" alt="Мы потеряли фото"/>
+                </c:otherwise>
+            </c:choose>
         <div class="profile">
             <form method="get" action="${contextPath}/update/${user.id}">
                 <button class="logout" type="submit" value="update">Обновить данные профиля</button>

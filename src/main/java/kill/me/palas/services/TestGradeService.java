@@ -61,7 +61,6 @@ public class TestGradeService {
                 overCourseService.save(user, test.getTopic().getCourse(), 6);
             else if (findAllByUserAndCourse(user, course).size() == testService.findAllActiveByCourse(course).size())
                 overCourseService.update(overCourseService.findOneByUserAndCourse(user,course), 7);
-
         }
     }
 

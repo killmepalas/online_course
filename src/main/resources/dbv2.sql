@@ -249,3 +249,16 @@ create table Comment(
     foreign key (user_id) references User(id),
     foreign key (topic_id) references Topic(id)
 );
+
+alter table Lecture
+modify text text not null ;
+
+ALTER TABLE Lecture CHANGE text text text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+ALTER TABLE lecture CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+ALTER TABLE Lecture DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+ALTER TABLE Lecture CHANGE text text text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+

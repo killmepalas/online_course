@@ -29,7 +29,7 @@
     </nav>
 </header>
 <div class="container">
-    <main id="course">
+    <main>
         <c:if test="${status == 'teacher'}">
             <section class="help">
                 <div class="background">
@@ -143,6 +143,7 @@
 
                 <h1>Найдено элементов курса: ${countActiveTests+lectures.size()}</h1>
                 <c:if test="${!lectures.isEmpty()}">
+                    <h3>Лекции</h3>
                     <c:forEach items="${lectures}" var="lecture">
                         <c:if test="${lectures.indexOf(lecture) % 3==0}"><div class="row"></c:if>
                         <section class="col-3">
@@ -160,6 +161,7 @@
                     </c:forEach>
                 </c:if>
                 <c:if test="${!tests.isEmpty()}">
+                    <h3>Тесты</h3>
                     <c:forEach items="${tests}" var="test">
                         <c:if test="${test.status.id == 1}">
                             <c:if test="${tests.indexOf(test) % 3==0}"><div class="row"></c:if>
@@ -203,24 +205,45 @@
 
         <div>
             <h1>Комментарии</h1>
+            <c:if test="${comments.isEmpty()}">
+                <h3>Комментариев пока нет</h3>
+            </c:if>
             <c:forEach items="${comments}" var="comment">
-                <div class="table">
-                    <c:choose>
-                        <c:when test="${comment.user.username == topic.course.teacher.username}">
-                            <p class="teacher">${comment.user.username} (Преподаватель)</p>
-                        </c:when>
-                        <c:otherwise>
-                            <p class="user">${comment.user.username}</p>
-                        </c:otherwise>
-                    </c:choose>
+                <div class="comments">
+                    <div class="com_left">
+                        <c:choose>
+                            <c:when test="${comment.user.photolink != null}">
+                                <img src="${comment.user.photolink}" alt="Мы потеряли ваше фото" class="com_img"/>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${contextPath}/resources/img/avatar.png" alt="Мы потеряли фото"
+                                     class="com_img"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
 
-                    <p class="date">${comment.date.time}</p>
-                    <p class="comment">${comment.text}</p>
+                    <div class="com_right">
+                        <c:choose>
+                            <c:when test="${comment.user.username == topic.course.teacher.username}">
+                                <p class="teacher">${comment.user.username} (Преподаватель)</p>
+                            </c:when>
+                            <c:otherwise>
+                                <p class="user">${comment.user.username}</p>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <p class="date">${comment.date.time}</p>
+
+                        <p class="comment">${comment.text}</p>
+                    </div>
+
                 </div>
             </c:forEach>
-            <form  method="post" action="${pageContext.request.contextPath}/comment/add/${topic.id}" path="text">
+            <form method="post" action="${pageContext.request.contextPath}/comment/add/${topic.id}" path="text">
                 <input type="text" placeholder="Оставить комментарий..." name="comment" class="search">
-                <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">Отправить</button>
+                <button class="formcource" type="submit" name="${_csrf.parameterName}" value="${_csrf.token}">
+                    Отправить
+                </button>
             </form>
         </div>
     </main>

@@ -13,6 +13,6 @@
 
     <context:component-scan base-package="kill.me.palas.*"/>
 
-    <context:property-placeholder location="classpath:hibernate.properties"/>
+    <context:property-placeholder location="classpath:hibernate.properties,classpath:swagger-config.properties"/>
 
 </beans>

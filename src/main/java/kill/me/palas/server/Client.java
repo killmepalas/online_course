@@ -35,8 +35,10 @@ public class Client {
 
 
     public static void notification(int courseId,Course course, int typeElement, int typeAction, String name) {
-        ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8090")
-                .usePlaintext().build();
+        try {
+            ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8090")
+                    .usePlaintext().build();
+
 
         UpdateServiceGrpc.UpdateServiceBlockingStub stub =
                 UpdateServiceGrpc.newBlockingStub(channel);
@@ -57,6 +59,9 @@ public class Client {
         System.out.println(response);
 
         channel.shutdownNow();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

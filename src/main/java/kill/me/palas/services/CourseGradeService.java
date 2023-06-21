@@ -75,8 +75,8 @@ public class CourseGradeService {
         for (TopicGrade topicGrade : topicGrades) {
             grades += topicGrade.getGrade();
         }
+        result = grades / topicService.findAllActiveTopicsByCourseId(course.getId()).size();
         if (courseGrade == null) {
-            result = grades / topicService.findAllActiveTopicsByCourseId(course.getId()).size();
             courseGrade = new CourseGrade();
             courseGrade.setCourse(course);
             courseGrade.setUser(user);
@@ -84,16 +84,14 @@ public class CourseGradeService {
             courseGradeRepository.save(courseGrade);
         } else {
             if (result != courseGrade.getGrade()) {
-                int count = topicService.findAllActiveTopicsByCourseId(course.getId()).size();
-                result = grades / count;
                 courseGrade.setGrade(result);
                 courseGradeRepository.save(courseGrade);
-                if (courseGrade.getFinalTest() >= 50 && courseGrade.getGrade() >= 50 && overCourseService.isUserOverCourse(user,course) != 8){
-                    overCourseService.update(overCourseService.findOneByUserAndCourse(user, course), 8);
-                    mailSender = new MailSender();
-                    mailSender.Send(user.getEmail(), course.getName(), user.getLastname() + " " + user.getName() + " " + user.getMidname());
-                }
             }
+        }
+        if (courseGrade.getFinalTest() >= 50 && courseGrade.getGrade() >= 50 && overCourseService.isUserOverCourse(user,course) != 8){
+            overCourseService.update(overCourseService.findOneByUserAndCourse(user, course), 8);
+            mailSender = new MailSender();
+            mailSender.Send(user.getEmail(), course.getName(), user.getLastname() + " " + user.getName() + " " + user.getMidname());
         }
     }
 
